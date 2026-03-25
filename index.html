@@ -162,22 +162,22 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .ep-desc { font-size:12px; color:var(--ink-2); line-height:1.55 }
 /* ── Fan photo popup ── */
 #exp-popup.photo-only { background:none; backdrop-filter:none; -webkit-backdrop-filter:none; box-shadow:none; border-radius:0; overflow:visible; width:auto; padding:0 }
-.ep-fan { position:relative; width:340px; height:260px; }
+.ep-fan { position:relative; width:380px; height:260px; }
 .ep-fan-photo {
   position:absolute;
-  width:300px; height:225px; /* 4:3 */
+  width:280px; height:210px; /* 4:3 */
   border-radius:14px; overflow:hidden;
   box-shadow:0 8px 28px rgba(0,0,0,.28), 0 2px 8px rgba(0,0,0,.14);
-  transition:transform .42s cubic-bezier(.25,.46,.45,.94), box-shadow .42s cubic-bezier(.25,.46,.45,.94);
+  transition:box-shadow .38s cubic-bezier(.25,.46,.45,.94), outline .38s;
   cursor:pointer;
   transform-origin:bottom center;
-  top:0; left:50%; margin-left:-150px;
+  top:0; left:50%; margin-left:-140px;
 }
-.ep-fan-photo img { width:100%; height:100%; object-fit:cover; display:block }
+.ep-fan-photo img { width:100%; height:100%; object-fit:cover; display:block; pointer-events:none }
 /* Fan initial positions — photo 2 (milieu) devant */
-.ep-fan-photo:nth-child(1) { transform:rotate(-13deg); z-index:1 }
+.ep-fan-photo:nth-child(1) { transform:rotate(-22deg); z-index:1 }
 .ep-fan-photo:nth-child(2) { transform:rotate(0deg);   z-index:3 }
-.ep-fan-photo:nth-child(3) { transform:rotate(13deg);  z-index:2 }
+.ep-fan-photo:nth-child(3) { transform:rotate(22deg);  z-index:2 }
 /* ── Card popup separator ── */
 .ep-sep { height:1px; background:rgba(0,0,0,.08); margin:0 }
 .ep-footer { padding:var(--sp) }
@@ -631,20 +631,13 @@ function showPopup(d, anchor) {
 
     fanPhotos.forEach((photo, i) => {
       photo.addEventListener('mouseenter', () => {
-        photo.style.zIndex = '10';
-        photo.style.transform = 'translateY(-18px) scale(1.04)';
-        photo.style.boxShadow = '0 24px 52px rgba(0,0,0,.36), 0 6px 16px rgba(0,0,0,.18)';
+        /* Bring to front immediately — no position change = no jitter */
+        fanPhotos.forEach((p, j) => p.style.zIndex = j === i ? '10' : baseZ[j]);
+        photo.style.boxShadow = '0 16px 40px rgba(0,0,0,.38), 0 4px 12px rgba(0,0,0,.2)';
       });
       photo.addEventListener('mouseleave', () => {
-        photo.style.transform = baseT[i];
         photo.style.boxShadow = '';
-        /* Reset z-index only after the transition finishes — aucun saut visuel */
-        const onEnd = (e) => {
-          if (e.propertyName !== 'transform') return;
-          photo.style.zIndex = baseZ[i];
-          photo.removeEventListener('transitionend', onEnd);
-        };
-        photo.addEventListener('transitionend', onEnd);
+        fanPhotos.forEach((p, j) => p.style.zIndex = baseZ[j]);
       });
     });
   } else {
