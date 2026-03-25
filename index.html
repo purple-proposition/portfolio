@@ -146,7 +146,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .int-ico { font-size:14px; flex-shrink:0 }
 
 /* ── Exp popup ── */
-#exp-popup { position:fixed; z-index:9998; width:268px; background:rgba(245,245,245,.55); backdrop-filter:blur(16px) saturate(1.6); -webkit-backdrop-filter:blur(16px) saturate(1.6); border-radius:var(--r); box-shadow:var(--shadow-h); overflow:hidden; pointer-events:none; opacity:0; transform:translateY(8px) scale(.97); transition:opacity .2s ease,transform .2s cubic-bezier(.25,.46,.45,.94) }
+#exp-popup { position:fixed; z-index:9998; width:268px; background:rgba(245,245,245,.55); backdrop-filter:blur(16px) saturate(1.6); -webkit-backdrop-filter:blur(16px) saturate(1.6); border-radius:var(--r); box-shadow:var(--shadow-h); overflow:hidden; pointer-events:none; opacity:0; transform:translateY(10px) scale(.96); transition:opacity .38s cubic-bezier(.25,.46,.45,.94),transform .38s cubic-bezier(.25,.46,.45,.94) }
 #exp-popup.visible { opacity:1; transform:translateY(0) scale(1); pointer-events:all }
 .ep-browser { display:flex; align-items:center; gap:8px; padding:7px 10px; background:rgba(0,0,0,.06); border-bottom:1px solid rgba(0,0,0,.07) }
 .ep-browser-dots { display:flex; gap:4px; flex-shrink:0 }
@@ -161,18 +161,56 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .ep-title { font-size:13px; font-weight:600; color:var(--ink) }
 .ep-desc { font-size:12px; color:var(--ink-2); line-height:1.55 }
 /* ── Fan photo popup ── */
-#exp-popup.photo-only { background:none; backdrop-filter:none; -webkit-backdrop-filter:none; box-shadow:none; border-radius:0; overflow:visible; width:auto }
-.ep-fan { position:relative; width:200px; height:175px; }
-.ep-fan-photo { position:absolute; width:180px; height:135px; border-radius:10px; overflow:hidden; box-shadow:0 6px 24px rgba(0,0,0,.32),0 2px 6px rgba(0,0,0,.14); transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease),z-index 0s; cursor:pointer; transform-origin:bottom center }
+#exp-popup.photo-only { background:none; backdrop-filter:none; -webkit-backdrop-filter:none; box-shadow:none; border-radius:0; overflow:visible; width:auto; padding:0 }
+.ep-fan { position:relative; width:340px; height:260px; }
+.ep-fan-photo {
+  position:absolute;
+  width:300px; height:225px; /* 4:3 */
+  border-radius:14px; overflow:hidden;
+  box-shadow:0 8px 28px rgba(0,0,0,.28), 0 2px 8px rgba(0,0,0,.14);
+  transition:transform .42s cubic-bezier(.25,.46,.45,.94), box-shadow .42s cubic-bezier(.25,.46,.45,.94);
+  cursor:pointer;
+  transform-origin:bottom center;
+  top:0; left:50%; margin-left:-150px;
+}
 .ep-fan-photo img { width:100%; height:100%; object-fit:cover; display:block }
-.ep-fan-photo:nth-child(1) { bottom:0; left:0; transform:rotate(-10deg); z-index:1 }
-.ep-fan-photo:nth-child(2) { bottom:0; left:10px; transform:rotate(-2deg); z-index:2 }
-.ep-fan-photo:nth-child(3) { bottom:0; left:20px; transform:rotate(6deg); z-index:3 }
-.ep-fan-photo:hover { box-shadow:0 10px 32px rgba(0,0,0,.38),0 3px 8px rgba(0,0,0,.18) }
+/* Fan initial positions — photo 2 (milieu) devant */
+.ep-fan-photo:nth-child(1) { transform:rotate(-13deg); z-index:1 }
+.ep-fan-photo:nth-child(2) { transform:rotate(0deg);   z-index:3 }
+.ep-fan-photo:nth-child(3) { transform:rotate(13deg);  z-index:2 }
+/* ── Card popup separator ── */
+.ep-sep { height:1px; background:rgba(0,0,0,.08); margin:0 }
 .ep-footer { padding:var(--sp) }
-.ep-link { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; background:var(--tag-bg); color:var(--ink-2); border-radius:var(--r-sm); font-size:12px; text-decoration:none; transition:background .15s,color .15s }
+.ep-link { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; background:var(--tag-bg); color:var(--ink-2); border-radius:var(--r-sm); font-size:12px; text-decoration:none; transition:background .28s cubic-bezier(.25,.46,.45,.94),color .28s cubic-bezier(.25,.46,.45,.94) }
 .ep-link:hover { background:#8B8B8B; color:#F4F4F4 }
 
+/* ── Dark mode ── */
+/* Smooth color transitions on all themed elements */
+.card,.ch,.chip,.contact-btn,.lang-btn,.int-btn,.tag,.ep-sep,#exp-popup,.ep-link,.hero,.cb,.exp-card,
+.skill-row,.edu-card,.skill-col,.hero-chips,.lang-row { transition-property:background,color,border-color; transition-duration:1.2s; transition-timing-function:ease }
+.card { transition-property:background,color,border-color,box-shadow,transform; transition-duration:1.2s,1.2s,1.2s,var(--dur),var(--dur); transition-timing-function:ease,ease,ease,var(--ease),var(--ease) }
+/* Dark overrides — keeps blue (#4169E1) intact */
+body.dark .card           { background:#1E1E22 }
+body.dark .ch             { background:#28282E }
+body.dark .ch-label       { color:#E0E0E6 }
+body.dark .ch-icon        { stroke:#C0C0CC }
+body.dark .ch-r           { color:#8888A0; border-color:#8888A0 }
+body.dark .ch-r.current   { color:#4169E1; border-color:#4169E1 }
+body.dark .ch-toggle      { border-color:#5A5A6C }
+body.dark .ch-toggle svg  { stroke:#9898AA }
+body.dark .tag            { background:#2C2C35; color:#C0C0CC }
+body.dark .chip           { background:#2C2C35; color:#C0C0CC; border:none }
+body.dark .chip.on        { background:#4169E1; color:#fff }
+body.dark .contact-btn    { background:#2C2C35; color:#C0C0CC; border-color:#3E3E4A }
+body.dark .lang-btn       { background:#2C2C35; color:#C0C0CC }
+body.dark .int-btn        { background:#2C2C35; color:#C0C0CC }
+body.dark .ep-sep         { background:rgba(255,255,255,.09) }
+body.dark #exp-popup      { background:rgba(22,22,28,.82) }
+body.dark .ep-browser     { background:rgba(255,255,255,.06); border-bottom-color:rgba(255,255,255,.06) }
+body.dark .ep-img         { background:#2C2C35 }
+body.dark .ep-link        { background:#2C2C35; color:#C0C0CC }
+body.dark .ep-link:hover  { background:#5A5A6C; color:#F4F4F4 }
+body.dark .lang-sep       { opacity:.15 }
 /* ── Print ── */
 .btn-print { position:fixed; bottom:32px; right:32px; display:flex; align-items:center; gap:var(--sp-sm); padding:var(--sp-sm) var(--sp); background:rgba(28,28,30,.78); backdrop-filter:blur(12px); color:rgba(255,255,255,.92); border:1px solid rgba(255,255,255,.1); border-radius:var(--r-pill); font-family:var(--font); font-size:12.5px; font-weight:500; cursor:pointer; z-index:200; box-shadow:0 4px 20px rgba(0,0,0,.18); transition:opacity .15s }
 .btn-print:hover { opacity:.8 }
@@ -528,9 +566,24 @@ function applyTime() {
   const [grad, dark] = PERIODS[slot(new Date().getHours())];
   document.body.style.background = grad;
   const r = document.documentElement;
-  r.style.setProperty('--ink',   dark ? '#ECECEE' : '#1A1A1A');
-  r.style.setProperty('--ink-2', dark ? '#9898A0' : '#5C5C5C');
-  r.style.setProperty('--ink-3', dark ? '#55555C' : '#AAAAAA');
+  /* Text */
+  r.style.setProperty('--ink',        dark ? '#ECECEE' : '#1A1A1A');
+  r.style.setProperty('--ink-2',      dark ? '#9898A0' : '#5C5C5C');
+  r.style.setProperty('--ink-3',      dark ? '#55555C' : '#AAAAAA');
+  /* Surfaces */
+  r.style.setProperty('--card-bg',    dark ? '#1E1E22' : '#F5F5F5');
+  r.style.setProperty('--card-head',  dark ? '#28282E' : '#E8E8E8');
+  r.style.setProperty('--card-border',dark ? '#3A3A3E' : '#E8E8E8');
+  r.style.setProperty('--tag-bg',     dark ? '#2C2C35' : '#E8E8E8');
+  r.style.setProperty('--tag-ink',    dark ? '#C0C0CC' : '#3D3D3D');
+  r.style.setProperty('--shadow',     dark
+    ? '0 1px 3px rgba(0,0,0,.25), 0 3px 12px rgba(0,0,0,.32)'
+    : '0 1px 2px rgba(0,0,0,.04), 0 3px 12px rgba(0,0,0,.05)');
+  r.style.setProperty('--shadow-h',   dark
+    ? '0 2px 8px rgba(0,0,0,.32), 0 10px 28px rgba(0,0,0,.42)'
+    : '0 2px 8px rgba(0,0,0,.07), 0 10px 28px rgba(0,0,0,.09)');
+  /* Toggle body.dark class for hardcoded-color overrides */
+  document.body.classList.toggle('dark', dark);
 }
 applyTime(); setInterval(applyTime, 30000);
 
@@ -570,19 +623,28 @@ function showPopup(d, anchor) {
       </div>
     `;
     const fanPhotos = [...epPopup.querySelectorAll('.ep-fan-photo')];
+    /* Base states matching CSS nth-child */
+    const baseT = ['rotate(-13deg)', 'rotate(0deg)', 'rotate(13deg)'];
+    const baseZ = [1, 3, 2];
+    /* Apply base z-index inline so JS fully controls them */
+    fanPhotos.forEach((p, i) => p.style.zIndex = baseZ[i]);
+
     fanPhotos.forEach((photo, i) => {
-      const baseRotations = ['rotate(-10deg)', 'rotate(-2deg)', 'rotate(6deg)'];
       photo.addEventListener('mouseenter', () => {
-        fanPhotos.forEach((p, j) => {
-          p.style.zIndex = j === i ? '10' : j < i ? String(j + 1) : String(j);
-          p.style.transform = j === i ? 'rotate(0deg) translateY(-8px)' : baseRotations[j];
-        });
+        photo.style.zIndex = '10';
+        photo.style.transform = 'translateY(-18px) scale(1.04)';
+        photo.style.boxShadow = '0 24px 52px rgba(0,0,0,.36), 0 6px 16px rgba(0,0,0,.18)';
       });
       photo.addEventListener('mouseleave', () => {
-        fanPhotos.forEach((p, j) => {
-          p.style.zIndex = '';
-          p.style.transform = '';
-        });
+        photo.style.transform = baseT[i];
+        photo.style.boxShadow = '';
+        /* Reset z-index only after the transition finishes — aucun saut visuel */
+        const onEnd = (e) => {
+          if (e.propertyName !== 'transform') return;
+          photo.style.zIndex = baseZ[i];
+          photo.removeEventListener('transitionend', onEnd);
+        };
+        photo.addEventListener('transitionend', onEnd);
       });
     });
   } else {
@@ -610,7 +672,9 @@ function showPopup(d, anchor) {
   }
 
   const r  = anchor.getBoundingClientRect();
-  const pw = d.photos ? (epPopup.offsetWidth || 210) : 260, ph = epPopup.offsetHeight || 220, gap = 12;
+  const pw = d.photos ? (epPopup.offsetWidth || 340) : 268;
+  const ph = epPopup.offsetHeight || 220;
+  const gap = d.photos ? 6 : 12;
   let left = r.left + r.width / 2 - pw / 2;
   left = Math.max(8, Math.min(left, window.innerWidth - pw - 8));
   let top = r.top - ph - gap;
