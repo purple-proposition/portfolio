@@ -548,14 +548,22 @@ document.querySelectorAll('.ch-toggle').forEach(btn => {
 
 /* ── Time background ── */
 const PERIODS = [
-  ['linear-gradient(160deg,#0b0c1d,#11102b,#1a1330,#0d0c1e)',true],
-  ['linear-gradient(160deg,#1c1438,#3b2158,#7c3b68,#c4704a,#e8a86a)',true],
-  ['linear-gradient(160deg,#e8d8c4,#d4bfa8,#c8b8d4,#b8cce0,#ccd8e8)',false],
-  ['linear-gradient(160deg,#c2d0e0,#ccd8e8,#d8e4f0,#e4ecf4,#eff4f8)',false],
-  ['linear-gradient(160deg,#c8d4e4,#d4c8d8,#e0c8c8,#e8d0b8,#ecdcc4)',false],
-  ['linear-gradient(160deg,#c4a8b8,#d4a090,#d8b090,#c8a8a0,#a898b8)',false],
-  ['linear-gradient(160deg,#2a1f40,#3d2458,#5c3460,#7a3850,#9a5048)',true],
-  ['linear-gradient(160deg,#080b18,#0d1028,#151428,#0a0c1c)',true]
+  /* 0 — 深夜  Shin'ya  · nuit profonde  (0–5h)  */
+  ['linear-gradient(150deg,#0C0B18 0%,#13101E 55%,#0E0D1A 100%)', true],
+  /* 1 — 夜明け Yoake   · aube brumeuse  (5–7h)  */
+  ['linear-gradient(150deg,#C4BEC8 0%,#CABEC4 40%,#B8C0C4 75%,#C2C0C8 100%)', false],
+  /* 2 — 朝    Asa     · matin doux      (7–10h) */
+  ['linear-gradient(150deg,#DDD8D0 0%,#E4DDD6 45%,#D6D0C8 80%,#DED8CE 100%)', false],
+  /* 3 — 昼    Hiru    · midi calme      (10–14h)*/
+  ['linear-gradient(150deg,#D0D4D8 0%,#D8DDE4 45%,#CCCCD4 80%,#D4D8DC 100%)', false],
+  /* 4 — 午後  Gogo    · après-midi      (14–17h)*/
+  ['linear-gradient(150deg,#D4CEC4 0%,#DCDAD0 45%,#D0C8BC 80%,#DAD4C8 100%)', false],
+  /* 5 — 夕暮れ Yugure · coucher de soleil(17–19h)*/
+  ['linear-gradient(150deg,#C4A898 0%,#BCA099 40%,#A89098 75%,#C0A89C 100%)', false],
+  /* 6 — 宵    Yoi    · soir             (19–21h)*/
+  ['linear-gradient(150deg,#1E1A2C 0%,#261E38 50%,#201A2E 100%)', true],
+  /* 7 — 夜    Yoru   · nuit             (21–24h)*/
+  ['linear-gradient(150deg,#0C0B18 0%,#13101E 55%,#0E0D1A 100%)', true],
 ];
 function slot(h){return h<5?0:h<7?1:h<10?2:h<14?3:h<17?4:h<19?5:h<21?6:7}
 function applyTime() {
@@ -681,7 +689,22 @@ function showPopup(d, anchor) {
   epPopup.style.top  = top  + 'px';
   epPopup.classList.add('visible');
 }
-function hidePopup() { epT = setTimeout(() => epPopup.classList.remove('visible'), 150); }
+function hidePopup() {
+  epT = setTimeout(() => {
+    if (epPopup.classList.contains('photo-only')) {
+      const photos = [...epPopup.querySelectorAll('.ep-fan-photo')];
+      const baseT  = ['rotate(-22deg)','rotate(0deg)','rotate(22deg)'];
+      photos.forEach((p, i) => {
+        p.style.transition = 'opacity .2s ease-in, transform .28s cubic-bezier(.4,0,1,1)';
+        p.style.opacity    = '0';
+        p.style.transform  = baseT[i] + ' scale(.9)';
+      });
+      setTimeout(() => epPopup.classList.remove('visible'), 300);
+    } else {
+      epPopup.classList.remove('visible');
+    }
+  }, 120);
+}
 
 epPopup.addEventListener('mouseenter', () => clearTimeout(epT));
 epPopup.addEventListener('mouseleave', hidePopup);
