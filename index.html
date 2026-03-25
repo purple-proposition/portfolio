@@ -160,15 +160,15 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .ep-body { padding:var(--sp); display:flex; flex-direction:column; gap:var(--sp) }
 .ep-title { font-size:13px; font-weight:600; color:var(--ink) }
 .ep-desc { font-size:12px; color:var(--ink-2); line-height:1.55 }
-.ep-fan { position:relative; height:185px; }
-.ep-fan-photo { position:absolute; left:0; width:236px; height:177px; border-radius:10px; overflow:hidden; box-shadow:0 4px 18px rgba(0,0,0,.28),0 1px 4px rgba(0,0,0,.12); transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease); cursor:pointer }
+/* ── Fan photo popup ── */
+#exp-popup.photo-only { background:none; backdrop-filter:none; -webkit-backdrop-filter:none; box-shadow:none; border-radius:0; overflow:visible; width:auto }
+.ep-fan { position:relative; width:200px; height:175px; }
+.ep-fan-photo { position:absolute; width:180px; height:135px; border-radius:10px; overflow:hidden; box-shadow:0 6px 24px rgba(0,0,0,.32),0 2px 6px rgba(0,0,0,.14); transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease),z-index 0s; cursor:pointer; transform-origin:bottom center }
 .ep-fan-photo img { width:100%; height:100%; object-fit:cover; display:block }
-.ep-fan-photo::after { content:''; position:absolute; inset:0; background:rgba(0,0,0,.2); transition:background var(--dur) var(--ease) }
-.ep-fan-photo:nth-child(1) { top:8px; z-index:1 }
-.ep-fan-photo:nth-child(2) { top:4px; z-index:2 }
-.ep-fan-photo:nth-child(3) { top:0; z-index:3 }
-.ep-fan-photo:hover { transform:translateY(-4px); box-shadow:0 8px 28px rgba(0,0,0,.32) }
-.ep-fan-photo:hover::after { background:rgba(0,0,0,0) }
+.ep-fan-photo:nth-child(1) { bottom:0; left:0; transform:rotate(-10deg); z-index:1 }
+.ep-fan-photo:nth-child(2) { bottom:0; left:10px; transform:rotate(-2deg); z-index:2 }
+.ep-fan-photo:nth-child(3) { bottom:0; left:20px; transform:rotate(6deg); z-index:3 }
+.ep-fan-photo:hover { box-shadow:0 10px 32px rgba(0,0,0,.38),0 3px 8px rgba(0,0,0,.18) }
 .ep-footer { padding:var(--sp) }
 .ep-link { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; background:var(--tag-bg); color:var(--ink-2); border-radius:var(--r-sm); font-size:12px; text-decoration:none; transition:background .15s,color .15s }
 .ep-link:hover { background:#8B8B8B; color:#F4F4F4 }
@@ -556,10 +556,12 @@ function showPopup(d, anchor) {
   }
 
   if (d.photos) {
-    epImg.innerHTML = '';
+    epPopup.classList.add('photo-only');
+    epBrowser.style.display = 'none';
     epImg.style.display = 'none';
     epLink.style.display = 'none';
     document.querySelector('.ep-sep').style.display = 'none';
+    document.querySelector('#exp-popup .ep-body').style.padding = '0';
     document.querySelector('#exp-popup .ep-body').innerHTML = `
       <div class="ep-fan">
         <div class="ep-fan-photo"><img src="images/travel-1.jpg" alt="Voyage"></div>
@@ -568,13 +570,24 @@ function showPopup(d, anchor) {
       </div>
     `;
     const fanPhotos = [...epPopup.querySelectorAll('.ep-fan-photo')];
-    fanPhotos.forEach(photo => {
+    fanPhotos.forEach((photo, i) => {
+      const baseRotations = ['rotate(-10deg)', 'rotate(-2deg)', 'rotate(6deg)'];
       photo.addEventListener('mouseenter', () => {
-        fanPhotos.forEach(p => p.style.zIndex = '');
-        photo.style.zIndex = '10';
+        fanPhotos.forEach((p, j) => {
+          p.style.zIndex = j === i ? '10' : j < i ? String(j + 1) : String(j);
+          p.style.transform = j === i ? 'rotate(0deg) translateY(-8px)' : baseRotations[j];
+        });
+      });
+      photo.addEventListener('mouseleave', () => {
+        fanPhotos.forEach((p, j) => {
+          p.style.zIndex = '';
+          p.style.transform = '';
+        });
       });
     });
   } else {
+    epPopup.classList.remove('photo-only');
+    document.querySelector('#exp-popup .ep-body').style.padding = '';
     epImg.style.display = '';
     document.querySelector('.ep-sep').style.display = '';
     if (d.preview) {
@@ -597,7 +610,7 @@ function showPopup(d, anchor) {
   }
 
   const r  = anchor.getBoundingClientRect();
-  const pw = 260, ph = epPopup.offsetHeight || 220, gap = 12;
+  const pw = d.photos ? (epPopup.offsetWidth || 210) : 260, ph = epPopup.offsetHeight || 220, gap = 12;
   let left = r.left + r.width / 2 - pw / 2;
   left = Math.max(8, Math.min(left, window.innerWidth - pw - 8));
   let top = r.top - ph - gap;
