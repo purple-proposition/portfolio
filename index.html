@@ -6,6 +6,7 @@
 <title>Jesse Sotomayor</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 <style>
 :root {
   --sp: 16px; --sp-sm: 8px; --gap: 32px;
@@ -144,9 +145,17 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .int-ico { font-size:14px; flex-shrink:0 }
 
 /* ── Exp popup ── */
-#exp-popup { position:fixed; z-index:9998; width:260px; background:rgba(245,245,245,.55); backdrop-filter:blur(16px) saturate(1.6); -webkit-backdrop-filter:blur(16px) saturate(1.6); border-radius:var(--r); box-shadow:var(--shadow-h); overflow:hidden; pointer-events:none; opacity:0; transform:translateY(8px) scale(.97); transition:opacity .2s ease,transform .2s cubic-bezier(.25,.46,.45,.94) }
+#exp-popup { position:fixed; z-index:9998; width:268px; background:rgba(245,245,245,.55); backdrop-filter:blur(16px) saturate(1.6); -webkit-backdrop-filter:blur(16px) saturate(1.6); border-radius:var(--r); box-shadow:var(--shadow-h); overflow:hidden; pointer-events:none; opacity:0; transform:translateY(8px) scale(.97); transition:opacity .2s ease,transform .2s cubic-bezier(.25,.46,.45,.94) }
 #exp-popup.visible { opacity:1; transform:translateY(0) scale(1); pointer-events:all }
-.ep-img { width:100%; height:120px; background:var(--tag-bg); display:flex; align-items:center; justify-content:center; font-size:36px }
+.ep-browser { display:flex; align-items:center; gap:8px; padding:7px 10px; background:rgba(0,0,0,.06); border-bottom:1px solid rgba(0,0,0,.07) }
+.ep-browser-dots { display:flex; gap:4px; flex-shrink:0 }
+.ep-browser-dots span { width:7px; height:7px; border-radius:50% }
+.ep-browser-dots span:nth-child(1) { background:#FF6058 }
+.ep-browser-dots span:nth-child(2) { background:#FFBD2E }
+.ep-browser-dots span:nth-child(3) { background:#28C941 }
+.ep-browser-url { font-family:var(--mono); font-size:10px; color:var(--ink-3); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:1 }
+.ep-img { width:100%; height:130px; background:var(--tag-bg); display:flex; align-items:center; justify-content:center; font-size:36px }
+.ep-img img { width:100%; height:100%; object-fit:cover; display:block }
 .ep-body { padding:var(--sp); display:flex; flex-direction:column; gap:var(--sp) }
 .ep-title { font-size:13px; font-weight:600; color:var(--ink) }
 .ep-desc { font-size:12px; color:var(--ink-2); line-height:1.55 }
@@ -188,6 +197,10 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 <body>
 
 <div id="exp-popup">
+  <div class="ep-browser" id="ep-browser">
+    <div class="ep-browser-dots"><span></span><span></span><span></span></div>
+    <div class="ep-browser-url" id="ep-browser-url"></div>
+  </div>
   <div class="ep-img" id="ep-img"></div>
   <div class="ep-body">
     <div class="ep-title" id="ep-title"></div>
@@ -202,7 +215,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 <div id="tip"></div>
 
 <button class="btn-print" onclick="window.print()">
-  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6V2h8v4M4 12H2V7h12v5h-2M4 10h8v4H4z"/></svg>
+  <i data-lucide="printer" style="width:13px;height:13px;stroke:currentColor;fill:none"></i>
   <span data-i="print">Imprimer</span>
 </button>
 
@@ -212,11 +225,11 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
   <div class="card hero">
     <div class="ch">
       <div class="ch-l">
-        <svg class="ch-icon" viewBox="0 0 16 16"><circle cx="8" cy="6" r="2.5"/><path d="M2.5 14c0-3 2.5-5 5.5-5s5.5 2 5.5 5" stroke-linecap="round"/></svg>
+        <i data-lucide="user" class="ch-icon"></i>
         <span class="ch-label">Portfolio<span class="ch-label-suffix"></span></span>
       </div>
       <div class="ch-right">
-        <button class="ch-toggle"><svg viewBox="0 0 14 14"><polyline points="2,9 7,4 12,9"/></svg></button>
+        <button class="ch-toggle"><i data-lucide="chevron-up"></i></button>
       </div>
     </div>
     <div class="cb-wrap"><div class="cb">
@@ -231,15 +244,15 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
       <div class="hero-sep"></div>
       <div class="hero-btns"><div class="contact-btns">
             <a href="mailto:jessesotomayor@icloud.com" class="contact-btn">
-              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <i data-lucide="mail"></i>
               <span data-i="cta-email">M'envoyer un email</span>
             </a>
             <a href="tel:0606954136" class="contact-btn">
-              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>
+              <i data-lucide="phone"></i>
               <span data-i="cta-phone">M'appeler</span>
             </a>
             <a href="https://linkedin.com/in/jessesotomayor" target="_blank" class="contact-btn">
-              <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              <i data-lucide="linkedin"></i>
               <span data-i="cta-linkedin">Me contacter sur LinkedIn</span>
             </a>
           </div></div>
@@ -247,16 +260,16 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
   </div>
 
   <!-- COMPÉTENCES -->
-  <div class="section-title"><h2 data-i="section-skills">Compétences</h2><button class="section-toggle" data-section="skills"><svg viewBox="0 0 14 14"><polyline points="2,9 7,4 12,9"/></svg></button></div>
+  <div class="section-title"><h2 data-i="section-skills">Compétences</h2><button class="section-toggle" data-section="skills"><i data-lucide="chevron-up"></i></button></div>
   <div class="row col-3" data-section="skills">
 
     <div class="card">
       <div class="ch">
         <div class="ch-l">
-          <svg class="ch-icon" viewBox="0 0 16 16"><path d="M2 11l3.5-3.5 2.5 2.5 4.5-5.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <i data-lucide="wrench" class="ch-icon"></i>
           <span class="ch-label" data-i="tools-label">Outils</span>
         </div>
-        <div class="ch-right"><button class="ch-toggle"><svg viewBox="0 0 14 14"><polyline points="2,9 7,4 12,9"/></svg></button></div>
+        <div class="ch-right"><button class="ch-toggle"><i data-lucide="chevron-up"></i></button></div>
       </div>
       <div class="cb-wrap"><div class="cb">
         <div class="chips">
@@ -277,10 +290,10 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
     <div class="card">
       <div class="ch">
         <div class="ch-l">
-          <svg class="ch-icon" viewBox="0 0 16 16"><circle cx="8" cy="8" r="3"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.22 3.22l1.42 1.42M11.36 11.36l1.42 1.42M3.22 12.78l1.42-1.42M11.36 4.64l1.42-1.42"/></svg>
+          <i data-lucide="sparkles" class="ch-icon"></i>
           <span class="ch-label" data-i="expertise-label">Expertises</span>
         </div>
-        <div class="ch-right"><button class="ch-toggle"><svg viewBox="0 0 14 14"><polyline points="2,9 7,4 12,9"/></svg></button></div>
+        <div class="ch-right"><button class="ch-toggle"><i data-lucide="chevron-up"></i></button></div>
       </div>
       <div class="cb-wrap"><div class="cb">
         <div class="chips">
@@ -297,10 +310,10 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
     <div class="card">
       <div class="ch">
         <div class="ch-l">
-          <svg class="ch-icon" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M2 8h12M8 2c-1.5 2-2 4-2 6s.5 4 2 6M8 2c1.5 2 2 4 2 6s-.5 4-2 6"/></svg>
+          <i data-lucide="globe" class="ch-icon"></i>
           <span class="ch-label" data-i="lang-title">Langues</span>
         </div>
-        <div class="ch-right"><button class="ch-toggle"><svg viewBox="0 0 14 14"><polyline points="2,9 7,4 12,9"/></svg></button></div>
+        <div class="ch-right"><button class="ch-toggle"><i data-lucide="chevron-up"></i></button></div>
       </div>
       <div class="cb-wrap"><div class="cb">
         <div class="lang-btns">
@@ -314,7 +327,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
   </div>
 
   <!-- EXPÉRIENCE -->
-  <div class="section-title"><h2 data-i="section-exp">Expérience</h2><button class="section-toggle" data-section="exp"><svg viewBox="0 0 14 14"><polyline points="2,9 7,4 12,9"/></svg></button></div>
+  <div class="section-title"><h2 data-i="section-exp">Expérience</h2><button class="section-toggle" data-section="exp"><i data-lucide="chevron-up"></i></button></div>
   <div class="row col-2" data-section="exp">
 
     <div class="card exp-card" data-popup="je">
@@ -328,7 +341,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
         </div>
         <div class="ch-right">
           <span class="ch-r" data-i="since">Depuis 2021</span>
-          <button class="ch-toggle"><svg viewBox="0 0 14 14"><polyline points="2,9 7,4 12,9"/></svg></button>
+          <button class="ch-toggle"><i data-lucide="chevron-up"></i></button>
         </div>
       </div>
       <div class="cb-wrap"><div class="cb">
@@ -351,7 +364,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
         </div>
         <div class="ch-right">
           <span class="ch-r" data-i="since2">Depuis 2021</span>
-          <button class="ch-toggle"><svg viewBox="0 0 14 14"><polyline points="2,9 7,4 12,9"/></svg></button>
+          <button class="ch-toggle"><i data-lucide="chevron-up"></i></button>
         </div>
       </div>
       <div class="cb-wrap"><div class="cb">
@@ -374,7 +387,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
         </div>
         <div class="ch-right">
           <span class="ch-r" data-i="since3">Depuis 2017</span>
-          <button class="ch-toggle"><svg viewBox="0 0 14 14"><polyline points="2,9 7,4 12,9"/></svg></button>
+          <button class="ch-toggle"><i data-lucide="chevron-up"></i></button>
         </div>
       </div>
       <div class="cb-wrap"><div class="cb">
@@ -397,7 +410,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
         </div>
         <div class="ch-right">
           <span class="ch-r">2014 – 2017</span>
-          <button class="ch-toggle"><svg viewBox="0 0 14 14"><polyline points="2,9 7,4 12,9"/></svg></button>
+          <button class="ch-toggle"><i data-lucide="chevron-up"></i></button>
         </div>
       </div>
       <div class="cb-wrap"><div class="cb">
@@ -412,7 +425,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
   </div>
 
   <!-- FORMATION -->
-  <div class="section-title"><h2 data-i="section-edu">Formation</h2><button class="section-toggle" data-section="edu"><svg viewBox="0 0 14 14"><polyline points="2,9 7,4 12,9"/></svg></button></div>
+  <div class="section-title"><h2 data-i="section-edu">Formation</h2><button class="section-toggle" data-section="edu"><i data-lucide="chevron-up"></i></button></div>
   <div class="row col-2" data-section="edu">
 
     <div class="card exp-card">
@@ -426,7 +439,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
         </div>
         <div class="ch-right">
           <span class="ch-r">2025 – 2026</span>
-          <button class="ch-toggle"><svg viewBox="0 0 14 14"><polyline points="2,9 7,4 12,9"/></svg></button>
+          <button class="ch-toggle"><i data-lucide="chevron-up"></i></button>
         </div>
       </div>
       <div class="cb-wrap"><div class="cb">
@@ -439,10 +452,10 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
     <div class="card">
       <div class="ch">
         <div class="ch-l">
-          <svg class="ch-icon" viewBox="0 0 16 16"><path d="M8 2.5l1.3 2.6 2.9.4-2.1 2 .5 2.9L8 9l-2.6 1.4.5-2.9-2.1-2 2.9-.4z"/></svg>
+          <i data-lucide="star" class="ch-icon"></i>
           <span class="ch-label" data-i="int-title">Centres d'intérêt</span>
         </div>
-        <div class="ch-right"><button class="ch-toggle"><svg viewBox="0 0 14 14"><polyline points="2,9 7,4 12,9"/></svg></button></div>
+        <div class="ch-right"><button class="ch-toggle"><i data-lucide="chevron-up"></i></button></div>
       </div>
       <div class="cb-wrap"><div class="cb">
         <div class="int-btns">
@@ -524,15 +537,25 @@ function applyTime() {
 applyTime(); setInterval(applyTime, 30000);
 
 /* ── Popup shared ── */
-const epPopup = document.getElementById('exp-popup');
-const epImg   = document.getElementById('ep-img');
-const epTitle = document.getElementById('ep-title');
-const epDesc  = document.getElementById('ep-desc');
-const epLink  = document.getElementById('ep-link');
+const epPopup      = document.getElementById('exp-popup');
+const epImg        = document.getElementById('ep-img');
+const epTitle      = document.getElementById('ep-title');
+const epDesc       = document.getElementById('ep-desc');
+const epLink       = document.getElementById('ep-link');
+const epBrowser    = document.getElementById('ep-browser');
+const epBrowserUrl = document.getElementById('ep-browser-url');
 let epT;
 
 function showPopup(d, anchor) {
   epTitle.textContent = d.title;
+
+  /* browser chrome */
+  if (d.url) {
+    try { epBrowserUrl.textContent = new URL(d.url).hostname.replace(/^www\./,''); } catch(e) { epBrowserUrl.textContent = d.url; }
+    epBrowser.style.display = 'flex';
+  } else {
+    epBrowser.style.display = 'none';
+  }
 
   if (d.photos) {
     epImg.innerHTML = '';
@@ -550,7 +573,11 @@ function showPopup(d, anchor) {
   } else {
     epImg.style.display = '';
     document.querySelector('.ep-sep').style.display = '';
-    epImg.textContent = d.emoji;
+    if (d.preview) {
+      epImg.innerHTML = `<img src="images/${d.preview}" alt="${d.title}">`;
+    } else {
+      epImg.innerHTML = `<span style="font-size:36px">${d.emoji}</span>`;
+    }
     document.querySelector('.ep-body').innerHTML = `
       <div class="ep-title" id="ep-title">${d.title}</div>
       <div class="ep-desc" id="ep-desc">${d.desc}</div>
@@ -583,10 +610,10 @@ epPopup.addEventListener('mouseleave', hidePopup);
 
 /* ── Exp popups ── */
 const expData = {
-  je: {title:'Job Events',       desc:'Stratégie digitale, contenus TikTok +2M vues, campagnes growth.',                emoji:'📅', url:'https://jobevents.fr',          label:'Voir le site'},
-  '8b':{title:'8Beats Radio',    desc:'Radio vidéo-ludique en ligne — co-fondée en 2021, 4K auditeurs.',                emoji:'🎵', url:'https://8beats.fr',             label:'Écouter'},
-  pp: {title:'Purple Proposition',desc:'Studio de design graphique — identités visuelles, campagnes cross-canal.',    emoji:'🎨', url:'https://purpleproposition.com', label:'Voir le portfolio'},
-  po: {title:'Palm Off',          desc:'Label musical — production de concerts et stratégie de marque (2014–2017).',  emoji:'🎤', url:null, label:null}
+  je:  {title:'Le Village des Recruteurs', desc:'Stratégie digitale, contenus TikTok +2M vues, campagnes growth.',              emoji:'📅', url:'https://levillagedesrecruteurs.fr', label:'Voir le site',      preview:'preview-je.jpg'},
+  '8b':{title:'8Beats Radio',              desc:'Radio vidéo-ludique en ligne — co-fondée en 2021, 4K auditeurs.',              emoji:'🎵', url:'https://8beats.co',                label:'Écouter',            preview:'preview-8beats.jpg'},
+  pp:  {title:'Purple Proposition',        desc:'Studio de design graphique — identités visuelles, campagnes cross-canal.',    emoji:'🎨', url:'https://purpleproposition.com',    label:'Voir le portfolio'},
+  po:  {title:'Palm Off',                  desc:'Label musical — production de concerts et stratégie de marque (2014–2017).',  emoji:'🎤', url:'https://soundcloud.com/palmoff',   label:'Écouter sur SoundCloud'}
 };
 document.querySelectorAll('.exp-card[data-popup]').forEach(card => {
   card.addEventListener('mouseenter', () => { clearTimeout(epT); const d = expData[card.dataset.popup]; if (d) showPopup(d, card); });
@@ -623,6 +650,9 @@ document.querySelectorAll('.chip[data-tip]').forEach(chip => {
   });
   chip.addEventListener('mouseleave', () => { tipT = setTimeout(() => { tip.style.opacity='0'; tip.style.transform='translateY(4px)'; }, 80); });
 });
+
+/* ── Lucide icons ── */
+lucide.createIcons();
 </script>
 </body>
 </html>
