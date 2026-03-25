@@ -150,11 +150,18 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .ep-body { padding:var(--sp); display:flex; flex-direction:column; gap:var(--sp) }
 .ep-title { font-size:13px; font-weight:600; color:var(--ink) }
 .ep-desc { font-size:12px; color:var(--ink-2); line-height:1.55 }
-.ep-photos { display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; padding:var(--sp) }
-.ep-photo { border-radius:var(--r-sm); overflow:hidden; aspect-ratio:1; cursor:pointer; transition:transform .25s cubic-bezier(.34,1.56,.64,1), box-shadow .25s ease; flex-shrink:0 }
-.ep-photo:hover { transform:scale(1.12); box-shadow:0 8px 24px rgba(0,0,0,.18); z-index:2; position:relative }
-.ep-photo img { width:100%; height:100%; object-fit:cover; display:block }
-.ep-photo-placeholder { width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:22px }
+.ep-fan { position:relative; height:150px; display:flex; align-items:center; justify-content:center; margin:16px 0 8px }
+.ep-fan-photo { position:absolute; width:85px; height:110px; border-radius:8px; overflow:hidden; box-shadow:0 4px 18px rgba(0,0,0,.28),0 1px 4px rgba(0,0,0,.12); transition:transform .38s cubic-bezier(.34,1.56,.64,1),box-shadow .3s ease; cursor:pointer }
+.ep-fan-photo img { width:100%; height:100%; object-fit:cover; display:block }
+.ep-fan-photo::after { content:''; position:absolute; inset:0; background:rgba(0,0,0,.22); transition:background .3s ease }
+.ep-fan-photo:hover::after { background:rgba(0,0,0,0) }
+.ep-fan-photo:nth-child(1) { transform:rotate(-9deg) translate(-22px,4px); z-index:1 }
+.ep-fan-photo:nth-child(2) { transform:rotate(6deg) translate(16px,-3px); z-index:2 }
+.ep-fan-photo:nth-child(3) { transform:rotate(-1.5deg); z-index:3 }
+.ep-fan:hover .ep-fan-photo:nth-child(1) { transform:rotate(-13deg) translate(-44px,6px); box-shadow:0 8px 28px rgba(0,0,0,.32) }
+.ep-fan:hover .ep-fan-photo:nth-child(2) { transform:rotate(10deg) translate(34px,-4px); box-shadow:0 8px 28px rgba(0,0,0,.32) }
+.ep-fan:hover .ep-fan-photo:nth-child(3) { transform:rotate(-1.5deg) translateY(-6px); box-shadow:0 10px 32px rgba(0,0,0,.35) }
+.ep-fan-caption { text-align:center; font-size:11px; color:var(--ink-3); padding:0 0 12px; font-family:var(--mono); text-transform:uppercase; letter-spacing:.08em }
 .ep-footer { padding:var(--sp) }
 .ep-link { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; background:var(--tag-bg); color:var(--ink-2); border-radius:var(--r-sm); font-size:12px; text-decoration:none; transition:background .15s,color .15s }
 .ep-link:hover { background:#8B8B8B; color:#F4F4F4 }
@@ -528,21 +535,18 @@ function showPopup(d, anchor) {
   epTitle.textContent = d.title;
 
   if (d.photos) {
-    // Photo grid layout for travel
     epImg.innerHTML = '';
     epImg.style.display = 'none';
-    // Replace body with photo grid
-    document.querySelector('.ep-body').innerHTML = `
-      <div class="ep-photos">
-        <div class="ep-photo" style="background:linear-gradient(135deg,#7EC8E3,#5BA4C8)"><div class="ep-photo-placeholder">🗼</div></div>
-        <div class="ep-photo" style="background:linear-gradient(135deg,#F4A261,#E76F51)"><div class="ep-photo-placeholder">🏜️</div></div>
-        <div class="ep-photo" style="background:linear-gradient(135deg,#52B788,#40916C)"><div class="ep-photo-placeholder">🌿</div></div>
-        <div class="ep-photo" style="background:linear-gradient(135deg,#E9C46A,#F4A261)"><div class="ep-photo-placeholder">🏖️</div></div>
-        <div class="ep-photo" style="background:linear-gradient(135deg,#B5838D,#6D6875)"><div class="ep-photo-placeholder">🏔️</div></div>
-        <div class="ep-photo" style="background:linear-gradient(135deg,#457B9D,#1D3557)"><div class="ep-photo-placeholder">🌊</div></div>
-      </div>
-    `;
+    epLink.style.display = 'none';
     document.querySelector('.ep-sep').style.display = 'none';
+    document.querySelector('.ep-body').innerHTML = `
+      <div class="ep-fan">
+        <div class="ep-fan-photo"><img src="images/travel-1.jpg" alt="Voyage"></div>
+        <div class="ep-fan-photo"><img src="images/travel-2.jpg" alt="Voyage"></div>
+        <div class="ep-fan-photo"><img src="images/travel-3.jpg" alt="Voyage"></div>
+      </div>
+      <div class="ep-fan-caption">✈️ Voyage</div>
+    `;
   } else {
     epImg.style.display = '';
     document.querySelector('.ep-sep').style.display = '';
@@ -594,7 +598,8 @@ const intData = {
   cinema: {title:'Cinéma',     desc:'Letterboxd — journal de films, critiques et découvertes.',            emoji:'🎬', url:'https://letterboxd.com',   label:'Voir Letterboxd'},
   tech:   {title:'Tech',       desc:'Product Hunt — les meilleurs outils et produits tech du moment.',    emoji:'💻', url:'https://producthunt.com',  label:'Voir Product Hunt'},
   gaming: {title:'Jeux vidéo', desc:'8Beats Radio — la seule radio dédiée à la musique de jeux vidéo.',   emoji:'🎮', url:'https://8beats.fr',        label:'Écouter 8Beats'},
-  music:  {title:'Musique',    desc:'Record Club — écouter et noter des albums avec des amis.',           emoji:'🎵', url:'https://record.club',      label:'Voir Record Club'}
+  music:  {title:'Musique',    desc:'Record Club — écouter et noter des albums avec des amis.',           emoji:'🎵', url:'https://record.club',      label:'Voir Record Club'},
+  travel: {title:'Voyage', photos:true, url:null, label:null}
 };
 document.querySelectorAll('.int-btn[data-int]').forEach(btn => {
   btn.addEventListener('mouseenter', () => { clearTimeout(epT); const d = intData[btn.dataset.int]; if (d) showPopup(d, btn); });
