@@ -615,11 +615,10 @@ function showPopup(d, anchor) {
     epLink.style.display = 'none';
     document.querySelector('.ep-sep').style.display = 'none';
     document.querySelector('#exp-popup .ep-body').style.padding = '0';
+    const srcs = d.photoSrc || ['travel-1.jpg','travel-2.jpg','travel-3.jpg'];
     document.querySelector('#exp-popup .ep-body').innerHTML = `
       <div class="ep-fan">
-        <div class="ep-fan-photo"><img src="images/travel-1.jpg" alt="Voyage"></div>
-        <div class="ep-fan-photo"><img src="images/travel-2.jpg" alt="Voyage"></div>
-        <div class="ep-fan-photo"><img src="images/travel-3.jpg" alt="Voyage"></div>
+        ${srcs.map(s=>`<div class="ep-fan-photo"><img src="images/${s}" alt="${d.title}"></div>`).join('')}
       </div>
     `;
     const fanPhotos = [...epPopup.querySelectorAll('.ep-fan-photo')];
@@ -693,7 +692,7 @@ epPopup.addEventListener('mouseleave', hidePopup);
 const expData = {
   je:  {title:'Le Village des Recruteurs', desc:'Stratégie digitale, contenus TikTok +2M vues, campagnes growth.',              emoji:'📅', url:'https://levillagedesrecruteurs.fr', label:'Voir le site',      preview:'preview-je.jpg'},
   '8b':{title:'8Beats Radio',              desc:'Radio vidéo-ludique en ligne — co-fondée en 2021, 4K auditeurs.',              emoji:'🎵', url:'https://8beats.co',                label:'Écouter',            preview:'preview-8beats.jpg'},
-  pp:  {title:'Purple Proposition',        desc:'Studio de design graphique — identités visuelles, campagnes cross-canal.',    emoji:'🎨', url:'https://purpleproposition.com',    label:'Voir le portfolio'},
+  pp:  {title:'Purple Proposition',        desc:'Studio de design graphique — identités visuelles, campagnes cross-canal.',    emoji:'🎨', url:'https://purpleproposition.com',    label:'Voir le portfolio', photos:true, photoSrc:['pp-1.jpg','pp-2.jpg','pp-3.jpg']},
   po:  {title:'Palm Off',                  desc:'Label musical — production de concerts et stratégie de marque (2014–2017).',  emoji:'🎤', url:'https://soundcloud.com/palmoff',   label:'Écouter sur SoundCloud'}
 };
 document.querySelectorAll('.exp-card[data-popup]').forEach(card => {
