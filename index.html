@@ -148,13 +148,6 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 /* ── Exp popup ── */
 #exp-popup { position:fixed; z-index:9998; width:268px; background:rgba(245,245,245,.55); backdrop-filter:blur(16px) saturate(1.6); -webkit-backdrop-filter:blur(16px) saturate(1.6); border-radius:var(--r); box-shadow:var(--shadow-h); overflow:hidden; pointer-events:none; opacity:0; transform:translateY(8px) scale(.97); transition:opacity .5s cubic-bezier(.16,1,.3,1),transform .5s cubic-bezier(.16,1,.3,1) }
 #exp-popup.visible { opacity:1; transform:translateY(0) scale(1); pointer-events:all }
-.ep-browser { display:flex; align-items:center; gap:8px; padding:7px 10px; background:rgba(0,0,0,.06); border-bottom:1px solid rgba(0,0,0,.07) }
-.ep-browser-dots { display:flex; gap:4px; flex-shrink:0 }
-.ep-browser-dots span { width:7px; height:7px; border-radius:50% }
-.ep-browser-dots span:nth-child(1) { background:#FF6058 }
-.ep-browser-dots span:nth-child(2) { background:#FFBD2E }
-.ep-browser-dots span:nth-child(3) { background:#28C941 }
-.ep-browser-url { font-family:var(--mono); font-size:10px; color:var(--ink-3); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:1 }
 .ep-img { width:100%; height:130px; background:var(--tag-bg); display:flex; align-items:center; justify-content:center; font-size:36px }
 .ep-img img { width:100%; height:100%; object-fit:cover; display:block }
 .ep-body { padding:var(--sp); display:flex; flex-direction:column; gap:var(--sp) }
@@ -174,8 +167,9 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
   top:0; left:50%; margin-left:-140px;
 }
 .ep-fan-photo img { width:100%; height:100%; object-fit:cover; display:block; pointer-events:none }
-.ep-fan-photo::after { content:''; position:absolute; inset:0; background:rgba(0,0,0,.38); transition:background .5s cubic-bezier(.16,1,.3,1); pointer-events:none }
-.ep-fan-photo:hover::after { background:rgba(0,0,0,0) }
+.ep-fan-photo::after { content:''; position:absolute; inset:0; background:rgba(0,0,0,0); transition:background .5s cubic-bezier(.16,1,.3,1); pointer-events:none }
+.ep-fan-photo.behind::after { background:rgba(0,0,0,.38) }
+.ep-fan-photo.behind:hover::after { background:rgba(0,0,0,0) }
 /* Fan initial positions — photo 2 (milieu) devant */
 .ep-fan-photo:nth-child(1) { transform:rotate(-22deg); z-index:1 }
 .ep-fan-photo:nth-child(2) { transform:rotate(0deg);   z-index:3 }
@@ -212,7 +206,6 @@ body.dark .ch-role        { color:#7878A0 }
 body.dark .ep-sep         { background:rgba(255,255,255,.09) }
 body.dark #exp-popup      { background:rgba(22,22,28,.82) }
 body.dark #exp-popup.photo-only { background:none; backdrop-filter:none; -webkit-backdrop-filter:none; box-shadow:none }
-body.dark .ep-browser     { background:rgba(255,255,255,.06); border-bottom-color:rgba(255,255,255,.06) }
 body.dark .ep-img         { background:#2C2C35 }
 body.dark .ep-link        { background:#2C2C35; color:#C0C0CC }
 body.dark .ep-link:hover  { background:#5A5A6C; color:#F4F4F4 }
@@ -240,10 +233,6 @@ body.dark #tip            { background:rgba(30,30,36,.92); color:#ECECEE }
 <body>
 
 <div id="exp-popup">
-  <div class="ep-browser" id="ep-browser">
-    <div class="ep-browser-dots"><span></span><span></span><span></span></div>
-    <div class="ep-browser-url" id="ep-browser-url"></div>
-  </div>
   <div class="ep-img" id="ep-img"></div>
   <div class="ep-body">
     <div class="ep-title" id="ep-title"></div>
@@ -600,24 +589,13 @@ const epImg        = document.getElementById('ep-img');
 const epTitle      = document.getElementById('ep-title');
 const epDesc       = document.getElementById('ep-desc');
 const epLink       = document.getElementById('ep-link');
-const epBrowser    = document.getElementById('ep-browser');
-const epBrowserUrl = document.getElementById('ep-browser-url');
 let epT;
 
 function showPopup(d, anchor) {
   epTitle.textContent = d.title;
 
-  /* browser chrome */
-  if (d.url) {
-    try { epBrowserUrl.textContent = new URL(d.url).hostname.replace(/^www\./,''); } catch(e) { epBrowserUrl.textContent = d.url; }
-    epBrowser.style.display = 'flex';
-  } else {
-    epBrowser.style.display = 'none';
-  }
-
   if (d.photos) {
     epPopup.classList.add('photo-only');
-    epBrowser.style.display = 'none';
     epImg.style.display = 'none';
     epLink.style.display = 'none';
     document.querySelector('.ep-sep').style.display = 'none';
@@ -629,21 +607,31 @@ function showPopup(d, anchor) {
       </div>
     `;
     const fanPhotos = [...epPopup.querySelectorAll('.ep-fan-photo')];
-    /* Base states matching CSS nth-child */
-    const baseT = ['rotate(-13deg)', 'rotate(0deg)', 'rotate(13deg)'];
+    /* baseZ[1]=3 → middle photo is front by default */
     const baseZ = [1, 3, 2];
-    /* Apply base z-index inline so JS fully controls them */
-    fanPhotos.forEach((p, i) => p.style.zIndex = baseZ[i]);
+    /* photos 0 and 2 start behind → dark overlay */
+    fanPhotos.forEach((p, i) => {
+      p.style.zIndex = baseZ[i];
+      if (i !== 1) p.classList.add('behind');
+    });
 
     fanPhotos.forEach((photo, i) => {
       photo.addEventListener('mouseenter', () => {
-        /* Bring to front immediately — no position change = no jitter */
-        fanPhotos.forEach((p, j) => p.style.zIndex = j === i ? '10' : baseZ[j]);
+        fanPhotos.forEach((p, j) => {
+          p.style.zIndex = j === i ? '10' : baseZ[j];
+          /* middle photo goes behind when side is hovered */
+          if (i !== 1 && j === 1) p.classList.add('behind');
+          if (j === i)            p.classList.remove('behind');
+        });
         photo.style.boxShadow = '0 16px 40px rgba(0,0,0,.38), 0 4px 12px rgba(0,0,0,.2)';
       });
       photo.addEventListener('mouseleave', () => {
         photo.style.boxShadow = '';
-        fanPhotos.forEach((p, j) => p.style.zIndex = baseZ[j]);
+        fanPhotos.forEach((p, j) => {
+          p.style.zIndex = baseZ[j];
+          /* restore: only side photos are behind */
+          p.classList.toggle('behind', j !== 1);
+        });
       });
     });
   } else {
