@@ -29,7 +29,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 
 /* ── Animation system ── */
 /* Single easing for all drawer motion: ease-in-out for natural feel */
-:root { --dur: .42s; --ease: cubic-bezier(.65,0,.35,1) }
+:root { --dur: .52s; --ease: cubic-bezier(.16,1,.3,1) }
 
 /* ── Card ── */
 .card { background:var(--card-bg); border-radius:var(--r); box-shadow:var(--shadow); overflow:hidden; transition:box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease) }
@@ -146,7 +146,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .int-ico { font-size:14px; flex-shrink:0 }
 
 /* ── Exp popup ── */
-#exp-popup { position:fixed; z-index:9998; width:268px; background:rgba(245,245,245,.55); backdrop-filter:blur(16px) saturate(1.6); -webkit-backdrop-filter:blur(16px) saturate(1.6); border-radius:var(--r); box-shadow:var(--shadow-h); overflow:hidden; pointer-events:none; opacity:0; transform:translateY(10px) scale(.96); transition:opacity .38s cubic-bezier(.25,.46,.45,.94),transform .38s cubic-bezier(.25,.46,.45,.94) }
+#exp-popup { position:fixed; z-index:9998; width:268px; background:rgba(245,245,245,.55); backdrop-filter:blur(16px) saturate(1.6); -webkit-backdrop-filter:blur(16px) saturate(1.6); border-radius:var(--r); box-shadow:var(--shadow-h); overflow:hidden; pointer-events:none; opacity:0; transform:translateY(8px) scale(.97); transition:opacity .5s cubic-bezier(.16,1,.3,1),transform .5s cubic-bezier(.16,1,.3,1) }
 #exp-popup.visible { opacity:1; transform:translateY(0) scale(1); pointer-events:all }
 .ep-browser { display:flex; align-items:center; gap:8px; padding:7px 10px; background:rgba(0,0,0,.06); border-bottom:1px solid rgba(0,0,0,.07) }
 .ep-browser-dots { display:flex; gap:4px; flex-shrink:0 }
@@ -168,12 +168,14 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
   width:280px; height:210px; /* 4:3 */
   border-radius:14px; overflow:hidden;
   box-shadow:0 8px 28px rgba(0,0,0,.28), 0 2px 8px rgba(0,0,0,.14);
-  transition:box-shadow .38s cubic-bezier(.25,.46,.45,.94), outline .38s;
+  transition:box-shadow .5s cubic-bezier(.16,1,.3,1);
   cursor:pointer;
   transform-origin:bottom center;
   top:0; left:50%; margin-left:-140px;
 }
 .ep-fan-photo img { width:100%; height:100%; object-fit:cover; display:block; pointer-events:none }
+.ep-fan-photo::after { content:''; position:absolute; inset:0; background:rgba(0,0,0,.38); transition:background .5s cubic-bezier(.16,1,.3,1); pointer-events:none }
+.ep-fan-photo:hover::after { background:rgba(0,0,0,0) }
 /* Fan initial positions — photo 2 (milieu) devant */
 .ep-fan-photo:nth-child(1) { transform:rotate(-22deg); z-index:1 }
 .ep-fan-photo:nth-child(2) { transform:rotate(0deg);   z-index:3 }
@@ -205,8 +207,11 @@ body.dark .contact-btn    { background:#2C2C35; color:#C0C0CC; border-color:#3E3
 body.dark .lang-btn       { background:#2C2C35; color:#C0C0CC }
 body.dark .int-btn        { background:#2C2C35; color:#C0C0CC }
 body.dark .section-title h2 { color:#ECECEE }
+body.dark .ch-company     { color:#E0E0E6 }
+body.dark .ch-role        { color:#7878A0 }
 body.dark .ep-sep         { background:rgba(255,255,255,.09) }
 body.dark #exp-popup      { background:rgba(22,22,28,.82) }
+body.dark #exp-popup.photo-only { background:none; backdrop-filter:none; -webkit-backdrop-filter:none; box-shadow:none }
 body.dark .ep-browser     { background:rgba(255,255,255,.06); border-bottom-color:rgba(255,255,255,.06) }
 body.dark .ep-img         { background:#2C2C35 }
 body.dark .ep-link        { background:#2C2C35; color:#C0C0CC }
