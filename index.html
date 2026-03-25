@@ -154,7 +154,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .ep-title { font-size:13px; font-weight:600; color:var(--ink) }
 .ep-desc { font-size:12px; color:var(--ink-2); line-height:1.55 }
 /* ── Fan photo popup ── */
-#exp-popup.photo-only { background:none; backdrop-filter:none; -webkit-backdrop-filter:none; box-shadow:none; border-radius:0; overflow:visible; width:auto; padding:0 }
+#exp-popup.photo-only { background:none !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important; box-shadow:none !important; border-radius:0; overflow:visible; width:auto; padding:0; transition:none !important }
 .ep-fan { position:relative; width:380px; height:260px; }
 .ep-fan-photo {
   position:absolute;
@@ -205,7 +205,7 @@ body.dark .ch-company     { color:#E0E0E6 }
 body.dark .ch-role        { color:#7878A0 }
 body.dark .ep-sep         { background:rgba(255,255,255,.09) }
 body.dark #exp-popup      { background:rgba(22,22,28,.82) }
-body.dark #exp-popup.photo-only { background:none; backdrop-filter:none; -webkit-backdrop-filter:none; box-shadow:none }
+body.dark #exp-popup.photo-only { background:none !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important; box-shadow:none !important }
 body.dark .ep-img         { background:#2C2C35 }
 body.dark .ep-link        { background:#2C2C35; color:#C0C0CC }
 body.dark .ep-link:hover  { background:#5A5A6C; color:#F4F4F4 }
@@ -607,19 +607,30 @@ function showPopup(d, anchor) {
       </div>
     `;
     const fanPhotos = [...epPopup.querySelectorAll('.ep-fan-photo')];
-    /* baseZ[1]=3 → middle photo is front by default */
+    const baseT = ['rotate(-22deg)','rotate(0deg)','rotate(22deg)'];
     const baseZ = [1, 3, 2];
-    /* photos 0 and 2 start behind → dark overlay */
+
+    /* Entry: start scaled-down, stagger in fast */
     fanPhotos.forEach((p, i) => {
-      p.style.zIndex = baseZ[i];
+      p.style.transition = 'none';
+      p.style.opacity    = '0';
+      p.style.transform  = baseT[i] + ' scale(.84)';
+      p.style.zIndex     = baseZ[i];
       if (i !== 1) p.classList.add('behind');
     });
+    fanPhotos.forEach((p, i) => {
+      setTimeout(() => {
+        p.style.transition = 'opacity .28s cubic-bezier(.16,1,.3,1), transform .38s cubic-bezier(.16,1,.3,1), box-shadow .4s cubic-bezier(.16,1,.3,1)';
+        p.style.opacity   = '1';
+        p.style.transform = baseT[i];
+      }, i * 55);
+    });
+    setTimeout(() => fanPhotos.forEach(p => { p.style.transition = ''; p.style.opacity = ''; }), 650);
 
     fanPhotos.forEach((photo, i) => {
       photo.addEventListener('mouseenter', () => {
         fanPhotos.forEach((p, j) => {
           p.style.zIndex = j === i ? '10' : baseZ[j];
-          /* middle photo goes behind when side is hovered */
           if (i !== 1 && j === 1) p.classList.add('behind');
           if (j === i)            p.classList.remove('behind');
         });
@@ -629,7 +640,6 @@ function showPopup(d, anchor) {
         photo.style.boxShadow = '';
         fanPhotos.forEach((p, j) => {
           p.style.zIndex = baseZ[j];
-          /* restore: only side photos are behind */
           p.classList.toggle('behind', j !== 1);
         });
       });
@@ -650,7 +660,7 @@ function showPopup(d, anchor) {
     `;
   }
 
-  if (d.url) {
+  if (d.url && !d.photos) {
     epLink.innerHTML = d.label + ' <svg viewBox="0 0 10 10" width="10" height="10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M1 9L9 1M9 1H3M9 1V7"/></svg>';
     epLink.href = d.url;
     epLink.style.display = 'inline-flex';
