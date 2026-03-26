@@ -253,10 +253,12 @@ body.resizing .cb-wrap { transition:none !important }
 
 /* ── Mobile (≤600px) ── */
 @media (max-width:600px) {
-  :root { --gap:32px }
   .page { padding:32px 32px 64px }
   .col-2,.col-3 { grid-template-columns:1fr }
   .row { gap:32px }
+  .cb { padding:var(--sp) }
+  .exp-card .cb { gap:12px }
+  .card-link-row { padding-top:12px }
   .name { font-size:22px; letter-spacing:-.5px }
   .contact-btns { flex-direction:column; gap:8px }
   .contact-btn { width:100%; justify-content:center }
