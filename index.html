@@ -162,25 +162,21 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .ep-desc { font-size:var(--t-base); color:var(--ink-2); line-height:1.6 }
 /* ── Fan photo popup ── */
 #exp-popup.photo-only { background:none !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important; box-shadow:none !important; border-radius:0; overflow:visible; width:auto; padding:0; transition:none !important }
-.ep-fan { position:relative; width:360px; height:230px; }
+.ep-fan { position:relative; }
 .ep-fan-photo {
   position:absolute;
-  width:250px; height:187px; /* 4:3 */
+  width:250px; height:auto; max-height:300px;
   border-radius:14px; overflow:hidden;
   box-shadow:0 8px 28px rgba(0,0,0,.28), 0 2px 8px rgba(0,0,0,.14);
   transition:transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
   cursor:pointer;
-  transform-origin:center center;
+  transform-origin:center top;
   top:0; left:50%; margin-left:-125px;
 }
-.ep-fan-photo img { width:100%; height:100%; object-fit:cover; display:block; pointer-events:none }
+.ep-fan-photo img { width:100%; height:auto; display:block; pointer-events:none }
 .ep-fan-photo::after { content:''; position:absolute; inset:0; background:rgba(0,0,0,0); transition:background .5s cubic-bezier(.16,1,.3,1); pointer-events:none }
 .ep-fan-photo.behind::after { background:rgba(0,0,0,.38) }
 .ep-fan-photo.behind:hover::after { background:rgba(0,0,0,0) }
-/* Fan initial positions — photo 2 (milieu) devant */
-.ep-fan-photo:nth-child(1) { transform:translateX(-60px) rotate(-10deg); z-index:1 }
-.ep-fan-photo:nth-child(2) { transform:rotate(0deg);                     z-index:3 }
-.ep-fan-photo:nth-child(3) { transform:translateX(60px)  rotate(10deg);  z-index:2 }
 /* ── Card popup separator ── */
 .ep-sep { height:1px; background:rgba(0,0,0,.08); margin:0 16px }
 .ep-footer { padding:var(--sp) }
@@ -454,7 +450,7 @@ body.resizing .cb-wrap { transition:none !important }
       </div></div>
     </div>
 
-    <div class="card exp-card">
+    <div class="card exp-card" data-popup="pp">
       <div class="ch">
         <div class="ch-l">
           <div class="exp-logo"><img src="images/logo-pp.jpeg" alt="Purple Proposition"></div>
@@ -470,7 +466,6 @@ body.resizing .cb-wrap { transition:none !important }
       </div>
       <div class="cb-wrap"><div class="cb">
         <p class="exp-para" data-i="pp-para">Studio de design graphique fondé en 2017. Identités visuelles, chartes graphiques et campagnes cross-canal pour une dizaine de clients — visuels Photoshop/Canva, posts Instagram, dossiers presse, supports print et digital.</p>
-        <div class="card-link-row"><button class="card-link" data-int="pp">Voir les visuels <svg viewBox="0 0 10 10" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1 9L9 1M9 1H3M9 1V7"/></svg></button></div>
       </div></div>
     </div>
 
@@ -648,6 +643,15 @@ const epLink       = document.getElementById('ep-link');
 let epT;
 let currentFanBaseT = [];
 
+/* ── Adjust fan container height to tallest photo after load ── */
+function adjustFanHeight() {
+  const fan = document.getElementById('ep-fan-container');
+  if (!fan) return;
+  const photos = [...fan.querySelectorAll('.ep-fan-photo')];
+  const maxH = Math.max(...photos.map(p => p.offsetHeight));
+  if (maxH > 0) fan.style.height = (maxH + 20) + 'px';
+}
+
 /* ── Fan layout helper — works for any N photos ── */
 function fanLayout(n) {
   const mid    = Math.floor(n / 2);
@@ -669,7 +673,8 @@ function fanLayout(n) {
   });
   zIndices[mid] = n * 2; // center always on top
   const fanW = 250 + (n - 1) * maxX * 2 / n + 80;
-  return { transforms, zIndices, mid, fanW: Math.round(fanW), fanH: n <= 3 ? 230 : 240 };
+  /* fanH is just a placeholder; the container height is set after images load */
+  return { transforms, zIndices, mid, fanW: Math.round(fanW), fanH: n <= 3 ? 230 : 280 };
 }
 
 function showPopup(d, anchor) {
@@ -686,8 +691,8 @@ function showPopup(d, anchor) {
     currentFanBaseT = lay.transforms;
 
     document.querySelector('#exp-popup .ep-body').innerHTML = `
-      <div class="ep-fan" style="width:${lay.fanW}px;height:${lay.fanH}px">
-        ${srcs.map(s=>`<div class="ep-fan-photo"><img src="images/${s}" alt="${d.title}"></div>`).join('')}
+      <div class="ep-fan" style="width:${lay.fanW}px;height:${lay.fanH}px" id="ep-fan-container">
+        ${srcs.map(s=>`<div class="ep-fan-photo"><img src="images/${s}" alt="${d.title}" onload="adjustFanHeight()"></div>`).join('')}
       </div>
     `;
     const fanPhotos = [...epPopup.querySelectorAll('.ep-fan-photo')];
@@ -786,7 +791,9 @@ epPopup.addEventListener('mouseenter', () => clearTimeout(epT));
 epPopup.addEventListener('mouseleave', hidePopup);
 
 /* ── Exp popups ── */
-const expData = {};
+const expData = {
+  pp: {title:'Purple Proposition', photos:true, photoSrc:['pp-1.jpg','pp-2.jpg','pp-3.jpg','pp-4.jpg','pp-5.jpg']}
+};
 document.querySelectorAll('.exp-card[data-popup]').forEach(card => {
   card.addEventListener('mouseenter', () => {
     if (card.classList.contains('closed')) return;
@@ -797,8 +804,7 @@ document.querySelectorAll('.exp-card[data-popup]').forEach(card => {
 
 /* ── Interests popups ── */
 const intData = {
-  travel: {title:'Voyage',              photos:true, photoSrc:['travel-1.jpg','travel-2.jpg','travel-3.jpg'], url:null, label:null},
-  pp:     {title:'Purple Proposition',  photos:true, photoSrc:['pp-1.jpg','pp-2.jpg','pp-3.jpg','pp-4.jpg','pp-5.jpg'], url:null, label:null}
+  travel: {title:'Voyage', photos:true, photoSrc:['travel-1.jpg','travel-2.jpg','travel-3.jpg'], url:null, label:null}
 };
 document.querySelectorAll('[data-int]').forEach(btn => {
   btn.addEventListener('mouseenter', () => {
