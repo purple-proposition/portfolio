@@ -171,9 +171,9 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .ep-fan-photo.behind::after { background:rgba(0,0,0,.38) }
 .ep-fan-photo.behind:hover::after { background:rgba(0,0,0,0) }
 /* Fan initial positions — photo 2 (milieu) devant */
-.ep-fan-photo:nth-child(1) { transform:rotate(-22deg); z-index:1 }
-.ep-fan-photo:nth-child(2) { transform:rotate(0deg);   z-index:3 }
-.ep-fan-photo:nth-child(3) { transform:rotate(22deg);  z-index:2 }
+.ep-fan-photo:nth-child(1) { transform:translateX(-60px) rotate(-10deg); z-index:1 }
+.ep-fan-photo:nth-child(2) { transform:rotate(0deg);                     z-index:3 }
+.ep-fan-photo:nth-child(3) { transform:translateX(60px)  rotate(10deg);  z-index:2 }
 /* ── Card popup separator ── */
 .ep-sep { height:1px; background:rgba(0,0,0,.08); margin:0 16px }
 .ep-footer { padding:var(--sp) }
@@ -615,7 +615,7 @@ function showPopup(d, anchor) {
       </div>
     `;
     const fanPhotos = [...epPopup.querySelectorAll('.ep-fan-photo')];
-    const baseT = ['rotate(-22deg)','rotate(0deg)','rotate(22deg)'];
+    const baseT = ['translateX(-60px) rotate(-10deg)','rotate(0deg)','translateX(60px) rotate(10deg)'];
     const baseZ = [1, 3, 2];
 
     /* Entry: start scaled-down, stagger in fast */
@@ -693,7 +693,7 @@ function hidePopup() {
   epT = setTimeout(() => {
     if (epPopup.classList.contains('photo-only')) {
       const photos = [...epPopup.querySelectorAll('.ep-fan-photo')];
-      const baseT  = ['rotate(-22deg)','rotate(0deg)','rotate(22deg)'];
+      const baseT  = ['translateX(-60px) rotate(-10deg)','rotate(0deg)','translateX(60px) rotate(10deg)'];
       photos.forEach((p, i) => {
         p.style.transition = 'opacity .2s ease-in, transform .28s cubic-bezier(.4,0,1,1)';
         p.style.opacity    = '0';
