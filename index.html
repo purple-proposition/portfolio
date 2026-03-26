@@ -50,8 +50,6 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 
 /* ── Card ── */
 .card { background:var(--card-bg); border-radius:var(--r); box-shadow:var(--shadow); overflow:hidden; transition:box-shadow var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease) }
-.card:hover { transform:scale(1.018); box-shadow:var(--shadow-h) }
-.exp-card:hover { transform:scale(1.012); box-shadow:var(--shadow-h) }
 
 /* ── Drawer ── */
 /* grid-template-rows animates the height — no JS height measurement needed */
@@ -99,13 +97,11 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 /* ── Contact buttons ── */
 .contact-btns { display:flex; flex-wrap:wrap; gap:var(--sp-sm) }
 .contact-btn { display:inline-flex; align-items:center; gap:var(--sp-sm); padding:var(--sp-sm) var(--sp); background:var(--tag-bg); border:none; border-radius:var(--r-sm); font-family:var(--font); font-size:var(--t-base); font-weight:400; color:var(--tag-ink); text-decoration:none; white-space:nowrap; cursor:pointer; transition:background var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease) }
-.contact-btn:hover { background:#5c5c5c; color:#F4F4F4 }
 .contact-btn svg { width:13px; height:13px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; flex-shrink:0 }
 
 /* ── Chips ── */
 .chips { display:flex; flex-wrap:wrap; gap:12px }
 .chip { display:inline-flex; align-items:center; padding:var(--sp-sm) 12px; background:var(--tag-bg); border:none; border-radius:var(--r-sm); font-family:var(--font); font-size:var(--t-base); font-weight:400; color:var(--tag-ink); cursor:pointer; transition:background var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease) }
-.chip:hover, .chip.on:hover { background:#5c5c5c; color:#F4F4F4 }
 .chip.on { background:var(--tag-bg); color:var(--ink) }
 
 /* ── Tooltip ── */
@@ -134,7 +130,6 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 /* ── Lang ── */
 .lang-btns { display:flex; flex-wrap:wrap; gap:var(--sp-sm) }
 .lang-btn { display:inline-flex; align-items:center; gap:var(--sp-sm); padding:var(--sp-sm) 12px; background:var(--tag-bg); border:none; border-radius:var(--r-sm); font-family:var(--font); font-size:var(--t-base); font-weight:400; color:var(--tag-ink); cursor:pointer; transition:background var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease) }
-.lang-btn:hover { background:#5c5c5c; color:#F4F4F4 }
 .lang-flag { font-size:14px; line-height:1; flex-shrink:0 }
 .lang-sep { width:1px; height:11px; background:currentColor; opacity:.2; flex-shrink:0 }
 .lang-lvl { font-family:var(--mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; opacity:.6 }
@@ -154,7 +149,6 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 /* ── Interests ── */
 .int-btns { display:flex; flex-wrap:wrap; gap:var(--sp-sm) }
 .int-btn { display:inline-flex; align-items:center; gap:var(--sp-sm); padding:var(--sp-sm) 12px; background:var(--tag-bg); border:none; border-radius:var(--r-sm); font-family:var(--font); font-size:var(--t-base); color:var(--tag-ink); cursor:pointer; text-decoration:none; transition:background var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease) }
-.int-btn:hover { background:#5c5c5c; color:#F4F4F4 }
 .int-ico { font-size:14px; flex-shrink:0 }
 
 /* ── Exp popup ── */
@@ -190,7 +184,6 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .ep-sep { height:1px; background:rgba(0,0,0,.08); margin:0 16px }
 .ep-footer { padding:var(--sp) }
 .ep-link { display:inline-flex; align-items:center; gap:var(--sp-sm); padding:var(--sp-sm) var(--sp); background:var(--tag-bg); color:var(--tag-ink); border-radius:var(--r-sm); font-size:var(--t-base); text-decoration:none; transition:background var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease) }
-.ep-link:hover { background:#5c5c5c; color:#F4F4F4 }
 
 /* ── Dark mode ── */
 /* Smooth color transitions on all themed elements */
@@ -221,7 +214,6 @@ body.dark #exp-popup      { background:rgba(22,22,28,.82) }
 body.dark #exp-popup.photo-only { background:none !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important; box-shadow:none !important }
 body.dark .ep-img         { background:#2C2C35 }
 body.dark .ep-link        { background:#2C2C35; color:#C0C0CC }
-body.dark .ep-link:hover  { background:#5A5A6C; color:#F4F4F4 }
 body.dark .lang-sep       { opacity:.15 }
 body.dark #tip            { background:rgba(22,22,28,.90); color:#ECECEE }
 /* ── Experience paragraph ── */
@@ -230,22 +222,53 @@ body.dark #tip            { background:rgba(22,22,28,.90); color:#ECECEE }
 .card-link-row { border-top:1px solid rgba(0,0,0,.07); padding-top:var(--sp) }
 body.dark .card-link-row { border-top-color:rgba(255,255,255,.09) }
 .card-link { display:inline-flex; align-items:center; gap:var(--sp-sm); padding:var(--sp-sm) var(--sp); background:var(--tag-bg); color:var(--tag-ink); border-radius:var(--r-sm); font-size:var(--t-base); text-decoration:none; transition:background var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease) }
-.card-link:hover { background:#5c5c5c; color:#F4F4F4 }
 /* ── Resize: disable transitions to prevent animation on window resize ── */
 body.resizing .cb-wrap { transition:none !important }
 /* ── Focus visible ── */
 :focus-visible { outline:2px solid #2563EB; outline-offset:2px; border-radius:4px }
 /* ── Print ── */
 .btn-print { position:fixed; bottom:var(--gap); right:var(--gap); display:flex; align-items:center; gap:var(--sp-sm); padding:var(--sp-sm) var(--sp); background:rgba(28,28,30,.78); backdrop-filter:blur(12px); color:rgba(255,255,255,.92); border:1px solid rgba(255,255,255,.1); border-radius:var(--r-pill); font-family:var(--font); font-size:var(--t-base); font-weight:500; cursor:pointer; z-index:200; box-shadow:0 4px 20px rgba(0,0,0,.18); transition:opacity .15s }
-.btn-print:hover { opacity:.8 }
 
-@media(max-width:600px) {
-  :root { --gap:16px }
-  .page { padding:var(--sp) }
-  .hero .cb { grid-template-columns:1fr }
-  .hero-photo { display:none }
-  .hero-content::before { display:none }
+/* ── Hover: only on pointer devices ── */
+@media (hover: hover) {
+  .card:hover { transform:scale(1.018); box-shadow:var(--shadow-h) }
+  .exp-card:hover { transform:scale(1.012); box-shadow:var(--shadow-h) }
+  .contact-btn:hover { background:#5c5c5c; color:#F4F4F4 }
+  .chip:hover,.chip.on:hover { background:#5c5c5c; color:#F4F4F4 }
+  .lang-btn:hover { background:#5c5c5c; color:#F4F4F4 }
+  .int-btn:hover { background:#5c5c5c; color:#F4F4F4 }
+  .card-link:hover { background:#5c5c5c; color:#F4F4F4 }
+  .ep-link:hover { background:#5c5c5c; color:#F4F4F4 }
+  body.dark .ep-link:hover { background:#5A5A6C; color:#F4F4F4 }
+  .btn-print:hover { opacity:.8 }
+}
+@media (hover: none) {
+  .card,.exp-card { transition:box-shadow var(--dur-fast) var(--ease) }
+}
+
+/* ── Tablet (601–860px) ── */
+@media (max-width:860px) {
+  .col-3 { grid-template-columns:1fr 1fr }
+}
+
+/* ── Mobile (≤600px) ── */
+@media (max-width:600px) {
+  :root { --gap:12px }
+  .page { padding:12px 12px 40px }
   .col-2,.col-3 { grid-template-columns:1fr }
+  .row { gap:12px }
+  .name { font-size:22px; letter-spacing:-.5px }
+  .hero-desc { font-size:var(--t-base) }
+  .contact-btns { flex-direction:column; gap:8px }
+  .contact-btn { width:100%; justify-content:center }
+  .chips { gap:8px }
+  .lang-btns,.int-btns { gap:8px }
+  .section-title h2 { font-size:24px }
+  .ch-company { font-size:var(--t-base) }
+  .exp-para { font-size:var(--t-sm) }
+  .btn-print { bottom:12px; right:12px; padding:6px 12px; font-size:var(--t-sm) }
+  #exp-popup { display:none }
+  #tip { display:none }
 }
 @media print {
   .btn-print { display:none }
@@ -307,7 +330,7 @@ body.resizing .cb-wrap { transition:none !important }
               <span data-i="cta-phone">M'appeler</span>
             </a>
             <a href="https://linkedin.com/in/jessesotomayor" target="_blank" class="contact-btn" aria-label="Se connecter sur LinkedIn">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="flex-shrink:0"><path fill="#0A66C2" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="flex-shrink:0;fill:currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
               <span data-i="cta-linkedin">Se connecter sur LinkedIn</span>
             </a>
           </div></div>
