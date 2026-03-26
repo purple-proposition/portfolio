@@ -17,7 +17,7 @@
   --sp-lg: 24px;
   --gap:   32px;
   /* ── Surfaces ── */
-  --card-bg: rgba(245,245,245,.80); --card-head: rgba(232,232,232,.85); --card-border: #E8E8E8;
+  --card-bg: rgba(245,245,245,.90); --card-head: rgba(232,232,232,.90); --card-border: #E8E8E8;
   --tag-bg: #E8E8E8; --tag-ink: #3D3D3D;
   --ink: #1A1A1A; --ink-2: #5C5C5C; --ink-3: #AAAAAA;
   --page-max: 860px;
@@ -103,6 +103,8 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .chips { display:flex; flex-wrap:wrap; gap:12px }
 .chip { display:inline-flex; align-items:center; padding:var(--sp-sm) 12px; background:var(--tag-bg); border:none; border-radius:var(--r-sm); font-family:var(--font); font-size:var(--t-base); font-weight:400; color:var(--tag-ink); cursor:pointer; transition:background var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease) }
 .chip.on { background:var(--tag-bg); color:var(--ink) }
+.chip-sep { display:inline-block; width:1px; height:10px; background:currentColor; opacity:.2; flex-shrink:0; margin:0 6px; vertical-align:middle }
+.chip-lvl { font-family:var(--mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; opacity:.6 }
 
 /* ── Tooltip ── */
 #tip { position:fixed; z-index:9999; background:rgba(250,250,250,.80); backdrop-filter:blur(20px) saturate(1.8); -webkit-backdrop-filter:blur(20px) saturate(1.8); color:#3D3D3D; font-family:var(--font); font-size:var(--t-base); line-height:1.6; padding:var(--sp-sm) var(--sp); border-radius:var(--r-sm); max-width:220px; box-shadow:var(--shadow-h); pointer-events:none; opacity:0; transform:translateY(4px); transition:opacity var(--dur-fast) var(--ease),transform var(--dur-fast) var(--ease) }
@@ -170,8 +172,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
   box-shadow:0 8px 28px rgba(0,0,0,.28), 0 2px 8px rgba(0,0,0,.14);
   transition:transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
   cursor:pointer;
-  transform-origin:center top;
-  top:0; left:50%; margin-left:-125px;
+  top:50%; left:50%; margin-left:-125px;
 }
 .ep-fan-photo img { width:100%; height:auto; display:block; pointer-events:none }
 .ep-fan-photo::after { content:''; position:absolute; inset:0; background:rgba(0,0,0,0); transition:background .5s cubic-bezier(.16,1,.3,1); pointer-events:none }
@@ -353,16 +354,14 @@ body.resizing .cb-wrap { transition:none !important }
       </div>
       <div class="cb-wrap"><div class="cb">
         <div class="chips">
-          <span class="chip on" data-tip="Conception d'interfaces, identités visuelles et maquettes.">Figma</span>
-          <span class="chip on" data-tip="Retouche photo, visuels pour campagnes réseaux sociaux.">Photoshop</span>
-          <span class="chip on" data-tip="Gestion de projets, bases de données éditoriales et wikis.">Notion</span>
-          <span class="chip on" data-tip="Montage de contenus vidéo pour TikTok et réseaux sociaux.">Final Cut Pro</span>
-          <span class="chip on" data-tip="Production de contenus et automatisation de tâches éditoriales.">Claude</span>
-          <span class="chip on" data-tip="Campagnes d'outreach email à froid — séquences et A/B tests.">Lemlist</span>
-          <span class="chip on" data-tip="Analyse de données, reporting et tableaux de bord KPI.">Excel</span>
-          <span class="chip on" data-tip="Création de visuels rapides pour posts, stories et supports.">Canva</span>
-          <span class="chip on" data-tip="Gestion et optimisation de sites web.">WordPress</span>
-          <span class="chip on" data-tip="Suivi des audiences, analyse du trafic et optimisation des conversions.">Google Analytics</span>
+          <span class="chip on" data-tip="Production de contenus et automatisation de tâches éditoriales.">Claude<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
+          <span class="chip on" data-tip="Analyse de données, reporting et tableaux de bord KPI.">Excel<span class="chip-sep"></span><span class="chip-lvl">Débutant</span></span>
+          <span class="chip on" data-tip="Conception d'interfaces, identités visuelles et maquettes.">Figma<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
+          <span class="chip on" data-tip="Montage de contenus vidéo pour TikTok et réseaux sociaux.">Final Cut Pro<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
+          <span class="chip on" data-tip="Suivi des audiences, analyse du trafic et optimisation des conversions.">Google Analytics<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
+          <span class="chip on" data-tip="Campagnes d'outreach email à froid — séquences et A/B tests.">Lemlist<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
+          <span class="chip on" data-tip="Gestion de projets, bases de données éditoriales et wikis.">Notion<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
+          <span class="chip on" data-tip="Retouche photo, visuels pour campagnes réseaux sociaux.">Photoshop<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
         </div>
       </div></div>
     </div>
@@ -618,8 +617,8 @@ function applyTime() {
   r.style.setProperty('--ink-2',      dark ? '#9898A0' : '#5C5C5C');
   r.style.setProperty('--ink-3',      dark ? '#55555C' : '#AAAAAA');
   /* Surfaces */
-  r.style.setProperty('--card-bg',    dark ? 'rgba(30,30,34,.80)'  : 'rgba(245,245,245,.80)');
-  r.style.setProperty('--card-head',  dark ? 'rgba(40,40,46,.85)'  : 'rgba(232,232,232,.85)');
+  r.style.setProperty('--card-bg',    dark ? 'rgba(30,30,34,.90)'  : 'rgba(245,245,245,.90)');
+  r.style.setProperty('--card-head',  dark ? 'rgba(40,40,46,.90)'  : 'rgba(232,232,232,.90)');
   r.style.setProperty('--card-border',dark ? '#3A3A3E' : '#E8E8E8');
   r.style.setProperty('--tag-bg',     dark ? '#2C2C35' : '#E8E8E8');
   r.style.setProperty('--tag-ink',    dark ? '#C0C0CC' : '#3D3D3D');
@@ -654,9 +653,10 @@ function fanLayout(n) {
     const frac = (i - mid) * step;
     const x    = Math.round(frac * maxX);
     const a    = +(frac * maxRot).toFixed(1);
-    if (x === 0 && a === 0) return 'rotate(0deg)';
-    if (x === 0)            return `rotate(${a}deg)`;
-    return `translateX(${x}px) rotate(${a}deg)`;
+    /* translateY(-50%) centres each photo vertically at top:50% */
+    if (x === 0 && a === 0) return 'translateY(-50%)';
+    if (x === 0)            return `translateY(-50%) rotate(${a}deg)`;
+    return `translateY(-50%) translateX(${x}px) rotate(${a}deg)`;
   });
   /* z-indices: center highest, decrease outward */
   const zIndices = Array.from({length: n}, (_, i) => {
@@ -665,7 +665,7 @@ function fanLayout(n) {
   });
   zIndices[mid] = n * 2;
   const fanW = 250 + maxX * 2 + 40; /* fixed width — same as 3-photo fan */
-  return { transforms, zIndices, mid, fanW, fanH: 280 };
+  return { transforms, zIndices, mid, fanW, fanH: n <= 3 ? 230 : 380 };
 }
 
 function positionPopup(anchor, isPhoto) {
