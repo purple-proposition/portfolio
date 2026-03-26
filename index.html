@@ -528,8 +528,8 @@ body.resizing .cb-wrap { transition:none !important }
       <div class="cb-wrap"><div class="cb">
         <div class="int-btns">
           <a class="int-btn" href="https://letterboxd.com/prplprpstn/" target="_blank"><span class="int-ico">🎬</span><span data-i="int-cinema">Cinéma</span></a>
-          <button class="int-btn" data-int="tech"><span class="int-ico">💻</span><span data-i="int-tech">Tech</span></button>
-          <button class="int-btn" data-int="gaming"><span class="int-ico">🎮</span><span data-i="int-gaming">Jeux vidéo</span></button>
+          <button class="int-btn"><span class="int-ico">💻</span><span data-i="int-tech">Tech</span></button>
+          <button class="int-btn"><span class="int-ico">🎮</span><span data-i="int-gaming">Jeux vidéo</span></button>
           <a class="int-btn" href="https://record.club/purpleproposition" target="_blank"><span class="int-ico">🎵</span><span>Musique</span></a>
           <button class="int-btn" data-int="travel"><span class="int-ico">✈️</span><span>Voyage</span></button>
         </div>
@@ -764,8 +764,6 @@ document.querySelectorAll('.exp-card[data-popup]').forEach(card => {
 
 /* ── Interests popups ── */
 const intData = {
-  tech:   {title:'Tech',       desc:'Product Hunt — les meilleurs outils et produits tech du moment.',    emoji:'💻', url:'https://producthunt.com',  label:'Voir Product Hunt'},
-  gaming: {title:'Jeux vidéo', desc:'8Beats Radio — la seule radio dédiée à la musique de jeux vidéo.',   emoji:'🎮', url:'https://8beats.fr',        label:'Écouter 8Beats'},
   travel: {title:'Voyage', photos:true, url:null, label:null}
 };
 document.querySelectorAll('.int-btn[data-int]').forEach(btn => {
