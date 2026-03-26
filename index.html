@@ -76,19 +76,15 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 
 /* ── Toggle — rotates in sync with drawer ── */
 .ch-toggle {
-  width:22px; height:22px; border-radius:50%;
-  border:1px solid #8B8B8B; background:none;
+  background:none; border:none;
   display:flex; align-items:center; justify-content:center;
   cursor:pointer; flex-shrink:0; padding:0; line-height:0;
-  transition:border-color .15s;
 }
-.ch-toggle:hover { border-color:#5A5A5A }
 .ch-toggle svg {
-  width:10px; height:10px; stroke:#8B8B8B; fill:none;
+  width:16px; height:16px; stroke:var(--ink); fill:none;
   stroke-width:2; stroke-linecap:round; stroke-linejoin:round;
   transition:transform var(--dur) var(--ease);
 }
-.ch-toggle:hover svg { stroke:#5A5A5A }
 .card.closed .ch-toggle svg { transform:rotate(180deg) }
 
 /* ── Card body ── */
@@ -112,7 +108,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .chip.on { background:var(--tag-bg); color:var(--ink) }
 
 /* ── Tooltip ── */
-#tip { position:fixed; z-index:9999; background:rgba(250,250,250,.78); backdrop-filter:blur(20px) saturate(1.8); -webkit-backdrop-filter:blur(20px) saturate(1.8); color:#3D3D3D; font-family:var(--font); font-size:var(--t-base); line-height:1.6; padding:var(--sp-sm) var(--sp); border-radius:var(--r-sm); max-width:220px; box-shadow:var(--shadow-h); pointer-events:none; opacity:0; transform:translateY(4px); transition:opacity var(--dur-fast) var(--ease),transform var(--dur-fast) var(--ease) }
+#tip { position:fixed; z-index:9999; background:rgba(250,250,250,.90); backdrop-filter:blur(20px) saturate(1.8); -webkit-backdrop-filter:blur(20px) saturate(1.8); color:#3D3D3D; font-family:var(--font); font-size:var(--t-base); line-height:1.6; padding:var(--sp-sm) var(--sp); border-radius:var(--r-sm); max-width:220px; box-shadow:var(--shadow-h); pointer-events:none; opacity:0; transform:translateY(4px); transition:opacity var(--dur-fast) var(--ease),transform var(--dur-fast) var(--ease) }
 
 /* ── Hero ── */
 .hero .cb { padding:0; display:flex; flex-direction:column; gap:0 }
@@ -130,10 +126,8 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 /* ── Section title ── */
 .section-title { display:flex; align-items:center; gap:var(--sp); padding:0; margin-top:4px }
 .section-title h2 { font-size:var(--t-xl); font-weight:600; color:var(--ink); letter-spacing:-.5px; line-height:1 }
-.section-toggle { width:22px; height:22px; border-radius:50%; border:1px solid #8B8B8B; background:none; display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; padding:0; line-height:0; transition:border-color .15s }
-.section-toggle:hover { border-color:#5A5A5A }
-.section-toggle svg { width:10px; height:10px; stroke:#8B8B8B; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; transition:transform var(--dur) var(--ease) }
-.section-toggle:hover svg { stroke:#5A5A5A }
+.section-toggle { background:none; border:none; display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; padding:0; line-height:0 }
+.section-toggle svg { width:16px; height:16px; stroke:var(--ink); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; transition:transform var(--dur) var(--ease) }
 .section-toggle.all-closed svg { transform:rotate(180deg) }
 
 /* ── Lang ── */
@@ -150,7 +144,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .exp-logo { width:28px; height:28px; flex-shrink:0; border-radius:7px; overflow:hidden; display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:8px; font-weight:600; color:#fff; text-transform:uppercase; letter-spacing:.04em }
 .exp-logo img { width:100%; height:100%; object-fit:cover; display:block }
 .ch-title-block { display:flex; flex-direction:column; gap:4px }
-.ch-company { font-size:var(--t-md); font-weight:600; color:#333333; letter-spacing:-.2px; line-height:1.2 }
+.ch-company { font-size:var(--t-lg); font-weight:600; color:#333333; letter-spacing:-.2px; line-height:1.2 }
 .ch-role { font-size:var(--t-sm); color:#727272; line-height:1.2 }
 .bullets { display:flex; flex-direction:column; gap:var(--sp) }
 .bullet { display:flex; gap:var(--sp-sm); font-size:12px; color:var(--ink-2); line-height:1.55 }
@@ -209,8 +203,8 @@ body.dark .ch-label       { color:#E0E0E6 }
 body.dark .ch-icon        { stroke:#C0C0CC }
 body.dark .ch-r           { color:#8888A0; border-color:#8888A0 }
 body.dark .ch-r.current   { color:#2563EB; border-color:#2563EB }
-body.dark .ch-toggle      { border-color:#5A5A6C }
-body.dark .ch-toggle svg  { stroke:#9898AA }
+body.dark .ch-toggle svg  { stroke:#ECECEE }
+body.dark .section-toggle svg { stroke:#ECECEE }
 body.dark .tag            { background:#2C2C35; color:#C0C0CC }
 body.dark .chip           { background:#2C2C35; color:#C0C0CC; border:none }
 body.dark .chip.on        { background:#3A3A48; color:#ECECEE; border:none }
@@ -227,9 +221,9 @@ body.dark .ep-img         { background:#2C2C35 }
 body.dark .ep-link        { background:#2C2C35; color:#C0C0CC }
 body.dark .ep-link:hover  { background:#5A5A6C; color:#F4F4F4 }
 body.dark .lang-sep       { opacity:.15 }
-body.dark #tip            { background:rgba(22,22,28,.80); color:#ECECEE }
+body.dark #tip            { background:rgba(22,22,28,.90); color:#ECECEE }
 /* ── Experience paragraph ── */
-.exp-para { font-size:var(--t-base); color:var(--ink-2); line-height:1.65 }
+.exp-para { font-size:var(--t-md); color:var(--ink-2); line-height:1.65 }
 /* ── Card bottom link ── */
 .card-link-row { border-top:1px solid rgba(0,0,0,.07); padding-top:var(--sp) }
 body.dark .card-link-row { border-top-color:rgba(255,255,255,.09) }
@@ -400,7 +394,7 @@ body.resizing .cb-wrap { transition:none !important }
           </div>
         </div>
         <div class="ch-right">
-          <span class="ch-r current" data-i="since">Depuis 2021</span>
+          <span class="ch-r current" data-i="since">Depuis 2025</span>
           <button class="ch-toggle"><i data-lucide="chevron-up"></i></button>
         </div>
       </div>
@@ -522,9 +516,9 @@ body.resizing .cb-wrap { transition:none !important }
 <script>
 /* ── i18n ── */
 const T = {
-  fr: {'print':'Imprimer','tagline-b':'Co-fondateur, designer & growth hacker','tagline-rest':'— je construis des marques et des audiences depuis plus de 10 ans.','section-skills':'Compétences','tools-label':'Outils','expertise-label':'Expertises','lang-title':'Langues','lang-fr-lvl':'Natif','lang-en-lvl':'Courant','lang-es-lvl':'Familial','section-exp':'Expérience','since':'Depuis 2021','since2':'Depuis 2021','since3':'Depuis 2017','je-role':'Growth Hacker','je-para':"Growth hacker chez Job Events depuis 2021, je pilote la stratégie éditoriale et digitale — SEO, réseaux sociaux et contenus TikTok ayant généré plus de 2 millions de vues. J'optimise les campagnes en continu grâce à l'analyse de données.",'8b-role':'Co-fondateur','8b-para':"Co-fondateur de 8Beats Radio depuis 2021, la première radio en ligne dédiée à la musique de jeux vidéo. Je gère la stratégie éditoriale, l'acquisition et les réseaux sociaux — 4 000 auditeurs réguliers.",'pp-role':'Designer graphique','pp-para':"Studio de design graphique fondé en 2017. J'ai conçu des identités visuelles, des chartes graphiques et piloté des campagnes cross-canal pour une dizaine de clients — réseaux sociaux, newsletters, supports print et digital.",'po-role':'Co-fondateur','po-para':"Co-fondateur du label musical Palm Off de 2014 à 2017. Développement de l'identité de marque, relations presse, production de concerts — avec une stratégie emailing et cross-canal en support.",'section-edu':'Formation','int-title':"Centres d'intérêt",'cta-email':"M'envoyer un email",'cta-phone':"M'appeler",'cta-linkedin':'Se connecter sur LinkedIn','int-cinema':'Cinéma','int-tech':'Tech','int-gaming':'Jeux vidéo'},
-  en: {'print':'Print','tagline-b':'Co-founder, designer & growth hacker','tagline-rest':'— building brands and audiences for over 10 years.','section-skills':'Skills','tools-label':'Tools','expertise-label':'Expertise','lang-title':'Languages','lang-fr-lvl':'Native','lang-en-lvl':'Fluent','lang-es-lvl':'Heritage','section-exp':'Experience','since':'Since 2021','since2':'Since 2021','since3':'Since 2017','je-role':'Growth Hacker','je-para':'Growth hacker at Job Events since 2021, leading editorial and digital strategy — SEO, social media and TikTok content generating over 2 million views. Continuously optimising campaigns through data analysis.','8b-role':'Co-founder','8b-para':'Co-founder of 8Beats Radio since 2021, the first online radio dedicated to video game music. Managing editorial strategy, acquisition and social media — 4,000 regular listeners.','pp-role':'Graphic designer','pp-para':'Graphic design studio founded in 2017. Created visual identities, brand guidelines and ran cross-channel campaigns for a dozen clients — social media, newsletters, print and digital materials.','po-role':'Co-founder','po-para':'Co-founder of music label Palm Off from 2014 to 2017. Brand identity development, press relations, concert production and cross-channel strategy — email marketing and digital campaigns.','section-edu':'Education','int-title':'Interests','cta-email':'Send me an email','cta-phone':'Call me','cta-linkedin':'Connect on LinkedIn','int-cinema':'Cinema','int-tech':'Tech','int-gaming':'Gaming'},
-  es: {'print':'Imprimir','tagline-b':'Cofundador, diseñador & growth hacker','tagline-rest':'— construyendo marcas y audiencias desde hace más de 10 años.','section-skills':'Competencias','tools-label':'Herramientas','expertise-label':'Especialidades','lang-title':'Idiomas','lang-fr-lvl':'Nativo','lang-en-lvl':'Fluido','lang-es-lvl':'Familiar','section-exp':'Experiencia','since':'Desde 2021','since2':'Desde 2021','since3':'Desde 2017','je-role':'Growth Hacker','je-para':'Growth hacker en Job Events desde 2021, dirigiendo estrategia editorial y digital — SEO, redes sociales y contenidos TikTok con más de 2 millones de vistas. Optimización continua de campañas mediante análisis de datos.','8b-role':'Cofundador','8b-para':'Cofundador de 8Beats Radio desde 2021, la primera radio online dedicada a la música de videojuegos. Gestión de estrategia editorial, adquisición y redes sociales — 4.000 oyentes habituales.','pp-role':'Diseñador gráfico','pp-para':'Estudio de diseño gráfico fundado en 2017. Creación de identidades visuales, guías de marca y campañas multicanal para una docena de clientes — redes sociales, newsletters, materiales impresos y digitales.','po-role':'Cofundador','po-para':'Cofundador del sello musical Palm Off de 2014 a 2017. Desarrollo de identidad de marca, relaciones con la prensa, producción de conciertos — email marketing y campañas digitales en apoyo.','section-edu':'Formación','int-title':'Intereses','cta-email':'Enviarme un email','cta-phone':'Llamarme','cta-linkedin':'Conectar en LinkedIn','int-cinema':'Cine','int-tech':'Tech','int-gaming':'Videojuegos'}
+  fr: {'print':'Imprimer','tagline-b':'Co-fondateur, designer & growth hacker','tagline-rest':'— je construis des marques et des audiences depuis plus de 10 ans.','section-skills':'Compétences','tools-label':'Outils','expertise-label':'Expertises','lang-title':'Langues','lang-fr-lvl':'Natif','lang-en-lvl':'Courant','lang-es-lvl':'Familial','section-exp':'Expérience','since':'Depuis 2025','since2':'Depuis 2021','since3':'Depuis 2017','je-role':'Growth Hacker','je-para':"Growth hacker chez Job Events depuis 2021, je pilote la stratégie éditoriale et digitale — SEO, réseaux sociaux et contenus TikTok ayant généré plus de 2 millions de vues. J'optimise les campagnes en continu grâce à l'analyse de données.",'8b-role':'Co-fondateur','8b-para':"Co-fondateur de 8Beats Radio depuis 2021, la première radio en ligne dédiée à la musique de jeux vidéo. Je gère la stratégie éditoriale, l'acquisition et les réseaux sociaux — 4 000 auditeurs réguliers.",'pp-role':'Designer graphique','pp-para':"Studio de design graphique fondé en 2017. J'ai conçu des identités visuelles, des chartes graphiques et piloté des campagnes cross-canal pour une dizaine de clients — réseaux sociaux, newsletters, supports print et digital.",'po-role':'Co-fondateur','po-para':"Co-fondateur du label musical Palm Off de 2014 à 2017. Développement de l'identité de marque, relations presse, production de concerts — avec une stratégie emailing et cross-canal en support.",'section-edu':'Formation','int-title':"Centres d'intérêt",'cta-email':"M'envoyer un email",'cta-phone':"M'appeler",'cta-linkedin':'Se connecter sur LinkedIn','int-cinema':'Cinéma','int-tech':'Tech','int-gaming':'Jeux vidéo'},
+  en: {'print':'Print','tagline-b':'Co-founder, designer & growth hacker','tagline-rest':'— building brands and audiences for over 10 years.','section-skills':'Skills','tools-label':'Tools','expertise-label':'Expertise','lang-title':'Languages','lang-fr-lvl':'Native','lang-en-lvl':'Fluent','lang-es-lvl':'Heritage','section-exp':'Experience','since':'Since 2025','since2':'Since 2021','since3':'Since 2017','je-role':'Growth Hacker','je-para':'Growth hacker at Job Events since 2021, leading editorial and digital strategy — SEO, social media and TikTok content generating over 2 million views. Continuously optimising campaigns through data analysis.','8b-role':'Co-founder','8b-para':'Co-founder of 8Beats Radio since 2021, the first online radio dedicated to video game music. Managing editorial strategy, acquisition and social media — 4,000 regular listeners.','pp-role':'Graphic designer','pp-para':'Graphic design studio founded in 2017. Created visual identities, brand guidelines and ran cross-channel campaigns for a dozen clients — social media, newsletters, print and digital materials.','po-role':'Co-founder','po-para':'Co-founder of music label Palm Off from 2014 to 2017. Brand identity development, press relations, concert production and cross-channel strategy — email marketing and digital campaigns.','section-edu':'Education','int-title':'Interests','cta-email':'Send me an email','cta-phone':'Call me','cta-linkedin':'Connect on LinkedIn','int-cinema':'Cinema','int-tech':'Tech','int-gaming':'Gaming'},
+  es: {'print':'Imprimir','tagline-b':'Cofundador, diseñador & growth hacker','tagline-rest':'— construyendo marcas y audiencias desde hace más de 10 años.','section-skills':'Competencias','tools-label':'Herramientas','expertise-label':'Especialidades','lang-title':'Idiomas','lang-fr-lvl':'Nativo','lang-en-lvl':'Fluido','lang-es-lvl':'Familiar','section-exp':'Experiencia','since':'Desde 2025','since2':'Desde 2021','since3':'Desde 2017','je-role':'Growth Hacker','je-para':'Growth hacker en Job Events desde 2021, dirigiendo estrategia editorial y digital — SEO, redes sociales y contenidos TikTok con más de 2 millones de vistas. Optimización continua de campañas mediante análisis de datos.','8b-role':'Cofundador','8b-para':'Cofundador de 8Beats Radio desde 2021, la primera radio online dedicada a la música de videojuegos. Gestión de estrategia editorial, adquisición y redes sociales — 4.000 oyentes habituales.','pp-role':'Diseñador gráfico','pp-para':'Estudio de diseño gráfico fundado en 2017. Creación de identidades visuales, guías de marca y campañas multicanal para una docena de clientes — redes sociales, newsletters, materiales impresos y digitales.','po-role':'Cofundador','po-para':'Cofundador del sello musical Palm Off de 2014 a 2017. Desarrollo de identidad de marca, relaciones con la prensa, producción de conciertos — email marketing y campañas digitales en apoyo.','section-edu':'Formación','int-title':'Intereses','cta-email':'Enviarme un email','cta-phone':'Llamarme','cta-linkedin':'Conectar en LinkedIn','int-cinema':'Cine','int-tech':'Tech','int-gaming':'Videojuegos'}
 };
 function setLang(l) {
   const t = T[l]; if (!t) return;
