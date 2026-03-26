@@ -130,7 +130,8 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 /* ── Experience ── */
 .exp-card .ch { height:auto; min-height:44px; padding:var(--sp) }
 .exp-card .cb { display:flex; flex-direction:column; gap:var(--sp) }
-.exp-logo { width:28px; height:28px; flex-shrink:0; border-radius:7px; display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:8px; font-weight:600; color:#fff; text-transform:uppercase; letter-spacing:.04em }
+.exp-logo { width:28px; height:28px; flex-shrink:0; border-radius:7px; overflow:hidden; display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:8px; font-weight:600; color:#fff; text-transform:uppercase; letter-spacing:.04em }
+.exp-logo img { width:100%; height:100%; object-fit:cover; display:block }
 .ch-title-block { display:flex; flex-direction:column; gap:4px }
 .ch-company { font-size:14px; font-weight:600; color:#333333; letter-spacing:-.2px; line-height:1.2 }
 .ch-role { font-size:11px; color:#727272; line-height:1.2 }
@@ -370,7 +371,7 @@ body.resizing .cb-wrap { transition:none !important }
     <div class="card exp-card" data-popup="je">
       <div class="ch">
         <div class="ch-l">
-          <div class="exp-logo" style="background:#FFFFFF;color:#D4005A;border:1.5px solid #eee">JE</div>
+          <div class="exp-logo"><img src="images/logo-je.jpeg" alt="Job Events"></div>
           <div class="ch-title-block">
             <span class="ch-company">Job Events</span>
             <span class="ch-role" data-i="je-role">Growth Hacker</span>
@@ -389,7 +390,7 @@ body.resizing .cb-wrap { transition:none !important }
     <div class="card exp-card" data-popup="8b">
       <div class="ch">
         <div class="ch-l">
-          <div class="exp-logo" style="background:#000000;color:#FFFFFF">8B</div>
+          <div class="exp-logo"><img src="images/logo-8b.jpg" alt="8Beats Radio"></div>
           <div class="ch-title-block">
             <span class="ch-company">8Beats Radio</span>
             <span class="ch-role" data-i="8b-role">Co-fondateur</span>
@@ -408,7 +409,7 @@ body.resizing .cb-wrap { transition:none !important }
     <div class="card exp-card" data-popup="pp">
       <div class="ch">
         <div class="ch-l">
-          <div class="exp-logo" style="background:#FFFFFF;color:#1A1A1A;border:2px solid #1A1A1A;border-radius:50%">PP</div>
+          <div class="exp-logo"><img src="images/logo-pp.jpeg" alt="Purple Proposition"></div>
           <div class="ch-title-block">
             <span class="ch-company">Purple Proposition</span>
             <span class="ch-role" data-i="pp-role">Designer graphique</span>
@@ -427,7 +428,7 @@ body.resizing .cb-wrap { transition:none !important }
     <div class="card exp-card" data-popup="po">
       <div class="ch">
         <div class="ch-l">
-          <div class="exp-logo" style="background:#FFFFFF;color:#1A1A1A;border:1.5px solid #e0e0e0">PO</div>
+          <div class="exp-logo"><img src="images/logo-po.jpeg" alt="Palm Off"></div>
           <div class="ch-title-block">
             <span class="ch-company">Palm Off</span>
             <span class="ch-role" data-i="po-role">Co-fondateur</span>
@@ -452,7 +453,7 @@ body.resizing .cb-wrap { transition:none !important }
     <div class="card exp-card">
       <div class="ch">
         <div class="ch-l">
-          <div class="exp-logo" style="background:#FF4500;color:#000000">RS</div>
+          <div class="exp-logo"><img src="images/logo-rs.jpg" alt="Rocket School"></div>
           <div class="ch-title-block">
             <span class="ch-company">Rocket School</span>
             <span class="ch-role">Communication digitale</span>
