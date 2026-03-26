@@ -95,7 +95,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .col-3 { grid-template-columns:1fr 1fr 1fr }
 
 /* ── Contact buttons ── */
-.contact-btns { display:flex; flex-wrap:wrap; gap:var(--sp-sm) }
+.contact-btns { display:flex; flex-wrap:wrap; gap:12px }
 .contact-btn { display:inline-flex; align-items:center; gap:var(--sp-sm); padding:var(--sp-sm) var(--sp); background:var(--tag-bg); border:none; border-radius:var(--r-sm); font-family:var(--font); font-size:var(--t-base); font-weight:400; color:var(--tag-ink); text-decoration:none; white-space:nowrap; cursor:pointer; transition:background var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease) }
 .contact-btn svg { width:13px; height:13px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; flex-shrink:0 }
 
@@ -129,7 +129,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .section-toggle.all-closed svg { transform:rotate(180deg) }
 
 /* ── Lang ── */
-.lang-btns { display:flex; flex-wrap:wrap; gap:var(--sp-sm) }
+.lang-btns { display:flex; flex-wrap:wrap; gap:12px }
 .lang-btn { display:inline-flex; align-items:center; gap:var(--sp-sm); padding:var(--sp-sm) 12px; background:var(--tag-bg); border:none; border-radius:var(--r-sm); font-family:var(--font); font-size:var(--t-base); font-weight:400; color:var(--tag-ink); cursor:pointer; transition:background var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease) }
 .lang-flag { font-size:14px; line-height:1; flex-shrink:0 }
 .lang-sep { width:1px; height:11px; background:currentColor; opacity:.2; flex-shrink:0 }
@@ -148,7 +148,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .bdot { width:3px; height:3px; border-radius:50%; background:var(--ink-3); flex-shrink:0; margin-top:6px }
 
 /* ── Interests ── */
-.int-btns { display:flex; flex-wrap:wrap; gap:var(--sp-sm) }
+.int-btns { display:flex; flex-wrap:wrap; gap:12px }
 .int-btn { display:inline-flex; align-items:center; gap:var(--sp-sm); padding:var(--sp-sm) 12px; background:var(--tag-bg); border:none; border-radius:var(--r-sm); font-family:var(--font); font-size:var(--t-base); color:var(--tag-ink); cursor:pointer; text-decoration:none; transition:background var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease) }
 .int-ico { font-size:14px; flex-shrink:0 }
 
@@ -470,7 +470,7 @@ body.resizing .cb-wrap { transition:none !important }
       </div>
       <div class="cb-wrap"><div class="cb">
         <p class="exp-para" data-i="pp-para">Studio de design graphique fondé en 2017. Identités visuelles, chartes graphiques et campagnes cross-canal pour une dizaine de clients — visuels Photoshop/Canva, posts Instagram, dossiers presse, supports print et digital.</p>
-        <div class="card-link-row"><a class="card-link" href="https://www.purpleproposition.fr" target="_blank">Voir le portfolio <svg viewBox="0 0 10 10" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1 9L9 1M9 1H3M9 1V7"/></svg></a></div>
+        <div class="card-link-row"><button class="card-link" data-int="pp">Voir les visuels <svg viewBox="0 0 10 10" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1 9L9 1M9 1H3M9 1V7"/></svg></button></div>
       </div></div>
     </div>
 
@@ -771,9 +771,10 @@ document.querySelectorAll('.exp-card[data-popup]').forEach(card => {
 
 /* ── Interests popups ── */
 const intData = {
-  travel: {title:'Voyage', photos:true, url:null, label:null}
+  travel: {title:'Voyage',              photos:true, photoSrc:['travel-1.jpg','travel-2.jpg','travel-3.jpg'], url:null, label:null},
+  pp:     {title:'Purple Proposition',  photos:true, photoSrc:['pp-1.jpg','pp-2.jpg','pp-3.jpg'],            url:null, label:null}
 };
-document.querySelectorAll('.int-btn[data-int]').forEach(btn => {
+document.querySelectorAll('[data-int]').forEach(btn => {
   btn.addEventListener('mouseenter', () => {
     if (btn.closest('.card')?.classList.contains('closed')) return;
     clearTimeout(epT); const d = intData[btn.dataset.int]; if (d) showPopup(d, btn);
