@@ -194,8 +194,9 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 
 /* ── Dark mode ── */
 /* Smooth color transitions on all themed elements */
-.card,.ch,.chip,.contact-btn,.lang-btn,.int-btn,.tag,.ep-sep,#exp-popup,.ep-link,.hero,.cb,.exp-card,
+.card,.ch,.tag,.ep-sep,#exp-popup,.hero,.cb,.exp-card,
 .skill-row,.edu-card,.skill-col,.hero-chips,.lang-row { transition-property:background,color,border-color; transition-duration:1.2s; transition-timing-function:ease }
+body.mode-switching .chip,body.mode-switching .contact-btn,body.mode-switching .lang-btn,body.mode-switching .int-btn,body.mode-switching .ep-link,body.mode-switching .card-link { transition-property:background,color,border-color; transition-duration:1.2s; transition-timing-function:ease }
 .card { transition-property:background,color,border-color,box-shadow,transform; transition-duration:1.2s,1.2s,1.2s,var(--dur),var(--dur); transition-timing-function:ease,ease,ease,var(--ease),var(--ease) }
 /* Dark overrides — keeps blue (#2563EB) intact */
 body.dark .card           { background:#1E1E22 }
@@ -579,6 +580,11 @@ const PERIODS = [
 function slot(h){return h<5?0:h<7?1:h<10?2:h<14?3:h<17?4:h<19?5:h<21?6:7}
 function applyTime() {
   const [grad, dark] = PERIODS[slot(new Date().getHours())];
+  const wasDark = document.body.classList.contains('dark');
+  if (wasDark !== dark) {
+    document.body.classList.add('mode-switching');
+    setTimeout(() => document.body.classList.remove('mode-switching'), 1300);
+  }
   document.body.style.background = grad;
   const r = document.documentElement;
   /* Text */
