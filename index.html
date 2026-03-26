@@ -28,11 +28,10 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .page { max-width:var(--page-max); margin:0 auto; padding:var(--gap) var(--gap) calc(var(--gap)*2); display:flex; flex-direction:column; gap:var(--gap) }
 
 /* ── Animation system ── */
-/* Single easing for all drawer motion: ease-in-out for natural feel */
-:root { --dur: .52s; --ease: cubic-bezier(.16,1,.3,1) }
+:root { --dur: .52s; --dur-fast: .24s; --ease: cubic-bezier(.16,1,.3,1) }
 
 /* ── Card ── */
-.card { background:var(--card-bg); border-radius:var(--r); box-shadow:var(--shadow); overflow:hidden; transition:box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease) }
+.card { background:var(--card-bg); border-radius:var(--r); box-shadow:var(--shadow); overflow:hidden; transition:box-shadow var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease) }
 .card:hover { transform:scale(1.018); box-shadow:var(--shadow-h) }
 .exp-card:hover { transform:scale(1.012); box-shadow:var(--shadow-h) }
 
@@ -50,12 +49,12 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
   display:flex; align-items:center; justify-content:space-between; gap:var(--sp);
 }
 .ch-l { display:flex; align-items:center; gap:var(--sp-sm) }
-.ch-label { font-size:14px; font-weight:600; color:#333333; letter-spacing:-.2px; display:inline-flex; align-items:center; gap:0 }
+.ch-label { font-size:14px; font-weight:600; color:var(--ink); letter-spacing:-.2px; display:inline-flex; align-items:center; gap:0 }
 .ch-label-suffix { display:inline-block; opacity:0; transform:translateX(6px); transition:transform var(--dur) var(--ease), opacity var(--dur) var(--ease); margin-left:5px }
 .ch-label-suffix.visible { opacity:1; transform:translateX(0) }
 .ch-icon { width:15px; height:15px; stroke:#333333; fill:none; flex-shrink:0 }
 .ch-right { display:flex; align-items:center; gap:var(--sp) }
-.ch-r { font-family:var(--mono); font-size:10px; color:#8B8B8B; letter-spacing:.08em; text-transform:uppercase; white-space:nowrap; border:1px solid #8B8B8B; border-radius:var(--r-pill); padding:3px 8px }
+.ch-r { font-family:var(--mono); font-size:10px; color:#767676; letter-spacing:.08em; text-transform:uppercase; white-space:nowrap; border:1px solid #767676; border-radius:var(--r-pill); padding:3px 8px }
 .ch-r.current { color:#4169E1; border-color:#4169E1 }
 
 /* ── Toggle — rotates in sync with drawer ── */
@@ -85,18 +84,18 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 
 /* ── Contact buttons ── */
 .contact-btns { display:flex; flex-wrap:wrap; gap:var(--sp-sm) }
-.contact-btn { display:inline-flex; align-items:center; gap:6px; padding:9px 14px; background:var(--tag-bg); border:none; border-radius:var(--r-sm); font-family:var(--font); font-size:12px; font-weight:400; color:var(--ink-2); text-decoration:none; white-space:nowrap; cursor:pointer; transition:background .2s,color .2s,transform var(--dur) var(--ease) }
+.contact-btn { display:inline-flex; align-items:center; gap:6px; padding:9px 14px; background:var(--tag-bg); border:none; border-radius:var(--r-sm); font-family:var(--font); font-size:12px; font-weight:400; color:var(--ink-2); text-decoration:none; white-space:nowrap; cursor:pointer; transition:background var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease),transform var(--dur-fast) var(--ease) }
 .contact-btn:hover { background:#8B8B8B; color:#F4F4F4; transform:scale(1.04) }
 .contact-btn svg { width:13px; height:13px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; flex-shrink:0 }
 
 /* ── Chips ── */
 .chips { display:flex; flex-wrap:wrap; gap:var(--sp-sm) }
-.chip { display:inline-flex; align-items:center; padding:var(--sp-sm) var(--sp-sm); background:var(--tag-bg); border:none; border-radius:var(--r-sm); font-family:var(--font); font-size:12px; font-weight:400; color:var(--tag-ink); cursor:pointer; transition:background .2s,color .2s,transform var(--dur) var(--ease) }
+.chip { display:inline-flex; align-items:center; padding:var(--sp-sm) var(--sp-sm); background:var(--tag-bg); border:none; border-radius:var(--r-sm); font-family:var(--font); font-size:12px; font-weight:400; color:var(--tag-ink); cursor:pointer; transition:background var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease),transform var(--dur-fast) var(--ease) }
 .chip:hover, .chip.on:hover { background:#8B8B8B; color:#F4F4F4; transform:scale(1.04) }
 .chip.on { background:var(--tag-bg); color:var(--ink) }
 
 /* ── Tooltip ── */
-#tip { position:fixed; z-index:9999; background:rgba(245,245,245,.55); backdrop-filter:blur(16px) saturate(1.6); -webkit-backdrop-filter:blur(16px) saturate(1.6); color:var(--ink-2); font-family:var(--font); font-size:12px; line-height:1.6; padding:var(--sp-sm) var(--sp); border-radius:var(--r-sm); max-width:200px; box-shadow:var(--shadow-h); pointer-events:none; opacity:0; transform:translateY(4px); transition:opacity .16s,transform .16s }
+#tip { position:fixed; z-index:9999; background:rgba(245,245,245,.95); backdrop-filter:blur(16px) saturate(1.6); -webkit-backdrop-filter:blur(16px) saturate(1.6); color:#3D3D3D; font-family:var(--font); font-size:12px; line-height:1.6; padding:var(--sp-sm) var(--sp); border-radius:var(--r-sm); max-width:220px; box-shadow:var(--shadow-h); pointer-events:none; opacity:0; transform:translateY(4px); transition:opacity var(--dur-fast) var(--ease),transform var(--dur-fast) var(--ease) }
 
 /* ── Hero ── */
 .hero .cb { padding:0; display:flex; flex-direction:column; gap:0 }
@@ -113,7 +112,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 
 /* ── Section title ── */
 .section-title { display:flex; align-items:center; gap:var(--sp); padding:0; margin-top:4px }
-.section-title h2 { font-size:28px; font-weight:600; color:#333; letter-spacing:-1px; line-height:1 }
+.section-title h2 { font-size:28px; font-weight:600; color:var(--ink); letter-spacing:-1px; line-height:1 }
 .section-toggle { width:22px; height:22px; border-radius:50%; border:1px solid #8B8B8B; background:none; display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; padding:0; line-height:0; transition:border-color .15s }
 .section-toggle:hover { border-color:#5A5A5A }
 .section-toggle svg { width:10px; height:10px; stroke:#8B8B8B; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; transition:transform var(--dur) var(--ease) }
@@ -122,11 +121,11 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 
 /* ── Lang ── */
 .lang-btns { display:flex; flex-wrap:wrap; gap:var(--sp-sm) }
-.lang-btn { display:inline-flex; align-items:center; gap:var(--sp-sm); padding:var(--sp-sm) var(--sp-sm); background:var(--tag-bg); border:none; border-radius:var(--r-sm); font-family:var(--font); font-size:12px; font-weight:400; color:var(--tag-ink); cursor:pointer; transition:background .2s,color .2s,transform var(--dur) var(--ease) }
+.lang-btn { display:inline-flex; align-items:center; gap:var(--sp-sm); padding:var(--sp-sm) var(--sp-sm); background:var(--tag-bg); border:none; border-radius:var(--r-sm); font-family:var(--font); font-size:12px; font-weight:400; color:var(--tag-ink); cursor:pointer; transition:background var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease),transform var(--dur-fast) var(--ease) }
 .lang-btn:hover { background:#8B8B8B; color:#F4F4F4; transform:scale(1.04) }
 .lang-flag { font-size:14px; line-height:1; flex-shrink:0 }
 .lang-sep { width:1px; height:11px; background:currentColor; opacity:.2; flex-shrink:0 }
-.lang-lvl { font-family:var(--mono); font-size:9px; letter-spacing:.08em; text-transform:uppercase; opacity:.5 }
+.lang-lvl { font-family:var(--mono); font-size:9px; letter-spacing:.08em; text-transform:uppercase; color:#767676 }
 
 /* ── Experience ── */
 .exp-card .ch { height:auto; min-height:44px; padding:var(--sp) }
@@ -134,19 +133,19 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .exp-logo { width:28px; height:28px; flex-shrink:0; border-radius:7px; display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:8px; font-weight:600; color:#fff; text-transform:uppercase; letter-spacing:.04em }
 .ch-title-block { display:flex; flex-direction:column; gap:4px }
 .ch-company { font-size:14px; font-weight:600; color:#333333; letter-spacing:-.2px; line-height:1.2 }
-.ch-role { font-size:11px; color:#929293; line-height:1.2 }
+.ch-role { font-size:11px; color:#727272; line-height:1.2 }
 .bullets { display:flex; flex-direction:column; gap:var(--sp) }
 .bullet { display:flex; gap:var(--sp-sm); font-size:12px; color:var(--ink-2); line-height:1.55 }
 .bdot { width:3px; height:3px; border-radius:50%; background:var(--ink-3); flex-shrink:0; margin-top:6px }
 
 /* ── Interests ── */
 .int-btns { display:flex; flex-wrap:wrap; gap:var(--sp-sm) }
-.int-btn { display:inline-flex; align-items:center; gap:var(--sp-sm); padding:var(--sp-sm) var(--sp-sm); background:var(--tag-bg); border:none; border-radius:var(--r-sm); font-family:var(--font); font-size:12px; color:var(--tag-ink); cursor:pointer; transition:background .2s,color .2s,transform var(--dur) var(--ease) }
+.int-btn { display:inline-flex; align-items:center; gap:var(--sp-sm); padding:var(--sp-sm) var(--sp-sm); background:var(--tag-bg); border:none; border-radius:var(--r-sm); font-family:var(--font); font-size:12px; color:var(--tag-ink); cursor:pointer; transition:background var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease),transform var(--dur-fast) var(--ease) }
 .int-btn:hover { background:#8B8B8B; color:#F4F4F4; transform:scale(1.04) }
 .int-ico { font-size:14px; flex-shrink:0 }
 
 /* ── Exp popup ── */
-#exp-popup { position:fixed; z-index:9998; width:268px; background:rgba(245,245,245,.55); backdrop-filter:blur(16px) saturate(1.6); -webkit-backdrop-filter:blur(16px) saturate(1.6); border-radius:var(--r); box-shadow:var(--shadow-h); overflow:hidden; pointer-events:none; opacity:0; transform:translateY(8px) scale(.97); transition:opacity .5s cubic-bezier(.16,1,.3,1),transform .5s cubic-bezier(.16,1,.3,1) }
+#exp-popup { position:fixed; z-index:9998; width:268px; background:rgba(245,245,245,.92); backdrop-filter:blur(20px) saturate(1.8); -webkit-backdrop-filter:blur(20px) saturate(1.8); border-radius:var(--r); box-shadow:var(--shadow-h); overflow:hidden; pointer-events:none; opacity:0; transform:translateY(8px) scale(.97); transition:opacity var(--dur-fast) var(--ease),transform var(--dur-fast) var(--ease) }
 #exp-popup.visible { opacity:1; transform:translateY(0) scale(1); pointer-events:all }
 .ep-img { width:100%; height:130px; background:var(--tag-bg); display:flex; align-items:center; justify-content:center; font-size:36px }
 .ep-img img { width:100%; height:100%; object-fit:cover; display:block }
@@ -155,16 +154,16 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .ep-desc { font-size:12px; color:var(--ink-2); line-height:1.55 }
 /* ── Fan photo popup ── */
 #exp-popup.photo-only { background:none !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important; box-shadow:none !important; border-radius:0; overflow:visible; width:auto; padding:0; transition:none !important }
-.ep-fan { position:relative; width:380px; height:260px; }
+.ep-fan { position:relative; width:360px; height:230px; }
 .ep-fan-photo {
   position:absolute;
-  width:280px; height:210px; /* 4:3 */
+  width:250px; height:187px; /* 4:3 */
   border-radius:14px; overflow:hidden;
   box-shadow:0 8px 28px rgba(0,0,0,.28), 0 2px 8px rgba(0,0,0,.14);
-  transition:box-shadow .5s cubic-bezier(.16,1,.3,1);
+  transition:transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
   cursor:pointer;
-  transform-origin:bottom center;
-  top:0; left:50%; margin-left:-140px;
+  transform-origin:center center;
+  top:0; left:50%; margin-left:-125px;
 }
 .ep-fan-photo img { width:100%; height:100%; object-fit:cover; display:block; pointer-events:none }
 .ep-fan-photo::after { content:''; position:absolute; inset:0; background:rgba(0,0,0,0); transition:background .5s cubic-bezier(.16,1,.3,1); pointer-events:none }
@@ -177,7 +176,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 /* ── Card popup separator ── */
 .ep-sep { height:1px; background:rgba(0,0,0,.08); margin:0 16px }
 .ep-footer { padding:var(--sp) }
-.ep-link { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; background:var(--tag-bg); color:var(--ink-2); border-radius:var(--r-sm); font-size:12px; text-decoration:none; transition:background .28s cubic-bezier(.25,.46,.45,.94),color .28s cubic-bezier(.25,.46,.45,.94) }
+.ep-link { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; background:var(--tag-bg); color:var(--ink-2); border-radius:var(--r-sm); font-size:12px; text-decoration:none; transition:background var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease) }
 .ep-link:hover { background:#8B8B8B; color:#F4F4F4 }
 
 /* ── Dark mode ── */
@@ -210,7 +209,13 @@ body.dark .ep-img         { background:#2C2C35 }
 body.dark .ep-link        { background:#2C2C35; color:#C0C0CC }
 body.dark .ep-link:hover  { background:#5A5A6C; color:#F4F4F4 }
 body.dark .lang-sep       { opacity:.15 }
-body.dark #tip            { background:rgba(30,30,36,.92); color:#ECECEE }
+body.dark #tip            { background:rgba(28,28,34,.96); color:#ECECEE }
+/* ── Experience paragraph ── */
+.exp-para { font-size:12.5px; color:var(--ink-2); line-height:1.65; padding:0 2px }
+/* ── Resize: disable transitions to prevent animation on window resize ── */
+body.resizing .cb-wrap { transition:none !important }
+/* ── Focus visible ── */
+:focus-visible { outline:2px solid #4169E1; outline-offset:2px; border-radius:4px }
 /* ── Print ── */
 .btn-print { position:fixed; bottom:32px; right:32px; display:flex; align-items:center; gap:var(--sp-sm); padding:var(--sp-sm) var(--sp); background:rgba(28,28,30,.78); backdrop-filter:blur(12px); color:rgba(255,255,255,.92); border:1px solid rgba(255,255,255,.1); border-radius:var(--r-pill); font-family:var(--font); font-size:12.5px; font-weight:500; cursor:pointer; z-index:200; box-shadow:0 4px 20px rgba(0,0,0,.18); transition:opacity .15s }
 .btn-print:hover { opacity:.8 }
@@ -283,9 +288,9 @@ body.dark #tip            { background:rgba(30,30,36,.92); color:#ECECEE }
               <i data-lucide="phone"></i>
               <span data-i="cta-phone">M'appeler</span>
             </a>
-            <a href="https://linkedin.com/in/jessesotomayor" target="_blank" class="contact-btn">
+            <a href="https://linkedin.com/in/jessesotomayor" target="_blank" class="contact-btn" aria-label="Se connecter sur LinkedIn">
               <i data-lucide="linkedin"></i>
-              <span data-i="cta-linkedin">Me contacter sur LinkedIn</span>
+              <span data-i="cta-linkedin">Se connecter sur LinkedIn</span>
             </a>
           </div></div>
     </div></div>
@@ -329,12 +334,12 @@ body.dark #tip            { background:rgba(30,30,36,.92); color:#ECECEE }
       </div>
       <div class="cb-wrap"><div class="cb">
         <div class="chips">
-          <span class="chip">SEO</span>
-          <span class="chip">TikTok</span>
-          <span class="chip">Email marketing</span>
-          <span class="chip">Analytics</span>
-          <span class="chip">Branding</span>
-          <span class="chip">Réseaux sociaux</span>
+          <span class="chip" data-tip="Optimisation du référencement naturel — contenu, maillage, performance.">SEO</span>
+          <span class="chip" data-tip="Production de contenus courts — stratégie, tournage, montage, distribution.">TikTok</span>
+          <span class="chip" data-tip="Séquences d'emails automatisées, A/B tests et segmentation audience.">Email marketing</span>
+          <span class="chip" data-tip="Lecture de données, tableaux de bord KPI et optimisation continue.">Analytics</span>
+          <span class="chip" data-tip="Identités visuelles, chartes graphiques et positionnement de marque.">Branding</span>
+          <span class="chip" data-tip="Stratégie éditoriale cross-canal — Instagram, TikTok, LinkedIn.">Réseaux sociaux</span>
         </div>
       </div></div>
     </div>
@@ -365,7 +370,7 @@ body.dark #tip            { background:rgba(30,30,36,.92); color:#ECECEE }
     <div class="card exp-card" data-popup="je">
       <div class="ch">
         <div class="ch-l">
-          <div class="exp-logo" style="background:linear-gradient(135deg,#4F7CFF,#2952CC)">JE</div>
+          <div class="exp-logo" style="background:#FFFFFF;color:#D4005A;border:1.5px solid #eee">JE</div>
           <div class="ch-title-block">
             <span class="ch-company">Job Events</span>
             <span class="ch-role" data-i="je-role">Growth Hacker</span>
@@ -377,18 +382,14 @@ body.dark #tip            { background:rgba(30,30,36,.92); color:#ECECEE }
         </div>
       </div>
       <div class="cb-wrap"><div class="cb">
-        <div class="bullets">
-          <div class="bullet"><span class="bdot"></span><span data-i="je-b1">Stratégie éditoriale et communication digitale (SEO, réseaux sociaux)</span></div>
-          <div class="bullet"><span class="bdot"></span><span data-i="je-b2">Production de contenus multimédias — TikTok : +2M vues</span></div>
-          <div class="bullet"><span class="bdot"></span><span data-i="je-b3">Analyse de données et optimisation des campagnes</span></div>
-        </div>
+        <p class="exp-para" data-i="je-para">Growth hacker chez Job Events depuis 2021, je pilote la stratégie éditoriale et digitale — SEO, réseaux sociaux et contenus TikTok ayant généré plus de 2 millions de vues. J'optimise les campagnes en continu grâce à l'analyse de données.</p>
       </div></div>
     </div>
 
     <div class="card exp-card" data-popup="8b">
       <div class="ch">
         <div class="ch-l">
-          <div class="exp-logo" style="background:linear-gradient(135deg,#E05A4A,#B03020)">8B</div>
+          <div class="exp-logo" style="background:#000000;color:#FFFFFF">8B</div>
           <div class="ch-title-block">
             <span class="ch-company">8Beats Radio</span>
             <span class="ch-role" data-i="8b-role">Co-fondateur</span>
@@ -400,18 +401,14 @@ body.dark #tip            { background:rgba(30,30,36,.92); color:#ECECEE }
         </div>
       </div>
       <div class="cb-wrap"><div class="cb">
-        <div class="bullets">
-          <div class="bullet"><span class="bdot"></span><span data-i="8b-b1">Stratégie éditoriale et communication digitale (SEO, réseaux sociaux)</span></div>
-          <div class="bullet"><span class="bdot"></span><span data-i="8b-b2">Production de contenus multimédias — TikTok : +2M vues</span></div>
-          <div class="bullet"><span class="bdot"></span><span data-i="8b-b3">Analyse de données et optimisation des campagnes</span></div>
-        </div>
+        <p class="exp-para" data-i="8b-para">Co-fondateur de 8Beats Radio depuis 2021, la première radio en ligne dédiée à la musique de jeux vidéo. Je gère la stratégie éditoriale, l'acquisition et les réseaux sociaux — 4 000 auditeurs réguliers.</p>
       </div></div>
     </div>
 
     <div class="card exp-card" data-popup="pp">
       <div class="ch">
         <div class="ch-l">
-          <div class="exp-logo" style="background:linear-gradient(135deg,#9B5CF6,#6D28D9)">PP</div>
+          <div class="exp-logo" style="background:#FFFFFF;color:#1A1A1A;border:2px solid #1A1A1A;border-radius:50%">PP</div>
           <div class="ch-title-block">
             <span class="ch-company">Purple Proposition</span>
             <span class="ch-role" data-i="pp-role">Designer graphique</span>
@@ -423,18 +420,14 @@ body.dark #tip            { background:rgba(30,30,36,.92); color:#ECECEE }
         </div>
       </div>
       <div class="cb-wrap"><div class="cb">
-        <div class="bullets">
-          <div class="bullet"><span class="bdot"></span><span data-i="pp-b1">Création d'identités visuelles et de chartes graphiques</span></div>
-          <div class="bullet"><span class="bdot"></span><span data-i="pp-b2">Campagnes cross-canal (réseaux sociaux, newsletters)</span></div>
-          <div class="bullet"><span class="bdot"></span><span data-i="pp-b3">Optimisation des supports de communication</span></div>
-        </div>
+        <p class="exp-para" data-i="pp-para">Studio de design graphique fondé en 2017. J'ai conçu des identités visuelles, des chartes graphiques et piloté des campagnes cross-canal pour une dizaine de clients — réseaux sociaux, newsletters, supports print et digital.</p>
       </div></div>
     </div>
 
     <div class="card exp-card" data-popup="po">
       <div class="ch">
         <div class="ch-l">
-          <div class="exp-logo" style="background:linear-gradient(135deg,#10B981,#065F46)">PO</div>
+          <div class="exp-logo" style="background:#FFFFFF;color:#1A1A1A;border:1.5px solid #e0e0e0">PO</div>
           <div class="ch-title-block">
             <span class="ch-company">Palm Off</span>
             <span class="ch-role" data-i="po-role">Co-fondateur</span>
@@ -446,11 +439,7 @@ body.dark #tip            { background:rgba(30,30,36,.92); color:#ECECEE }
         </div>
       </div>
       <div class="cb-wrap"><div class="cb">
-        <div class="bullets">
-          <div class="bullet"><span class="bdot"></span><span data-i="po-b1">Développement de l'identité de marque et relations presse</span></div>
-          <div class="bullet"><span class="bdot"></span><span data-i="po-b2">Gestion de projet (campagnes digitales et concerts)</span></div>
-          <div class="bullet"><span class="bdot"></span><span data-i="po-b3">Emailing et stratégie cross-canal</span></div>
-        </div>
+        <p class="exp-para" data-i="po-para">Co-fondateur du label musical Palm Off de 2014 à 2017. Développement de l'identité de marque, relations presse, production de concerts — avec une stratégie emailing et cross-canal en support.</p>
       </div></div>
     </div>
 
@@ -463,7 +452,7 @@ body.dark #tip            { background:rgba(30,30,36,.92); color:#ECECEE }
     <div class="card exp-card">
       <div class="ch">
         <div class="ch-l">
-          <div class="exp-logo" style="background:linear-gradient(135deg,#F59E0B,#D97706)">RS</div>
+          <div class="exp-logo" style="background:#FF4500;color:#000000">RS</div>
           <div class="ch-title-block">
             <span class="ch-company">Rocket School</span>
             <span class="ch-role">Communication digitale</span>
@@ -506,9 +495,9 @@ body.dark #tip            { background:rgba(30,30,36,.92); color:#ECECEE }
 <script>
 /* ── i18n ── */
 const T = {
-  fr: {'print':'Imprimer','tagline-b':'Co-fondateur, designer & growth hacker','tagline-rest':'— je construis des marques et des audiences depuis plus de 10 ans.','section-skills':'Compétences','tools-label':'Outils','expertise-label':'Expertises','lang-title':'Langues','lang-fr-lvl':'Natif','lang-en-lvl':'Courant','lang-es-lvl':'Intermédiaire','section-exp':'Expérience','since':'Depuis 2021','since2':'Depuis 2021','since3':'Depuis 2017','je-role':'Growth Hacker','je-b1':'Stratégie éditoriale et communication digitale (SEO, réseaux sociaux)','je-b2':'Production de contenus multimédias — TikTok : +2M vues','je-b3':'Analyse de données et optimisation des campagnes','8b-role':'Co-fondateur','8b-b1':'Stratégie éditoriale et communication digitale (SEO, réseaux sociaux)','8b-b2':'Production de contenus multimédias — TikTok : +2M vues','8b-b3':'Analyse de données et optimisation des campagnes','pp-role':'Designer graphique','pp-b1':"Création d'identités visuelles et de chartes graphiques",'pp-b2':'Campagnes cross-canal (réseaux sociaux, newsletters)','pp-b3':'Optimisation des supports de communication','po-role':'Co-fondateur','po-b1':"Développement de l'identité de marque et relations presse",'po-b2':'Gestion de projet (campagnes digitales et concerts)','po-b3':'Emailing et stratégie cross-canal','section-edu':'Formation','int-title':"Centres d'intérêt",'cta-email':"M'envoyer un email",'cta-phone':"M'appeler",'cta-linkedin':'Me contacter sur LinkedIn','int-cinema':'Cinéma','int-tech':'Tech','int-gaming':'Jeux vidéo'},
-  en: {'print':'Print','tagline-b':'Co-founder, designer & growth hacker','tagline-rest':'— building brands and audiences for over 10 years.','section-skills':'Skills','tools-label':'Tools','expertise-label':'Expertise','lang-title':'Languages','lang-fr-lvl':'Native','lang-en-lvl':'Fluent','lang-es-lvl':'Intermediate','section-exp':'Experience','since':'Since 2021','since2':'Since 2021','since3':'Since 2017','je-role':'Growth Hacker','je-b1':'Editorial strategy & digital communication (SEO, social media)','je-b2':'Multimedia content production — TikTok: +2M views','je-b3':'Data analysis and campaign optimisation','8b-role':'Co-founder','8b-b1':'Editorial strategy & digital communication (SEO, social media)','8b-b2':'Multimedia content production — TikTok: +2M views','8b-b3':'Data analysis and campaign optimisation','pp-role':'Graphic designer','pp-b1':'Visual identity and brand guidelines creation','pp-b2':'Cross-channel campaigns (social media, newsletters)','pp-b3':'Communication materials optimisation','po-role':'Co-founder','po-b1':'Brand identity development and press relations','po-b2':'Project management (digital campaigns & concerts)','po-b3':'Email marketing and cross-channel strategy','section-edu':'Education','int-title':'Interests','cta-email':'Send me an email','cta-phone':'Call me','cta-linkedin':'Connect on LinkedIn','int-cinema':'Cinema','int-tech':'Tech','int-gaming':'Gaming'},
-  es: {'print':'Imprimir','tagline-b':'Cofundador, diseñador & growth hacker','tagline-rest':'— construyendo marcas y audiencias desde hace más de 10 años.','section-skills':'Competencias','tools-label':'Herramientas','expertise-label':'Especialidades','lang-title':'Idiomas','lang-fr-lvl':'Nativo','lang-en-lvl':'Fluido','lang-es-lvl':'Intermedio','section-exp':'Experiencia','since':'Desde 2021','since2':'Desde 2021','since3':'Desde 2017','je-role':'Growth Hacker','je-b1':'Estrategia editorial y comunicación digital (SEO, redes sociales)','je-b2':'Producción de contenidos multimedia — TikTok: +2M vistas','je-b3':'Análisis de datos y optimización de campañas','8b-role':'Cofundador','8b-b1':'Estrategia editorial y comunicación digital (SEO, redes sociales)','8b-b2':'Producción de contenidos multimedia — TikTok: +2M vistas','8b-b3':'Análisis de datos y optimización de campañas','pp-role':'Diseñador gráfico','pp-b1':'Creación de identidades visuales y guías de marca','pp-b2':'Campañas multicanal (redes sociales, newsletters)','pp-b3':'Optimización de materiales de comunicación','po-role':'Cofundador','po-b1':'Desarrollo de identidad de marca y relaciones con la prensa','po-b2':'Gestión de proyectos (campañas digitales y conciertos)','po-b3':'Email marketing y estrategia multicanal','section-edu':'Formación','int-title':'Intereses','cta-email':'Enviarme un email','cta-phone':'Llamarme','cta-linkedin':'Conectar en LinkedIn','int-cinema':'Cine','int-tech':'Tech','int-gaming':'Videojuegos'}
+  fr: {'print':'Imprimer','tagline-b':'Co-fondateur, designer & growth hacker','tagline-rest':'— je construis des marques et des audiences depuis plus de 10 ans.','section-skills':'Compétences','tools-label':'Outils','expertise-label':'Expertises','lang-title':'Langues','lang-fr-lvl':'Natif','lang-en-lvl':'Courant','lang-es-lvl':'Intermédiaire','section-exp':'Expérience','since':'Depuis 2021','since2':'Depuis 2021','since3':'Depuis 2017','je-role':'Growth Hacker','je-para':"Growth hacker chez Job Events depuis 2021, je pilote la stratégie éditoriale et digitale — SEO, réseaux sociaux et contenus TikTok ayant généré plus de 2 millions de vues. J'optimise les campagnes en continu grâce à l'analyse de données.",'8b-role':'Co-fondateur','8b-para':"Co-fondateur de 8Beats Radio depuis 2021, la première radio en ligne dédiée à la musique de jeux vidéo. Je gère la stratégie éditoriale, l'acquisition et les réseaux sociaux — 4 000 auditeurs réguliers.",'pp-role':'Designer graphique','pp-para':"Studio de design graphique fondé en 2017. J'ai conçu des identités visuelles, des chartes graphiques et piloté des campagnes cross-canal pour une dizaine de clients — réseaux sociaux, newsletters, supports print et digital.",'po-role':'Co-fondateur','po-para':"Co-fondateur du label musical Palm Off de 2014 à 2017. Développement de l'identité de marque, relations presse, production de concerts — avec une stratégie emailing et cross-canal en support.",'section-edu':'Formation','int-title':"Centres d'intérêt",'cta-email':"M'envoyer un email",'cta-phone':"M'appeler",'cta-linkedin':'Se connecter sur LinkedIn','int-cinema':'Cinéma','int-tech':'Tech','int-gaming':'Jeux vidéo'},
+  en: {'print':'Print','tagline-b':'Co-founder, designer & growth hacker','tagline-rest':'— building brands and audiences for over 10 years.','section-skills':'Skills','tools-label':'Tools','expertise-label':'Expertise','lang-title':'Languages','lang-fr-lvl':'Native','lang-en-lvl':'Fluent','lang-es-lvl':'Intermediate','section-exp':'Experience','since':'Since 2021','since2':'Since 2021','since3':'Since 2017','je-role':'Growth Hacker','je-para':'Growth hacker at Job Events since 2021, leading editorial and digital strategy — SEO, social media and TikTok content generating over 2 million views. Continuously optimising campaigns through data analysis.','8b-role':'Co-founder','8b-para':'Co-founder of 8Beats Radio since 2021, the first online radio dedicated to video game music. Managing editorial strategy, acquisition and social media — 4,000 regular listeners.','pp-role':'Graphic designer','pp-para':'Graphic design studio founded in 2017. Created visual identities, brand guidelines and ran cross-channel campaigns for a dozen clients — social media, newsletters, print and digital materials.','po-role':'Co-founder','po-para':'Co-founder of music label Palm Off from 2014 to 2017. Brand identity development, press relations, concert production and cross-channel strategy — email marketing and digital campaigns.','section-edu':'Education','int-title':'Interests','cta-email':'Send me an email','cta-phone':'Call me','cta-linkedin':'Connect on LinkedIn','int-cinema':'Cinema','int-tech':'Tech','int-gaming':'Gaming'},
+  es: {'print':'Imprimir','tagline-b':'Cofundador, diseñador & growth hacker','tagline-rest':'— construyendo marcas y audiencias desde hace más de 10 años.','section-skills':'Competencias','tools-label':'Herramientas','expertise-label':'Especialidades','lang-title':'Idiomas','lang-fr-lvl':'Nativo','lang-en-lvl':'Fluido','lang-es-lvl':'Intermedio','section-exp':'Experiencia','since':'Desde 2021','since2':'Desde 2021','since3':'Desde 2017','je-role':'Growth Hacker','je-para':'Growth hacker en Job Events desde 2021, dirigiendo estrategia editorial y digital — SEO, redes sociales y contenidos TikTok con más de 2 millones de vistas. Optimización continua de campañas mediante análisis de datos.','8b-role':'Cofundador','8b-para':'Cofundador de 8Beats Radio desde 2021, la primera radio online dedicada a la música de videojuegos. Gestión de estrategia editorial, adquisición y redes sociales — 4.000 oyentes habituales.','pp-role':'Diseñador gráfico','pp-para':'Estudio de diseño gráfico fundado en 2017. Creación de identidades visuales, guías de marca y campañas multicanal para una docena de clientes — redes sociales, newsletters, materiales impresos y digitales.','po-role':'Cofundador','po-para':'Cofundador del sello musical Palm Off de 2014 a 2017. Desarrollo de identidad de marca, relaciones con la prensa, producción de conciertos — email marketing y campañas digitales en apoyo.','section-edu':'Formación','int-title':'Intereses','cta-email':'Enviarme un email','cta-phone':'Llamarme','cta-linkedin':'Conectar en LinkedIn','int-cinema':'Cine','int-tech':'Tech','int-gaming':'Videojuegos'}
 };
 function setLang(l) {
   const t = T[l]; if (!t) return;
@@ -642,10 +631,12 @@ function showPopup(d, anchor) {
           if (i !== 1 && j === 1) p.classList.add('behind');
           if (j === i)            p.classList.remove('behind');
         });
-        photo.style.boxShadow = '0 16px 40px rgba(0,0,0,.38), 0 4px 12px rgba(0,0,0,.2)';
+        photo.style.transform  = baseT[i] + ' scale(1.04)';
+        photo.style.boxShadow  = '0 16px 40px rgba(0,0,0,.38), 0 4px 12px rgba(0,0,0,.2)';
       });
       photo.addEventListener('mouseleave', () => {
-        photo.style.boxShadow = '';
+        photo.style.transform  = baseT[i];
+        photo.style.boxShadow  = '';
         fanPhotos.forEach((p, j) => {
           p.style.zIndex = baseZ[j];
           p.classList.toggle('behind', j !== 1);
@@ -750,6 +741,14 @@ document.querySelectorAll('.chip[data-tip]').forEach(chip => {
     });
   });
   chip.addEventListener('mouseleave', () => { tipT = setTimeout(() => { tip.style.opacity='0'; tip.style.transform='translateY(4px)'; }, 80); });
+});
+
+/* ── Resize: disable drawer transitions during window resize ── */
+let _resizeT;
+window.addEventListener('resize', () => {
+  document.body.classList.add('resizing');
+  clearTimeout(_resizeT);
+  _resizeT = setTimeout(() => document.body.classList.remove('resizing'), 150);
 });
 
 /* ── Lucide icons ── */
