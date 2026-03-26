@@ -6,7 +6,7 @@
 <title>Jesse Sotomayor</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.525.0/dist/umd/lucide.min.js"></script>
 <style>
 :root {
   --sp: 16px; --sp-sm: 8px; --gap: 32px;
@@ -37,8 +37,8 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 
 /* ── Drawer ── */
 /* grid-template-rows animates the height — no JS height measurement needed */
-.cb-wrap { display:grid; grid-template-rows:1fr; overflow:hidden; transition:grid-template-rows var(--dur) var(--ease) }
-.cb-wrap > .cb { min-height:0; transition:padding var(--dur) var(--ease) }
+.cb-wrap { display:grid; grid-template-rows:1fr; overflow:hidden; transition:grid-template-rows .55s cubic-bezier(.4,0,.2,1) }
+.cb-wrap > .cb { min-height:0; transition:padding .55s cubic-bezier(.4,0,.2,1) }
 .card.closed .cb-wrap { grid-template-rows:0fr }
 .card.closed .cb-wrap > .cb { padding-top:0; padding-bottom:0 }
 
@@ -55,7 +55,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .ch-icon { width:15px; height:15px; stroke:#333333; fill:none; flex-shrink:0 }
 .ch-right { display:flex; align-items:center; gap:var(--sp) }
 .ch-r { font-family:var(--mono); font-size:10px; color:#767676; letter-spacing:.08em; text-transform:uppercase; white-space:nowrap; border:1px solid #767676; border-radius:var(--r-pill); padding:3px 8px }
-.ch-r.current { color:#4169E1; border-color:#4169E1 }
+.ch-r.current { color:#2563EB; border-color:#2563EB }
 
 /* ── Toggle — rotates in sync with drawer ── */
 .ch-toggle {
@@ -185,13 +185,13 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .card,.ch,.chip,.contact-btn,.lang-btn,.int-btn,.tag,.ep-sep,#exp-popup,.ep-link,.hero,.cb,.exp-card,
 .skill-row,.edu-card,.skill-col,.hero-chips,.lang-row { transition-property:background,color,border-color; transition-duration:1.2s; transition-timing-function:ease }
 .card { transition-property:background,color,border-color,box-shadow,transform; transition-duration:1.2s,1.2s,1.2s,var(--dur),var(--dur); transition-timing-function:ease,ease,ease,var(--ease),var(--ease) }
-/* Dark overrides — keeps blue (#4169E1) intact */
+/* Dark overrides — keeps blue (#2563EB) intact */
 body.dark .card           { background:#1E1E22 }
 body.dark .ch             { background:#28282E }
 body.dark .ch-label       { color:#E0E0E6 }
 body.dark .ch-icon        { stroke:#C0C0CC }
 body.dark .ch-r           { color:#8888A0; border-color:#8888A0 }
-body.dark .ch-r.current   { color:#4169E1; border-color:#4169E1 }
+body.dark .ch-r.current   { color:#2563EB; border-color:#2563EB }
 body.dark .ch-toggle      { border-color:#5A5A6C }
 body.dark .ch-toggle svg  { stroke:#9898AA }
 body.dark .tag            { background:#2C2C35; color:#C0C0CC }
@@ -213,10 +213,15 @@ body.dark .lang-sep       { opacity:.15 }
 body.dark #tip            { background:rgba(28,28,34,.96); color:#ECECEE }
 /* ── Experience paragraph ── */
 .exp-para { font-size:12.5px; color:var(--ink-2); line-height:1.65; padding:0 2px }
+/* ── Card bottom link ── */
+.card-link-row { border-top:1px solid rgba(0,0,0,.07); margin-top:var(--sp); padding-top:var(--sp) }
+body.dark .card-link-row { border-top-color:rgba(255,255,255,.09) }
+.card-link { display:inline-flex; align-items:center; gap:5px; padding:6px 12px; background:var(--tag-bg); color:var(--ink-2); border-radius:var(--r-sm); font-size:12px; text-decoration:none; transition:background var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease) }
+.card-link:hover { background:#8B8B8B; color:#F4F4F4 }
 /* ── Resize: disable transitions to prevent animation on window resize ── */
 body.resizing .cb-wrap { transition:none !important }
 /* ── Focus visible ── */
-:focus-visible { outline:2px solid #4169E1; outline-offset:2px; border-radius:4px }
+:focus-visible { outline:2px solid #2563EB; outline-offset:2px; border-radius:4px }
 /* ── Print ── */
 .btn-print { position:fixed; bottom:32px; right:32px; display:flex; align-items:center; gap:var(--sp-sm); padding:var(--sp-sm) var(--sp); background:rgba(28,28,30,.78); backdrop-filter:blur(12px); color:rgba(255,255,255,.92); border:1px solid rgba(255,255,255,.1); border-radius:var(--r-pill); font-family:var(--font); font-size:12.5px; font-weight:500; cursor:pointer; z-index:200; box-shadow:0 4px 20px rgba(0,0,0,.18); transition:opacity .15s }
 .btn-print:hover { opacity:.8 }
@@ -368,7 +373,7 @@ body.resizing .cb-wrap { transition:none !important }
   <div class="section-title"><h2 data-i="section-exp">Expérience</h2><button class="section-toggle" data-section="exp"><i data-lucide="chevron-up"></i></button></div>
   <div class="row col-2" data-section="exp">
 
-    <div class="card exp-card" data-popup="je">
+    <div class="card exp-card">
       <div class="ch">
         <div class="ch-l">
           <div class="exp-logo"><img src="images/logo-je.jpeg" alt="Job Events"></div>
@@ -384,10 +389,11 @@ body.resizing .cb-wrap { transition:none !important }
       </div>
       <div class="cb-wrap"><div class="cb">
         <p class="exp-para" data-i="je-para">Growth hacker chez Job Events depuis 2021, je pilote la stratégie éditoriale et digitale — SEO, réseaux sociaux et contenus TikTok ayant généré plus de 2 millions de vues. J'optimise les campagnes en continu grâce à l'analyse de données.</p>
+        <div class="card-link-row"><a class="card-link" href="https://levillagedesrecruteurs.fr" target="_blank">Voir le site <svg viewBox="0 0 10 10" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1 9L9 1M9 1H3M9 1V7"/></svg></a></div>
       </div></div>
     </div>
 
-    <div class="card exp-card" data-popup="8b">
+    <div class="card exp-card">
       <div class="ch">
         <div class="ch-l">
           <div class="exp-logo"><img src="images/logo-8b.jpg" alt="8Beats Radio"></div>
@@ -403,6 +409,7 @@ body.resizing .cb-wrap { transition:none !important }
       </div>
       <div class="cb-wrap"><div class="cb">
         <p class="exp-para" data-i="8b-para">Co-fondateur de 8Beats Radio depuis 2021, la première radio en ligne dédiée à la musique de jeux vidéo. Je gère la stratégie éditoriale, l'acquisition et les réseaux sociaux — 4 000 auditeurs réguliers.</p>
+        <div class="card-link-row"><a class="card-link" href="https://8beats.co" target="_blank">Écouter <svg viewBox="0 0 10 10" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1 9L9 1M9 1H3M9 1V7"/></svg></a></div>
       </div></div>
     </div>
 
@@ -441,6 +448,7 @@ body.resizing .cb-wrap { transition:none !important }
       </div>
       <div class="cb-wrap"><div class="cb">
         <p class="exp-para" data-i="po-para">Co-fondateur du label musical Palm Off de 2014 à 2017. Développement de l'identité de marque, relations presse, production de concerts — avec une stratégie emailing et cross-canal en support.</p>
+        <div class="card-link-row"><a class="card-link" href="https://soundcloud.com/palmoff" target="_blank">Écouter sur SoundCloud <svg viewBox="0 0 10 10" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1 9L9 1M9 1H3M9 1V7"/></svg></a></div>
       </div></div>
     </div>
 
@@ -703,13 +711,13 @@ epPopup.addEventListener('mouseleave', hidePopup);
 
 /* ── Exp popups ── */
 const expData = {
-  je:  {title:'Le Village des Recruteurs', desc:'Stratégie digitale, contenus TikTok +2M vues, campagnes growth.',              emoji:'📅', url:'https://levillagedesrecruteurs.fr', label:'Voir le site',      preview:'preview-je.jpg'},
-  '8b':{title:'8Beats Radio',              desc:'Radio vidéo-ludique en ligne — co-fondée en 2021, 4K auditeurs.',              emoji:'🎵', url:'https://8beats.co',                label:'Écouter',            preview:'preview-8beats.jpg'},
-  pp:  {title:'Purple Proposition',        desc:'Studio de design graphique — identités visuelles, campagnes cross-canal.',    emoji:'🎨', url:'https://purpleproposition.com',    label:'Voir le portfolio', photos:true, photoSrc:['pp-1.jpg','pp-2.jpg','pp-3.jpg']},
-  po:  {title:'Palm Off',                  desc:'Label musical — production de concerts et stratégie de marque (2014–2017).',  emoji:'🎤', url:'https://soundcloud.com/palmoff',   label:'Écouter sur SoundCloud'}
+  pp: {title:'Purple Proposition', photos:true, photoSrc:['pp-1.jpg','pp-2.jpg','pp-3.jpg']}
 };
 document.querySelectorAll('.exp-card[data-popup]').forEach(card => {
-  card.addEventListener('mouseenter', () => { clearTimeout(epT); const d = expData[card.dataset.popup]; if (d) showPopup(d, card); });
+  card.addEventListener('mouseenter', () => {
+    if (card.classList.contains('closed')) return;
+    clearTimeout(epT); const d = expData[card.dataset.popup]; if (d) showPopup(d, card);
+  });
   card.addEventListener('mouseleave', hidePopup);
 });
 
@@ -722,7 +730,10 @@ const intData = {
   travel: {title:'Voyage', photos:true, url:null, label:null}
 };
 document.querySelectorAll('.int-btn[data-int]').forEach(btn => {
-  btn.addEventListener('mouseenter', () => { clearTimeout(epT); const d = intData[btn.dataset.int]; if (d) showPopup(d, btn); });
+  btn.addEventListener('mouseenter', () => {
+    if (btn.closest('.card')?.classList.contains('closed')) return;
+    clearTimeout(epT); const d = intData[btn.dataset.int]; if (d) showPopup(d, btn);
+  });
   btn.addEventListener('mouseleave', hidePopup);
 });
 
