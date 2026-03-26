@@ -646,6 +646,31 @@ const epTitle      = document.getElementById('ep-title');
 const epDesc       = document.getElementById('ep-desc');
 const epLink       = document.getElementById('ep-link');
 let epT;
+let currentFanBaseT = [];
+
+/* ── Fan layout helper — works for any N photos ── */
+function fanLayout(n) {
+  const mid    = Math.floor(n / 2);
+  const maxX   = n <= 3 ? 60  : 80;
+  const maxRot = n <= 3 ? 10  : 14;
+  const step   = mid > 0 ? 1 / mid : 1;
+  const transforms = Array.from({length: n}, (_, i) => {
+    const frac = (i - mid) * step;
+    const x    = Math.round(frac * maxX);
+    const a    = +(frac * maxRot).toFixed(1);
+    if (x === 0 && a === 0) return 'rotate(0deg)';
+    if (x === 0)            return `rotate(${a}deg)`;
+    return `translateX(${x}px) rotate(${a}deg)`;
+  });
+  /* z-indices: center highest, decrease outward; right side slightly above left */
+  const zIndices = Array.from({length: n}, (_, i) => {
+    const dist = Math.abs(i - mid);
+    return (n - dist * 2) + (i > mid ? 1 : 0);
+  });
+  zIndices[mid] = n * 2; // center always on top
+  const fanW = 250 + (n - 1) * maxX * 2 / n + 80;
+  return { transforms, zIndices, mid, fanW: Math.round(fanW), fanH: n <= 3 ? 230 : 240 };
+}
 
 function showPopup(d, anchor) {
   epTitle.textContent = d.title;
@@ -657,14 +682,16 @@ function showPopup(d, anchor) {
     document.querySelector('.ep-sep').style.display = 'none';
     document.querySelector('#exp-popup .ep-body').style.padding = '0';
     const srcs = d.photoSrc || ['travel-1.jpg','travel-2.jpg','travel-3.jpg'];
+    const lay  = fanLayout(srcs.length);
+    currentFanBaseT = lay.transforms;
+
     document.querySelector('#exp-popup .ep-body').innerHTML = `
-      <div class="ep-fan">
+      <div class="ep-fan" style="width:${lay.fanW}px;height:${lay.fanH}px">
         ${srcs.map(s=>`<div class="ep-fan-photo"><img src="images/${s}" alt="${d.title}"></div>`).join('')}
       </div>
     `;
     const fanPhotos = [...epPopup.querySelectorAll('.ep-fan-photo')];
-    const baseT = ['translateX(-60px) rotate(-10deg)','rotate(0deg)','translateX(60px) rotate(10deg)'];
-    const baseZ = [1, 3, 2];
+    const { transforms: baseT, zIndices: baseZ, mid } = lay;
 
     /* Entry: start scaled-down, stagger in fast */
     fanPhotos.forEach((p, i) => {
@@ -672,33 +699,33 @@ function showPopup(d, anchor) {
       p.style.opacity    = '0';
       p.style.transform  = baseT[i] + ' scale(.84)';
       p.style.zIndex     = baseZ[i];
-      if (i !== 1) p.classList.add('behind');
+      if (i !== mid) p.classList.add('behind');
     });
     fanPhotos.forEach((p, i) => {
       setTimeout(() => {
         p.style.transition = 'opacity .28s cubic-bezier(.16,1,.3,1), transform .38s cubic-bezier(.16,1,.3,1), box-shadow .4s cubic-bezier(.16,1,.3,1)';
         p.style.opacity   = '1';
         p.style.transform = baseT[i];
-      }, i * 55);
+      }, i * 50);
     });
-    setTimeout(() => fanPhotos.forEach(p => { p.style.transition = ''; p.style.opacity = ''; }), 650);
+    setTimeout(() => fanPhotos.forEach(p => { p.style.transition = ''; p.style.opacity = ''; }), 700);
 
     fanPhotos.forEach((photo, i) => {
       photo.addEventListener('mouseenter', () => {
         fanPhotos.forEach((p, j) => {
-          p.style.zIndex = j === i ? '10' : baseZ[j];
-          if (i !== 1 && j === 1) p.classList.add('behind');
-          if (j === i)            p.classList.remove('behind');
+          p.style.zIndex = j === i ? '99' : baseZ[j];
+          if (i !== mid && j === mid) p.classList.add('behind');
+          if (j === i)                p.classList.remove('behind');
         });
-        photo.style.transform  = baseT[i] + ' scale(1.04)';
-        photo.style.boxShadow  = '0 16px 40px rgba(0,0,0,.38), 0 4px 12px rgba(0,0,0,.2)';
+        photo.style.transform = baseT[i] + ' scale(1.04)';
+        photo.style.boxShadow = '0 16px 40px rgba(0,0,0,.38), 0 4px 12px rgba(0,0,0,.2)';
       });
       photo.addEventListener('mouseleave', () => {
-        photo.style.transform  = baseT[i];
-        photo.style.boxShadow  = '';
+        photo.style.transform = baseT[i];
+        photo.style.boxShadow = '';
         fanPhotos.forEach((p, j) => {
           p.style.zIndex = baseZ[j];
-          p.classList.toggle('behind', j !== 1);
+          p.classList.toggle('behind', j !== mid);
         });
       });
     });
@@ -743,11 +770,10 @@ function hidePopup() {
   epT = setTimeout(() => {
     if (epPopup.classList.contains('photo-only')) {
       const photos = [...epPopup.querySelectorAll('.ep-fan-photo')];
-      const baseT  = ['translateX(-60px) rotate(-10deg)','rotate(0deg)','translateX(60px) rotate(10deg)'];
       photos.forEach((p, i) => {
         p.style.transition = 'opacity .2s ease-in, transform .28s cubic-bezier(.4,0,1,1)';
         p.style.opacity    = '0';
-        p.style.transform  = baseT[i] + ' scale(.9)';
+        p.style.transform  = (currentFanBaseT[i] || 'rotate(0deg)') + ' scale(.9)';
       });
       setTimeout(() => epPopup.classList.remove('visible'), 300);
     } else {
@@ -772,7 +798,7 @@ document.querySelectorAll('.exp-card[data-popup]').forEach(card => {
 /* ── Interests popups ── */
 const intData = {
   travel: {title:'Voyage',              photos:true, photoSrc:['travel-1.jpg','travel-2.jpg','travel-3.jpg'], url:null, label:null},
-  pp:     {title:'Purple Proposition',  photos:true, photoSrc:['pp-1.jpg','pp-2.jpg','pp-3.jpg'],            url:null, label:null}
+  pp:     {title:'Purple Proposition',  photos:true, photoSrc:['pp-1.jpg','pp-2.jpg','pp-3.jpg','pp-4.jpg','pp-5.jpg'], url:null, label:null}
 };
 document.querySelectorAll('[data-int]').forEach(btn => {
   btn.addEventListener('mouseenter', () => {
