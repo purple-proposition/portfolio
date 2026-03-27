@@ -285,16 +285,31 @@ body.resizing .cb-wrap { transition:none !important }
   /* Supprime les URLs auto du navigateur sur les liens */
   a::after { content:none !important }
 
-  /* Tokens : espacement réduit + typo ÷ 1.33 par rapport au design system */
+  /* Tous les tokens ÷ 1.33 — typo + espacement cohérents */
   :root {
-    --gap:16px; --sp:12px; --sp-sm:6px;
+    --gap:24px; --sp:12px; --sp-sm:6px; --sp-xs:3px; --sp-md:15px; --sp-lg:18px;
+    --r:15px; --r-sm:9px;
     --t-xs:8px; --t-sm:9px; --t-base:11px; --t-md:11px; --t-lg:12px; --t-xl:24px; --t-2xl:21px;
   }
-  /* ch-r est hardcodé à 10px — réduit proportionnellement */
-  .ch-r { font-size:8px !important }
 
-  /* Padding page réduit */
-  .page { max-width:100%; padding:12px 16px 16px }
+  /* Hauteur header de card : 52px ÷ 1.33 ≈ 39px */
+  .ch { height:39px !important }
+
+  /* Logo expérience : 40px ÷ 1.33 ≈ 30px */
+  .exp-logo { width:30px !important; height:30px !important; border-radius:7px !important }
+  .exp-logo img { width:30px !important; height:30px !important }
+
+  /* Icône card header : 15px ÷ 1.33 ≈ 11px */
+  .ch-icon { width:11px !important; height:11px !important }
+
+  /* Chips / lang-btn / int-btn — padding horizontal hardcodé à 12px ÷ 1.33 ≈ 9px */
+  .chip, .lang-btn, .int-btn { padding:var(--sp-sm) 9px !important }
+
+  /* ch-r — font-size et padding hardcodés */
+  .ch-r { font-size:8px !important; padding:3px var(--sp-sm) !important }
+
+  /* Page padding */
+  .page { max-width:100%; padding:9px 12px 12px }
 
   /* Ouvre tous les tiroirs */
   .cb-wrap { grid-template-rows:1fr !important; overflow:visible !important }
