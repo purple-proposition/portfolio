@@ -298,13 +298,10 @@ body.resizing .cb-wrap { transition:none !important }
   .ch-toggle,.ch-action,.section-toggle,#exp-popup,#tip,footer { display:none !important }
   [data-section="interests"],.section-title:has(h2[data-i="int-title"]) { display:none !important }
 
-  /* Hero: affiche email/tel/LinkedIn en texte brut à la place des boutons */
+  /* Hero: garde les boutons stylés, remplace le label par les vraies infos */
   .hero-sep { display:none !important }
-  .contact-btns { flex-wrap:wrap; gap:var(--sp) }
-  .contact-btn { background:none !important; border:none !important; box-shadow:none !important; padding:0 !important; color:var(--ink-2) !important }
-  .contact-btn i,.contact-btn svg { display:none !important }
   .contact-btn span[data-i] { display:none !important }
-  .contact-btn[data-print]::after { content:attr(data-print); font-family:var(--mono); font-size:var(--t-sm); color:var(--ink-2); letter-spacing:.01em }
+  .contact-btn[data-print]::after { content:attr(data-print) }
   .contact-btn:not([data-print]) { display:none !important }
 
   /* Supprime les boutons liens externes dans les expériences */
