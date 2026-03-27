@@ -275,49 +275,83 @@ body.resizing .cb-wrap { transition:none !important }
   #tip { display:none }
 }
 @media print {
-  @page { size:A4 portrait; margin:8mm 10mm }
-  html,body { background:white !important }
-  body { font-size:9px }
-  .page { max-width:100%; padding:0 }
-  /* Expand all drawers */
+  @page { size:A4 portrait; margin:7mm 9mm }
+
+  /* ── Background: force white (override JS inline gradient) ── */
+  html { background:white !important }
+  body { background:white !important; font-size:8px; -webkit-print-color-adjust:exact; print-color-adjust:exact }
+
+  /* ── Page container ── */
+  .page { max-width:100%; padding:0; gap:7px }
+
+  /* ── Expand all drawers ── */
   .cb-wrap { grid-template-rows:1fr !important; overflow:visible !important }
-  .cb { padding:8px 10px !important; gap:8px !important }
-  .exp-card .cb { gap:6px !important }
-  /* Keep multi-column layout — same as screen */
-  .row { gap:8px !important }
-  /* Clean card surfaces */
-  .card { box-shadow:none !important; border:1px solid #DCDCDC !important; background:white !important; border-radius:10px !important }
-  .ch { background:#F4F4F4 !important; min-height:0 !important; padding:6px 10px !important }
-  .exp-card .ch { min-height:0 !important }
-  /* Hide interactive & decorative elements */
+
+  /* ── Row gaps ── */
+  .row { gap:6px !important }
+
+  /* ── Cards ── */
+  .card { box-shadow:none !important; border:1px solid #DEDEDE !important; background:#FFFFFF !important; border-radius:12px !important }
+  .ch   { background:#F3F3F3 !important; min-height:0 !important; padding:5px 9px !important }
+  .cb   { padding:7px 9px !important; gap:6px !important }
+  .exp-card .cb { gap:5px !important }
+
+  /* ── Hide non-CV elements ── */
   .ch-toggle,.ch-action,.section-toggle,#exp-popup,#tip,footer { display:none !important }
   .hero-btns,.hero-sep { display:none !important }
-  /* Hero compact */
-  .hero-top { gap:10px; padding:2px 0 !important }
-  .avatar-box { width:40px !important; height:40px !important }
-  .name { font-size:15px !important; letter-spacing:-.5px }
-  .hero-desc { font-size:8.5px !important; line-height:1.4 }
-  /* Section titles */
-  .section-title { margin-top:8px !important; break-after:avoid }
-  .section-title h2 { font-size:11px !important }
-  /* Exp logo + text */
-  .exp-logo { width:26px !important; height:26px !important; border-radius:5px !important }
-  .ch-l { gap:8px !important }
-  .ch-company { font-size:9px !important; line-height:1.2 }
-  .ch-role { font-size:7.5px !important }
-  .ch-r { font-size:7px !important; padding:1px 5px !important; border-radius:4px !important }
-  .ch-icon { width:10px !important; height:10px !important }
-  .ch-label { font-size:10px !important }
-  /* Chips & tags */
-  .chip,.lang-btn,.int-btn { border:1px solid #DCDCDC !important; background:#F8F8F8 !important; color:#1A1A1A !important; padding:3px 7px !important; font-size:8px !important; border-radius:6px !important }
-  .chip-sep,.lang-sep { opacity:.25 !important }
-  .chip-lvl,.lang-lvl { font-size:7px !important }
-  .chips,.lang-btns,.int-btns { gap:5px !important }
-  /* Card link button */
-  .card-link { border:1px solid #DCDCDC !important; background:#F8F8F8 !important; color:#1A1A1A !important; font-size:8px !important; padding:4px 8px !important }
-  .card-link-row { padding-top:6px !important; margin-top:0 !important }
-  /* Experience paragraphs */
-  .exp-para { color:#222 !important; font-size:8.5px !important; line-height:1.45 !important }
+  [data-section="interests"],.section-title:has(h2[data-i="int-title"]) { display:none !important }
+
+  /* ── Hero ── */
+  .hero-top { gap:9px; padding:0 !important }
+  .avatar-box { width:34px !important; height:34px !important }
+  .name { font-size:13px !important; letter-spacing:-.4px }
+  .hero-desc { font-size:7.5px !important; line-height:1.4 }
+
+  /* ── Section titles ── */
+  .section-title { margin-top:7px !important; break-after:avoid }
+  .section-title h2 { font-size:10px !important; letter-spacing:-.2px }
+
+  /* ── Card headers ── */
+  .ch-l { gap:6px !important }
+  .ch-icon { width:9px !important; height:9px !important }
+  .ch-label { font-size:9px !important }
+  .exp-logo { width:22px !important; height:22px !important; border-radius:4px !important }
+  .ch-company { font-size:8px !important; line-height:1.15 }
+  .ch-role { font-size:6.5px !important }
+  .ch-r { font-size:6px !important; padding:1px 4px !important; border-radius:4px !important }
+
+  /* ── Experience descriptions: clamp to 3 lines ── */
+  .exp-para {
+    color:#1A1A1A !important;
+    font-size:7.5px !important;
+    line-height:1.4 !important;
+    display:-webkit-box !important;
+    -webkit-box-orient:vertical !important;
+    -webkit-line-clamp:3 !important;
+    overflow:hidden !important;
+  }
+
+  /* ── Chips ── */
+  .chip,.lang-btn,.int-btn {
+    background:#F0F0F0 !important; color:#1A1A1A !important;
+    border:1px solid #DEDEDE !important;
+    padding:2px 6px !important; font-size:7px !important;
+    border-radius:6px !important;
+  }
+  .chip-sep,.lang-sep { opacity:.2 !important }
+  .chip-lvl,.lang-lvl { font-size:6px !important }
+  .chips,.lang-btns,.int-btns { gap:4px !important }
+  .lang-flag { font-size:10px !important }
+
+  /* ── Card link button ── */
+  .card-link {
+    background:#F0F0F0 !important; color:#1A1A1A !important;
+    border:1px solid #DEDEDE !important;
+    font-size:7px !important; padding:3px 7px !important;
+    border-radius:6px !important;
+  }
+  .card-link-row { padding-top:5px !important }
+  .card-link svg { width:8px !important; height:8px !important }
 }
 </style>
 </head>
