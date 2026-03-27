@@ -274,95 +274,40 @@ body.resizing .cb-wrap { transition:none !important }
   #tip { display:none }
 }
 @media print {
-  @page { size:A4 portrait; margin:10mm 12mm }
+  /* A4 avec marges standard — le zoom scale tout proportionnellement */
+  @page { size:A4 portrait; margin:12mm 14mm }
 
-  /* ── Reset ── */
+  /* Scale global: 860px site → ~755px content A4 ≈ zoom 0.88 */
   html,body { background:white !important }
-  body { -webkit-print-color-adjust:exact; print-color-adjust:exact }
+  body { zoom:0.88; -webkit-print-color-adjust:exact; print-color-adjust:exact }
 
-  /* Suppress browser auto-URL on links */
+  /* Supprime les URLs auto du navigateur sur les liens */
   a::after { content:none !important }
 
-  /* ── Page ── */
-  .page { max-width:100%; padding:0; gap:8px }
+  /* Pleine largeur, padding natif */
+  .page { max-width:100% }
 
-  /* ── Expand all drawers ── */
+  /* Ouvre tous les tiroirs */
   .cb-wrap { grid-template-rows:1fr !important; overflow:visible !important }
 
-  /* ── Rows ── */
-  .row { gap:7px !important }
+  /* Fond blanc, ombres supprimées — couleurs des cards identiques au site */
+  .card { box-shadow:none !important }
+  html body { background:white !important }
 
-  /* ── Cards — faithful to design system ── */
-  .card { box-shadow:none !important; border:1px solid #E4E4E4 !important; background:#FAFAFA !important; border-radius:16px !important }
-  .ch   { background:#EFEFEF !important; min-height:0 !important; padding:6px 12px !important; border-radius:16px 16px 0 0 !important }
-  .cb   { padding:8px 12px !important; gap:7px !important }
-  .exp-card .cb { gap:6px !important }
-
-  /* ── Hide non-CV ── */
+  /* Masque les éléments interactifs et non-CV */
   .ch-toggle,.ch-action,.section-toggle,#exp-popup,#tip,footer { display:none !important }
-  .hero-sep { display:none !important }
   [data-section="interests"],.section-title:has(h2[data-i="int-title"]) { display:none !important }
 
-  /* ── Hero: show contact info as plain text ── */
-  .hero-btns { padding:0 !important }
-  .contact-btns { flex-direction:row; flex-wrap:wrap; gap:12px; align-items:center }
-  .contact-btn {
-    background:none !important; border:none !important; box-shadow:none !important;
-    padding:0 !important; gap:4px !important;
-    font-size:8px !important; color:#3D3D3D !important;
-  }
+  /* Hero: affiche email/tel/LinkedIn en texte brut à la place des boutons */
+  .hero-sep { display:none !important }
+  .contact-btns { flex-wrap:wrap; gap:var(--sp) }
+  .contact-btn { background:none !important; border:none !important; box-shadow:none !important; padding:0 !important; color:var(--ink-2) !important }
   .contact-btn i,.contact-btn svg { display:none !important }
   .contact-btn span[data-i] { display:none !important }
-  .contact-btn[data-print]::after { content:attr(data-print); font-family:'Geist Mono',monospace; font-size:7.5px; color:#3D3D3D; letter-spacing:.01em }
-  /* hide the dark mode toggle button in hero */
+  .contact-btn[data-print]::after { content:attr(data-print); font-family:var(--mono); font-size:var(--t-sm); color:var(--ink-2); letter-spacing:.01em }
   .contact-btn:not([data-print]) { display:none !important }
 
-  /* ── Hero layout ── */
-  .hero-top { gap:10px; padding:0 !important }
-  .avatar-box { width:40px !important; height:40px !important }
-  .name { font-size:15px !important; letter-spacing:-.5px }
-  .hero-desc { font-size:8px !important; line-height:1.4; color:#3D3D3D !important }
-
-  /* ── Section titles ── */
-  .section-title { margin-top:8px !important; break-after:avoid }
-  .section-title h2 { font-size:11px !important; color:#1A1A1A !important }
-
-  /* ── Card headers — uniform height ── */
-  .ch-l { gap:8px !important; align-items:center }
-  .ch-icon { width:11px !important; height:11px !important; stroke:#555 !important }
-  .ch-label { font-size:10px !important; font-weight:600 }
-  .ch-right { gap:6px !important }
-  .exp-logo { width:26px !important; height:26px !important; border-radius:5px !important; flex-shrink:0 }
-  .ch-title-block { gap:2px !important }
-  .ch-company { font-size:9px !important; line-height:1.15; font-weight:600 }
-  .ch-role { font-size:7px !important; color:#555 !important }
-  /* Date badges — mono smaller */
-  .ch-r { font-family:'Geist Mono',monospace !important; font-size:6.5px !important; padding:1px 5px !important; border-radius:4px !important; letter-spacing:.03em }
-
-  /* ── Descriptions: 3-line clamp ── */
-  .exp-para {
-    color:#222 !important; font-size:8px !important; line-height:1.45 !important;
-    display:-webkit-box !important; -webkit-box-orient:vertical !important;
-    -webkit-line-clamp:3 !important; overflow:hidden !important;
-  }
-
-  /* ── Chips — faithful colors ── */
-  .chip { background:#EBEBEB !important; color:#1A1A1A !important; border:none !important; padding:3px 7px !important; font-size:7.5px !important; border-radius:8px !important }
-  .chip-sep { opacity:.25 !important; margin:0 4px !important }
-  .chip-lvl { font-family:'Geist Mono',monospace !important; font-size:6px !important; letter-spacing:.05em }
-  .chips { gap:5px !important }
-
-  /* ── Language buttons ── */
-  .lang-btn { background:#EBEBEB !important; color:#1A1A1A !important; border:none !important; padding:3px 7px !important; font-size:8px !important; border-radius:8px !important; gap:5px !important }
-  .lang-sep { opacity:.2 !important; margin:0 4px !important }
-  .lang-lvl { font-family:'Geist Mono',monospace !important; font-size:6px !important; letter-spacing:.05em }
-  .lang-flag { font-size:11px !important }
-  .lang-btns { gap:5px !important }
-
-  /* ── Card link (Écouter, Voir le portfolio…) ── */
-  .card-link { background:#EBEBEB !important; color:#1A1A1A !important; border:none !important; font-size:7.5px !important; padding:3px 8px !important; border-radius:8px !important }
-  .card-link svg { display:none !important }
-  /* ── Hide external link buttons in experience cards ── */
+  /* Supprime les boutons liens externes dans les expériences */
   .card-link-row { display:none !important }
 }
 </style>
