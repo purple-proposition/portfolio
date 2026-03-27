@@ -224,8 +224,10 @@ body.dark .card-link-row { border-top-color:rgba(255,255,255,.09) }
 body.resizing .cb-wrap { transition:none !important }
 /* ── Focus visible ── */
 :focus-visible { outline:2px solid #2563EB; outline-offset:2px; border-radius:4px }
-/* ── Print ── */
-.btn-print { position:fixed; bottom:var(--gap); right:var(--gap); display:flex; align-items:center; gap:var(--sp-sm); padding:var(--sp-sm) var(--sp); background:rgba(28,28,30,.78); backdrop-filter:blur(12px); color:rgba(255,255,255,.92); border:1px solid rgba(255,255,255,.1); border-radius:var(--r-pill); font-family:var(--font); font-size:var(--t-base); font-weight:500; cursor:pointer; z-index:200; box-shadow:0 4px 20px rgba(0,0,0,.18); transition:opacity .15s }
+/* ── Header action buttons (print, theme) ── */
+.ch-action { background:none; border:none; padding:4px; cursor:pointer; display:flex; align-items:center; justify-content:center; border-radius:6px; transition:background var(--dur-fast) var(--ease) }
+.ch-action svg { width:15px; height:15px; stroke:var(--ink-2); fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round }
+@media (hover:pointer) { .ch-action:hover { background:var(--tag-bg) } }
 
 /* ── Hover: only on pointer devices ── */
 @media (hover: hover) {
@@ -238,7 +240,7 @@ body.resizing .cb-wrap { transition:none !important }
   .card-link:hover { background:#5c5c5c; color:#F4F4F4 }
   .ep-link:hover { background:#5c5c5c; color:#F4F4F4 }
   body.dark .ep-link:hover { background:#5A5A6C; color:#F4F4F4 }
-  .btn-print:hover { opacity:.8 }
+  .ch-action:hover { background:var(--tag-bg) }
 }
 @media (hover: none) {
   .card,.exp-card { transition:box-shadow var(--dur-fast) var(--ease) }
@@ -269,14 +271,37 @@ body.resizing .cb-wrap { transition:none !important }
   .chips { gap:8px }
   .lang-btns,.int-btns { gap:8px }
   .section-title h2 { font-size:24px }
-  .btn-print { bottom:16px; right:16px; padding:6px 12px; font-size:var(--t-sm) }
   #exp-popup { display:none }
   #tip { display:none }
 }
 @media print {
-  .btn-print { display:none }
-  body { print-color-adjust:exact; -webkit-print-color-adjust:exact }
-  @page { size:A4; margin:10mm 12mm }
+  @page { size:A4 portrait; margin:12mm 14mm }
+  html,body { background:white !important }
+  body { font-size:11px }
+  .page { max-width:100%; padding:0 }
+  /* Expand all drawers */
+  .cb-wrap { grid-template-rows:1fr !important; overflow:visible !important }
+  .cb { padding-top:var(--sp) !important }
+  /* Flatten layout to 1 column */
+  .col-2,.col-3 { grid-template-columns:1fr }
+  .row { gap:12px }
+  /* Clean card surfaces */
+  .card { box-shadow:none !important; border:1px solid #E0E0E0 !important; background:white !important; break-inside:avoid }
+  .ch { background:#F4F4F4 !important }
+  /* Hide interactive & decorative elements */
+  .ch-toggle,.ch-action,.section-toggle,#exp-popup,#tip,footer { display:none !important }
+  .hero-btns { display:none !important }
+  /* Hero compact */
+  .hero-top { gap:12px }
+  .avatar-box { width:56px; height:56px }
+  .name { font-size:20px }
+  /* Chips & tags */
+  .chip,.lang-btn,.int-btn { border:1px solid #E0E0E0 !important; background:#F8F8F8 !important; color:#1A1A1A !important }
+  .card-link { border:1px solid #E0E0E0 !important; background:#F8F8F8 !important; color:#1A1A1A !important }
+  .exp-para { color:#333 !important }
+  /* Section titles */
+  .section-title { break-after:avoid }
+  .section-title h2 { font-size:16px }
 }
 </style>
 </head>
@@ -296,11 +321,6 @@ body.resizing .cb-wrap { transition:none !important }
 
 <div id="tip"></div>
 
-<button class="btn-print" onclick="window.print()">
-  <i data-lucide="printer" style="width:13px;height:13px;stroke:currentColor;fill:none"></i>
-  <span data-i="print">Imprimer</span>
-</button>
-
 <main class="page">
 
   <!-- HERO -->
@@ -310,7 +330,14 @@ body.resizing .cb-wrap { transition:none !important }
         <i data-lucide="user" class="ch-icon"></i>
         <span class="ch-label">Portfolio<span class="ch-label-suffix"></span></span>
       </div>
-      <div class="ch-right">
+      <div class="ch-right" style="display:flex;align-items:center;gap:4px">
+        <button class="ch-action" onclick="applyTheme(!document.body.classList.contains('dark'))" aria-label="Basculer le thème">
+          <i data-lucide="moon" id="icon-moon"></i>
+          <i data-lucide="sun"  id="icon-sun" style="display:none"></i>
+        </button>
+        <button class="ch-action" onclick="window.print()" aria-label="Imprimer">
+          <i data-lucide="printer"></i>
+        </button>
         <button class="ch-toggle"><i data-lucide="chevron-up"></i></button>
       </div>
     </div>
@@ -336,10 +363,6 @@ body.resizing .cb-wrap { transition:none !important }
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="flex-shrink:0;fill:currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
               <span data-i="cta-linkedin">Se connecter sur LinkedIn</span>
             </a>
-            <button class="contact-btn" onclick="applyTheme(!document.body.classList.contains('dark'))" aria-label="Basculer le thème">
-              <i data-lucide="moon" id="icon-moon"></i>
-              <i data-lucide="sun"  id="icon-sun" style="display:none"></i>
-            </button>
           </div></div>
     </div></div>
   </div>
@@ -673,8 +696,8 @@ function positionPopup(anchor, isPhoto) {
   left = Math.max(8, Math.min(left, window.innerWidth - pw - 8));
   let top;
   if (isPhoto) {
-    /* Centre le popup au milieu de la card */
-    top = r.top + r.height / 2 - ph / 2;
+    /* Centre le popup au milieu de la card, décalé 12px vers le haut */
+    top = r.top + r.height / 2 - ph / 2 - 12;
     top = Math.max(8, Math.min(top, window.innerHeight - ph - 8));
   } else {
     const gap = 12;
