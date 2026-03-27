@@ -286,31 +286,32 @@ body.resizing .cb-wrap { transition:none !important }
   a::after { content:none !important }
 
   /* Tokens typo + espacement */
+  /* Grille 8pt — tous les tokens sont des multiples de 8 */
   :root {
-    --gap:24px; --sp:12px; --sp-sm:6px; --sp-xs:3px; --sp-md:15px; --sp-lg:18px;
-    --r:15px; --r-sm:9px;
-    --t-xs:8px; --t-sm:8px; --t-base:10px; --t-md:10px; --t-lg:12px; --t-xl:24px; --t-2xl:21px;
+    --gap:24px; --sp:16px; --sp-sm:8px; --sp-xs:8px; --sp-md:16px; --sp-lg:24px;
+    --r:16px; --r-sm:8px;
+    --t-xs:8px; --t-sm:8px; --t-base:8px; --t-md:8px; --t-lg:16px; --t-xl:24px; --t-2xl:24px;
   }
 
-  /* Hauteur header de card : 52px ÷ 1.33 ≈ 39px */
-  .ch { height:39px !important }
+  /* Card header : 40px */
+  .ch { height:40px !important }
 
-  /* Logo expérience : 40px ÷ 1.33 ≈ 30px */
-  .exp-logo { width:30px !important; height:30px !important; border-radius:7px !important }
-  .exp-logo img { width:30px !important; height:30px !important }
+  /* Logo expérience : 32px */
+  .exp-logo { width:32px !important; height:32px !important; border-radius:8px !important }
+  .exp-logo img { width:32px !important; height:32px !important }
 
-  /* Icône card header : 15px ÷ 1.33 ≈ 11px */
-  .ch-icon { width:11px !important; height:11px !important }
+  /* Icône card header : 16px */
+  .ch-icon { width:16px !important; height:16px !important }
 
-  /* Chips / lang-btn / int-btn — padding horizontal hardcodé à 12px ÷ 1.33 ≈ 9px */
-  .chip, .lang-btn, .int-btn { padding:var(--sp-sm) 9px !important }
+  /* Chips / lang-btn / int-btn */
+  .chip, .lang-btn, .int-btn { padding:8px !important }
 
-  /* Geist Mono à 8px */
-  .ch-r { font-size:8px !important; padding:3px var(--sp-sm) !important }
+  /* Geist Mono : 8px */
+  .ch-r { font-size:8px !important; padding:0 8px !important }
   .lang-lvl { font-size:8px !important }
 
   /* Page padding */
-  .page { max-width:100%; padding:9px 12px 12px }
+  .page { max-width:100%; padding:8px 16px 16px }
 
   /* Ouvre tous les tiroirs */
   .cb-wrap { grid-template-rows:1fr !important; overflow:visible !important }
