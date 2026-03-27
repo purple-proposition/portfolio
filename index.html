@@ -275,29 +275,38 @@ body.resizing .cb-wrap { transition:none !important }
   #tip { display:none }
 }
 @media print {
-  /* A4 avec marges standard — le zoom scale tout proportionnellement */
-  @page { size:A4 portrait; margin:12mm 14mm }
+  /* A4 — marges réduites pour maximiser l'espace utile */
+  @page { size:A4 portrait; margin:10mm 12mm }
 
-  /* Scale global: 860px site → ~755px content A4 ≈ zoom 0.88 */
   html,body { background:white !important }
-  body { zoom:0.88; -webkit-print-color-adjust:exact; print-color-adjust:exact }
+  /* zoom:0.84 — floor effectif: 14px×0.84≈11.8px≈8.8pt (lisible en impression 300dpi) */
+  body { zoom:0.84; -webkit-print-color-adjust:exact; print-color-adjust:exact }
 
   /* Supprime les URLs auto du navigateur sur les liens */
   a::after { content:none !important }
 
-  /* Pleine largeur, padding natif */
-  .page { max-width:100% }
+  /* Tokens : espacement réduit + typo ÷ 1.33 par rapport au design system */
+  :root {
+    --gap:16px; --sp:12px; --sp-sm:6px;
+    --t-xs:8px; --t-sm:9px; --t-base:11px; --t-md:11px; --t-lg:12px; --t-xl:24px; --t-2xl:21px;
+  }
+  /* ch-r est hardcodé à 10px — réduit proportionnellement */
+  .ch-r { font-size:8px !important }
+
+  /* Padding page réduit */
+  .page { max-width:100%; padding:12px 16px 16px }
 
   /* Ouvre tous les tiroirs */
   .cb-wrap { grid-template-rows:1fr !important; overflow:visible !important }
 
-  /* Fond blanc, ombres supprimées — couleurs des cards identiques au site */
+  /* Fond blanc, ombres supprimées */
   .card { box-shadow:none !important }
-  html body { background:white !important }
 
   /* Masque les éléments interactifs et non-CV */
   .ch-toggle,.ch-action,.section-toggle,#exp-popup,#tip,footer { display:none !important }
-  [data-section="interests"],.section-title:has(h2[data-i="int-title"]) { display:none !important }
+
+  /* Outils : masque les niveaux (séparateur + badge) */
+  .chip-sep, .chip-lvl { display:none !important }
 
   /* Hero: boutons stylés avec vraies infos */
   .contact-btn span[data-i] { display:none !important }
@@ -410,12 +419,12 @@ body.resizing .cb-wrap { transition:none !important }
       </div>
       <div class="cb-wrap"><div class="cb">
         <div class="chips">
-          <span class="chip" data-tip="Optimisation du référencement naturel — contenu, maillage, performance.">SEO</span>
-          <span class="chip" data-tip="Production de contenus courts — stratégie, tournage, montage, distribution.">TikTok</span>
-          <span class="chip" data-tip="Séquences d'emails automatisées, A/B tests et segmentation audience.">Email marketing</span>
           <span class="chip" data-tip="Lecture de données, tableaux de bord KPI et optimisation continue.">Analytics</span>
           <span class="chip" data-tip="Identités visuelles, chartes graphiques et positionnement de marque.">Branding</span>
+          <span class="chip" data-tip="Séquences d'emails automatisées, A/B tests et segmentation audience.">Email marketing</span>
           <span class="chip" data-tip="Stratégie éditoriale cross-canal — Instagram, TikTok, LinkedIn.">Réseaux sociaux</span>
+          <span class="chip" data-tip="Optimisation du référencement naturel — contenu, maillage, performance.">SEO</span>
+          <span class="chip" data-tip="Production de contenus courts — stratégie, tournage, montage, distribution.">TikTok</span>
         </div>
       </div></div>
     </div>
