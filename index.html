@@ -39,7 +39,7 @@
   --shadow-h: 0 2px 8px rgba(0,0,0,.07), 0 10px 28px rgba(0,0,0,.09);
 }
 *,*::before,*::after { box-sizing:border-box; margin:0; padding:0 }
-html { min-height:100%; background:#DEDAD4 }
+html { min-height:100%; background:#E8DDD2 }
 body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antialiased; min-height:100vh; transition:background 2s ease }
 
 /* ── Page ── */
@@ -588,10 +588,10 @@ document.querySelectorAll('.ch-toggle').forEach(btn => {
 });
 
 /* ── Theme (Japanese gradient, manual toggle) ── */
-/* 朝 Asa — washi paper warm neutral */
-const LIGHT_GRAD = 'linear-gradient(150deg,#DEDAD4 0%,#E6E0DA 40%,#DAD6CE 75%,#E2DDD8 100%)';
+/* 霞 Kasumi — morning mist: warm sand → pale indigo haze */
+const LIGHT_GRAD = 'linear-gradient(135deg,#E8DDD2 0%,#EDE5DC 25%,#DDD8E8 60%,#D4D0E2 100%)';
 /* 深夜 Shin\'ya — deep indigo night */
-const DARK_GRAD  = 'linear-gradient(150deg,#0E0D18 0%,#13101E 50%,#0C0B16 100%)';
+const DARK_GRAD  = 'linear-gradient(135deg,#0A0A16 0%,#10102A 45%,#0C0A1E 100%)';
 
 function applyTheme(dark) {
   const prev = document.body.classList.contains('dark');
