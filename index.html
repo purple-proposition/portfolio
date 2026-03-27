@@ -99,7 +99,6 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .contact-btn { display:inline-flex; align-items:center; gap:var(--sp-sm); padding:var(--sp-sm) var(--sp); background:var(--tag-bg); border:none; border-radius:var(--r-sm); font-family:var(--font); font-size:var(--t-base); font-weight:400; color:var(--tag-ink); text-decoration:none; white-space:nowrap; cursor:pointer; transition:background var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease) }
 .contact-btn svg { width:13px; height:13px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; flex-shrink:0 }
 .print-info { display:none }
-.print-merged-skills { display:none }
 
 /* ── Chips ── */
 .chips { display:flex; flex-wrap:wrap; gap:12px }
@@ -286,11 +285,11 @@ body.resizing .cb-wrap { transition:none !important }
   /* Supprime les URLs auto du navigateur sur les liens */
   a::after { content:none !important }
 
-  /* Tous les tokens ÷ 1.33 — typo + espacement cohérents */
+  /* Tokens typo + espacement */
   :root {
     --gap:24px; --sp:12px; --sp-sm:6px; --sp-xs:3px; --sp-md:15px; --sp-lg:18px;
     --r:15px; --r-sm:9px;
-    --t-xs:8px; --t-sm:9px; --t-base:11px; --t-md:11px; --t-lg:12px; --t-xl:24px; --t-2xl:21px;
+    --t-xs:8px; --t-sm:8px; --t-base:10px; --t-md:10px; --t-lg:12px; --t-xl:24px; --t-2xl:21px;
   }
 
   /* Hauteur header de card : 52px ÷ 1.33 ≈ 39px */
@@ -306,9 +305,9 @@ body.resizing .cb-wrap { transition:none !important }
   /* Chips / lang-btn / int-btn — padding horizontal hardcodé à 12px ÷ 1.33 ≈ 9px */
   .chip, .lang-btn, .int-btn { padding:var(--sp-sm) 9px !important }
 
-  /* Geist Mono réduit d'un cran supplémentaire */
-  .ch-r { font-size:7px !important; padding:3px var(--sp-sm) !important }
-  .lang-lvl { font-size:7px !important }
+  /* Geist Mono à 8px */
+  .ch-r { font-size:8px !important; padding:3px var(--sp-sm) !important }
+  .lang-lvl { font-size:8px !important }
 
   /* Page padding */
   .page { max-width:100%; padding:9px 12px 12px }
@@ -325,13 +324,8 @@ body.resizing .cb-wrap { transition:none !important }
   /* Outils : masque les niveaux (séparateur + badge) */
   .chip-sep, .chip-lvl { display:none !important }
 
-  /* Compétences : fusionné (merged) sur 2/3, Langues sur 1/3 */
-  [data-section="skills"] { grid-template-columns:2fr 1fr !important }
-  .print-merged-skills { display:block !important }
-  .print-merged-skills .cb-wrap { grid-template-rows:1fr !important }
-  /* Masque Outils (2e) et Expertises (3e) — merged les remplace */
-  [data-section="skills"] .card:nth-child(2),
-  [data-section="skills"] .card:nth-child(3) { display:none !important }
+  /* Compétences : 2 colonnes — chips plus larges, meilleur remplissage */
+  [data-section="skills"] { grid-template-columns:1fr 1fr !important }
 
   /* Centres d'intérêt : gap compact */
   .int-btns { gap:6px !important }
@@ -413,28 +407,6 @@ body.resizing .cb-wrap { transition:none !important }
   <!-- COMPÉTENCES -->
   <div class="section-title"><h2 data-i="section-skills">Compétences</h2><button class="section-toggle" data-section="skills"><i data-lucide="chevron-up"></i></button></div>
   <div class="row col-3" data-section="skills">
-
-    <!-- Print only: Outils + Expertises fusionnés et triés alphabétiquement -->
-    <div class="card print-merged-skills">
-      <div class="cb-wrap"><div class="cb">
-        <div class="chips">
-          <span class="chip">Analytics</span>
-          <span class="chip">Branding</span>
-          <span class="chip on">Claude</span>
-          <span class="chip">Email marketing</span>
-          <span class="chip on">Excel</span>
-          <span class="chip on">Figma</span>
-          <span class="chip on">Final Cut Pro</span>
-          <span class="chip on">Google Analytics</span>
-          <span class="chip on">Lemlist</span>
-          <span class="chip on">Notion</span>
-          <span class="chip on">Photoshop</span>
-          <span class="chip">Réseaux sociaux</span>
-          <span class="chip">SEO</span>
-          <span class="chip">TikTok</span>
-        </div>
-      </div></div>
-    </div>
 
     <div class="card">
       <div class="ch">
