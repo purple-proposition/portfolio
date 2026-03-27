@@ -225,9 +225,9 @@ body.resizing .cb-wrap { transition:none !important }
 /* ── Focus visible ── */
 :focus-visible { outline:2px solid #2563EB; outline-offset:2px; border-radius:4px }
 /* ── Header action buttons (print, theme) ── */
-.ch-action { background:none; border:none; padding:4px; cursor:pointer; display:flex; align-items:center; justify-content:center; border-radius:6px; transition:background var(--dur-fast) var(--ease) }
+.ch-action { background:none; border:none; padding:6px; cursor:pointer; display:flex; align-items:center; justify-content:center; border-radius:8px; transition:background var(--dur-fast) var(--ease) }
 .ch-action svg { width:15px; height:15px; stroke:var(--ink-2); fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round }
-@media (hover:pointer) { .ch-action:hover { background:var(--tag-bg) } }
+.ch-action:hover,.ch-toggle:hover { background:var(--tag-bg) }
 
 /* ── Hover: only on pointer devices ── */
 @media (hover: hover) {
@@ -275,33 +275,49 @@ body.resizing .cb-wrap { transition:none !important }
   #tip { display:none }
 }
 @media print {
-  @page { size:A4 portrait; margin:12mm 14mm }
+  @page { size:A4 portrait; margin:8mm 10mm }
   html,body { background:white !important }
-  body { font-size:11px }
+  body { font-size:9px }
   .page { max-width:100%; padding:0 }
   /* Expand all drawers */
   .cb-wrap { grid-template-rows:1fr !important; overflow:visible !important }
-  .cb { padding-top:var(--sp) !important }
-  /* Flatten layout to 1 column */
-  .col-2,.col-3 { grid-template-columns:1fr }
-  .row { gap:12px }
+  .cb { padding:8px 10px !important; gap:8px !important }
+  .exp-card .cb { gap:6px !important }
+  /* Keep multi-column layout — same as screen */
+  .row { gap:8px !important }
   /* Clean card surfaces */
-  .card { box-shadow:none !important; border:1px solid #E0E0E0 !important; background:white !important; break-inside:avoid }
-  .ch { background:#F4F4F4 !important }
+  .card { box-shadow:none !important; border:1px solid #DCDCDC !important; background:white !important; border-radius:10px !important }
+  .ch { background:#F4F4F4 !important; min-height:0 !important; padding:6px 10px !important }
+  .exp-card .ch { min-height:0 !important }
   /* Hide interactive & decorative elements */
   .ch-toggle,.ch-action,.section-toggle,#exp-popup,#tip,footer { display:none !important }
-  .hero-btns { display:none !important }
+  .hero-btns,.hero-sep { display:none !important }
   /* Hero compact */
-  .hero-top { gap:12px }
-  .avatar-box { width:56px; height:56px }
-  .name { font-size:20px }
-  /* Chips & tags */
-  .chip,.lang-btn,.int-btn { border:1px solid #E0E0E0 !important; background:#F8F8F8 !important; color:#1A1A1A !important }
-  .card-link { border:1px solid #E0E0E0 !important; background:#F8F8F8 !important; color:#1A1A1A !important }
-  .exp-para { color:#333 !important }
+  .hero-top { gap:10px; padding:2px 0 !important }
+  .avatar-box { width:40px !important; height:40px !important }
+  .name { font-size:15px !important; letter-spacing:-.5px }
+  .hero-desc { font-size:8.5px !important; line-height:1.4 }
   /* Section titles */
-  .section-title { break-after:avoid }
-  .section-title h2 { font-size:16px }
+  .section-title { margin-top:8px !important; break-after:avoid }
+  .section-title h2 { font-size:11px !important }
+  /* Exp logo + text */
+  .exp-logo { width:26px !important; height:26px !important; border-radius:5px !important }
+  .ch-l { gap:8px !important }
+  .ch-company { font-size:9px !important; line-height:1.2 }
+  .ch-role { font-size:7.5px !important }
+  .ch-r { font-size:7px !important; padding:1px 5px !important; border-radius:4px !important }
+  .ch-icon { width:10px !important; height:10px !important }
+  .ch-label { font-size:10px !important }
+  /* Chips & tags */
+  .chip,.lang-btn,.int-btn { border:1px solid #DCDCDC !important; background:#F8F8F8 !important; color:#1A1A1A !important; padding:3px 7px !important; font-size:8px !important; border-radius:6px !important }
+  .chip-sep,.lang-sep { opacity:.25 !important }
+  .chip-lvl,.lang-lvl { font-size:7px !important }
+  .chips,.lang-btns,.int-btns { gap:5px !important }
+  /* Card link button */
+  .card-link { border:1px solid #DCDCDC !important; background:#F8F8F8 !important; color:#1A1A1A !important; font-size:8px !important; padding:4px 8px !important }
+  .card-link-row { padding-top:6px !important; margin-top:0 !important }
+  /* Experience paragraphs */
+  .exp-para { color:#222 !important; font-size:8.5px !important; line-height:1.45 !important }
 }
 </style>
 </head>
@@ -330,7 +346,7 @@ body.resizing .cb-wrap { transition:none !important }
         <i data-lucide="user" class="ch-icon"></i>
         <span class="ch-label">Portfolio<span class="ch-label-suffix"></span></span>
       </div>
-      <div class="ch-right" style="display:flex;align-items:center;gap:4px">
+      <div class="ch-right" style="display:flex;align-items:center;gap:16px">
         <button class="ch-action" onclick="applyTheme(!document.body.classList.contains('dark'))" aria-label="Basculer le thème">
           <i data-lucide="moon" id="icon-moon"></i>
           <i data-lucide="sun"  id="icon-sun" style="display:none"></i>
