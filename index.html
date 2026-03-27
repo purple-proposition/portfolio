@@ -80,7 +80,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
   cursor:pointer; flex-shrink:0; padding:0; line-height:0;
 }
 .ch-toggle svg {
-  width:16px; height:16px; stroke:#767676; fill:none;
+  width:16px; height:16px; stroke:#767676; fill:none; transition:transform var(--dur) var(--ease), opacity var(--dur-fast) var(--ease);
   stroke-width:2; stroke-linecap:round; stroke-linejoin:round;
   transition:transform var(--dur) var(--ease);
 }
@@ -127,7 +127,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .section-title { display:flex; align-items:center; gap:var(--sp); padding:0; margin-top:4px }
 .section-title h2 { font-size:var(--t-xl); font-weight:600; color:var(--ink); letter-spacing:-.5px; line-height:1 }
 .section-toggle { background:none; border:none; display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; padding:6px; border-radius:8px; line-height:0; transition:background var(--dur-fast) var(--ease) }
-.section-toggle svg { width:16px; height:16px; stroke:var(--ink); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; transition:transform var(--dur) var(--ease) }
+.section-toggle svg { width:16px; height:16px; stroke:var(--ink); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; transition:transform var(--dur) var(--ease), opacity var(--dur-fast) var(--ease) }
 .section-toggle.all-closed svg { transform:rotate(180deg) }
 
 /* ── Lang ── */
@@ -226,8 +226,8 @@ body.resizing .cb-wrap { transition:none !important }
 :focus-visible { outline:2px solid #2563EB; outline-offset:2px; border-radius:4px }
 /* ── Header action buttons (print, theme) ── */
 .ch-action { background:none; border:none; padding:6px; cursor:pointer; display:flex; align-items:center; justify-content:center; border-radius:8px; transition:background var(--dur-fast) var(--ease) }
-.ch-action svg { width:15px; height:15px; stroke:var(--ink-2); fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round }
-.ch-action:hover,.ch-toggle:hover,.section-toggle:hover { background:var(--tag-bg) }
+.ch-action svg { width:15px; height:15px; stroke:var(--ink-2); fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; transition:opacity var(--dur-fast) var(--ease) }
+.ch-action:hover svg,.ch-toggle:hover svg,.section-toggle:hover svg { opacity:.45 }
 
 /* ── Hover: only on pointer devices ── */
 @media (hover: hover) {
