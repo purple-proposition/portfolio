@@ -191,30 +191,30 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 body.mode-switching .chip,body.mode-switching .contact-btn,body.mode-switching .lang-btn,body.mode-switching .int-btn,body.mode-switching .ep-link,body.mode-switching .card-link { transition-property:background,color,border-color; transition-duration:.32s; transition-timing-function:cubic-bezier(.4,0,.2,1) }
 .card { transition-property:background,color,border-color,box-shadow,transform; transition-duration:.32s,.32s,.32s,var(--dur),var(--dur); transition-timing-function:cubic-bezier(.4,0,.2,1),cubic-bezier(.4,0,.2,1),cubic-bezier(.4,0,.2,1),var(--ease),var(--ease) }
 /* Dark overrides — keeps blue (#2563EB) intact */
-body.dark .card           { background:#1E1E22 }
-body.dark .ch             { background:#28282E }
-body.dark .ch-label       { color:#E0E0E6 }
-body.dark .ch-icon        { stroke:#C0C0CC }
-body.dark .ch-r           { color:#8888A0; border-color:#8888A0 }
+body.dark .card           { background:#171717 }
+body.dark .ch             { background:#262626 }
+body.dark .ch-label       { color:#E5E5E5 }
+body.dark .ch-icon        { stroke:#D4D4D4 }
+body.dark .ch-r           { color:#737373; border-color:#737373 }
 body.dark .ch-r.current   { color:#2563EB; border-color:#2563EB }
-body.dark .ch-toggle svg  { stroke:#8888A0 }
-body.dark .section-toggle svg { stroke:#ECECEE }
-body.dark .tag            { background:#2C2C35; color:#C0C0CC }
-body.dark .chip           { background:#2C2C35; color:#C0C0CC; border:none }
-body.dark .chip.on        { background:#3A3A48; color:#ECECEE; border:none }
-body.dark .contact-btn    { background:#2C2C35; color:#C0C0CC; border-color:#3E3E4A }
-body.dark .lang-btn       { background:#2C2C35; color:#C0C0CC }
-body.dark .int-btn        { background:#2C2C35; color:#C0C0CC }
-body.dark .section-title h2 { color:#ECECEE }
-body.dark .ch-company     { color:#E0E0E6 }
-body.dark .ch-role        { color:#7878A0 }
+body.dark .ch-toggle svg  { stroke:#737373 }
+body.dark .section-toggle svg { stroke:#E5E5E5 }
+body.dark .tag            { background:#262626; color:#D4D4D4 }
+body.dark .chip           { background:#262626; color:#D4D4D4; border:none }
+body.dark .chip.on        { background:#404040; color:#E5E5E5; border:none }
+body.dark .contact-btn    { background:#262626; color:#D4D4D4; border-color:#404040 }
+body.dark .lang-btn       { background:#262626; color:#D4D4D4 }
+body.dark .int-btn        { background:#262626; color:#D4D4D4 }
+body.dark .section-title h2 { color:#E5E5E5 }
+body.dark .ch-company     { color:#E5E5E5 }
+body.dark .ch-role        { color:#737373 }
 body.dark .ep-sep         { background:rgba(255,255,255,.09) }
-body.dark #exp-popup      { background:rgba(22,22,28,.82) }
+body.dark #exp-popup      { background:rgba(23,23,23,.82) }
 body.dark #exp-popup.photo-only { background:none !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important; box-shadow:none !important }
-body.dark .ep-img         { background:#2C2C35 }
-body.dark .ep-link        { background:#2C2C35; color:#C0C0CC }
+body.dark .ep-img         { background:#262626 }
+body.dark .ep-link        { background:#262626; color:#D4D4D4 }
 body.dark .lang-sep       { opacity:.15 }
-body.dark #tip            { background:rgba(22,22,28,.90); color:#ECECEE }
+body.dark #tip            { background:rgba(23,23,23,.90); color:#E5E5E5 }
 /* ── Experience paragraph ── */
 .exp-para { font-size:var(--t-md); color:var(--tag-ink); line-height:1.65 }
 /* ── Card bottom link ── */
@@ -240,7 +240,7 @@ body.resizing .cb-wrap { transition:none !important }
   .int-btn:hover { background:#525252; color:#FAFAFA }
   .card-link:hover { background:#525252; color:#FAFAFA }
   .ep-link:hover { background:#525252; color:#FAFAFA }
-  body.dark .ep-link:hover { background:#5A5A6C; color:#FAFAFA }
+  body.dark .ep-link:hover { background:#525252; color:#FAFAFA }
 }
 @media (hover: none) {
   .card,.exp-card { transition:box-shadow var(--dur-fast) var(--ease) }
@@ -660,14 +660,14 @@ function applyTheme(dark) {
   }
   document.body.style.background = dark ? DARK_GRAD : LIGHT_GRAD;
   const r = document.documentElement;
-  r.style.setProperty('--ink',        dark ? '#ECECEE' : '#171717');
-  r.style.setProperty('--ink-2',      dark ? '#9898A0' : '#525252');
-  r.style.setProperty('--ink-3',      dark ? '#55555C' : '#525252');
-  r.style.setProperty('--card-bg',    dark ? 'rgba(30,30,34,.90)'  : 'rgba(250,250,250,.90)');
-  r.style.setProperty('--card-head',  dark ? 'rgba(40,40,46,.90)'  : 'rgba(233,233,233,.90)');
-  r.style.setProperty('--card-border',dark ? '#3A3A3E' : '#E5E5E5');
-  r.style.setProperty('--tag-bg',     dark ? '#2C2C35' : '#E5E5E5');
-  r.style.setProperty('--tag-ink',    dark ? '#C0C0CC' : '#171717');
+  r.style.setProperty('--ink',        dark ? '#E5E5E5' : '#171717');
+  r.style.setProperty('--ink-2',      dark ? '#A3A3A3' : '#525252');
+  r.style.setProperty('--ink-3',      dark ? '#525252' : '#525252');
+  r.style.setProperty('--card-bg',    dark ? 'rgba(23,23,23,.90)'  : 'rgba(250,250,250,.90)');
+  r.style.setProperty('--card-head',  dark ? 'rgba(38,38,38,.90)'  : 'rgba(233,233,233,.90)');
+  r.style.setProperty('--card-border',dark ? '#404040' : '#E5E5E5');
+  r.style.setProperty('--tag-bg',     dark ? '#262626' : '#E5E5E5');
+  r.style.setProperty('--tag-ink',    dark ? '#D4D4D4' : '#171717');
   r.style.setProperty('--shadow',     dark
     ? '0 1px 3px rgba(0,0,0,.25), 0 3px 12px rgba(0,0,0,.32)'
     : '0 1px 2px rgba(0,0,0,.04), 0 3px 12px rgba(0,0,0,.05)');
