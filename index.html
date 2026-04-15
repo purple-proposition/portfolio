@@ -99,6 +99,8 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .contact-btn { display:inline-flex; align-items:center; gap:var(--sp-sm); padding:var(--sp-sm) var(--sp); background:var(--tag-bg); border:none; border-radius:var(--r-sm); font-family:var(--font); font-size:var(--t-base); font-weight:400; color:var(--tag-ink); text-decoration:none; white-space:nowrap; cursor:pointer; transition:background var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease) }
 .contact-btn svg { width:13px; height:13px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; flex-shrink:0 }
 .print-info { display:none }
+.screen-text { display:inline }
+.print-text  { display:none }
 
 /* ── Chips ── */
 .chips { display:flex; flex-wrap:wrap; gap:12px }
@@ -108,7 +110,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .chip-lvl { font-family:var(--mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; opacity:.6 }
 
 /* ── Tooltip ── */
-#tip { position:fixed; z-index:9999; background:rgba(250,250,250,.80); backdrop-filter:blur(20px) saturate(1.8); -webkit-backdrop-filter:blur(20px) saturate(1.8); color:#171717; font-family:var(--font); font-size:var(--t-base); line-height:1.6; padding:var(--sp-sm) var(--sp); border-radius:var(--r-sm); max-width:220px; box-shadow:var(--shadow-h); pointer-events:none; opacity:0; transform:translateY(4px); transition:opacity .22s cubic-bezier(.16,1,.3,1),transform .22s cubic-bezier(.16,1,.3,1) }
+#tip { position:fixed; z-index:9999; background:rgba(250,250,250,.55); backdrop-filter:blur(28px) saturate(2.2); -webkit-backdrop-filter:blur(28px) saturate(2.2); color:#171717; font-family:var(--font); font-size:var(--t-base); line-height:1.6; padding:var(--sp-sm) var(--sp); border-radius:var(--r-sm); max-width:220px; box-shadow:var(--shadow-h); pointer-events:none; opacity:0; transform:translateY(4px); transition:opacity .22s cubic-bezier(.16,1,.3,1),transform .22s cubic-bezier(.16,1,.3,1) }
 
 /* ── Hero ── */
 .hero .cb { padding:0; display:flex; flex-direction:column; gap:0 }
@@ -214,7 +216,7 @@ body.dark #exp-popup.photo-only { background:none !important; backdrop-filter:no
 body.dark .ep-img         { background:#404040 }
 body.dark .ep-link        { background:#404040; color:#A3A3A3 }
 body.dark .lang-sep       { opacity:.15 }
-body.dark #tip            { background:rgba(23,23,23,.90); color:#E5E5E5 }
+body.dark #tip            { background:rgba(23,23,23,.70); color:#E5E5E5 }
 /* ── Experience paragraph ── */
 .exp-para { font-size:var(--t-md); color:var(--tag-ink); line-height:1.65 }
 /* ── Card bottom link ── */
@@ -333,6 +335,10 @@ body.resizing .cb-wrap { transition:none !important }
   .contact-btn span[data-i] { display:none !important }
   .contact-btn .print-info { display:inline !important }
 
+  /* Textes screen/print */
+  .screen-text { display:none !important }
+  .print-text  { display:inline !important }
+
   /* Supprime les boutons liens externes dans les expériences */
   .card-link-row { display:none !important }
 }
@@ -379,7 +385,7 @@ body.resizing .cb-wrap { transition:none !important }
         <div class="avatar-box"><img src="images/avatar.jpeg" alt="Jesse Sotomayor"></div>
         <div class="hero-info">
           <h1 class="name">Jesse <em>Sotomayor</em></h1>
-          <p class="hero-desc" data-i="tagline-rest">Je construis des marques et des audiences depuis plus de 10 ans.</p>
+          <p class="hero-desc" data-i="tagline-rest">Je construis des marques et des audiences depuis plus de 10 ans — à la recherche d'une entreprise pour mon Master 1 en marketing digital.</p>
         </div>
       </div>
       <div class="hero-sep"></div>
@@ -423,7 +429,7 @@ body.resizing .cb-wrap { transition:none !important }
           <span class="chip on" data-tip="Montage de contenus vidéo pour TikTok et réseaux sociaux.">Final Cut Pro<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
           <span class="chip on" data-tip="Suivi des audiences, analyse du trafic et optimisation des conversions.">Google Analytics<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
           <span class="chip on" data-tip="Campagnes d'outreach email à froid — séquences et A/B tests.">Lemlist<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
-          <span class="chip on" data-tip="Gestion de projets, bases de données éditoriales et wikis.">Notion<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
+          <span class="chip on" data-tip="Gestion de projets, bases de données éditoriales et wikis.">Notion<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
           <span class="chip on" data-tip="Retouche photo, visuels pour campagnes réseaux sociaux.">Photoshop<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
         </div>
       </div></div>
@@ -487,7 +493,7 @@ body.resizing .cb-wrap { transition:none !important }
         </div>
       </div>
       <div class="cb-wrap"><div class="cb">
-        <p class="exp-para" data-i="je-para">Refonte du site web, migration CRM (Sellsy vers Odoo) et déploiement de Claude pour l'ensemble de l'équipe, en parallèle de la gestion des campagnes multicanales via Lemlist, de l'enrichissement des fiches prospects, de la stratégie éditoriale et de la création de contenus pour les réseaux sociaux en coordination avec la chargée de communication.</p>
+        <p class="exp-para" data-i="je-para"><span class="screen-text">J'ai piloté la refonte du site web, migré le CRM de Sellsy vers Odoo et déployé Claude pour soutenir l'équipe au quotidien. J'ai également créé des outils internes pour faciliter le suivi des KPI et la génération de documents internes et externes. En parallèle, j'ai mené des campagnes multicanales via Lemlist, enrichi les fiches prospects pour chaque salon, défini la stratégie éditoriale et créé des contenus pour les réseaux sociaux avec la chargée de communication.</span><span class="print-text">Refonte du site web, migration du CRM de Sellsy vers Odoo et déploiement de Claude au service de l'équipe. Création d'outils internes pour faciliter le suivi des KPI et la génération de documents internes et externes. Pilotage de campagnes multicanales via Lemlist, enrichissement des fiches prospects pour chaque salon, définition de la stratégie éditoriale et création de contenus social media en coordination avec la chargée de communication.</span></p>
         <div class="card-link-row"><a class="card-link" href="https://levillagedesrecruteurs.fr" target="_blank">Voir le site <svg viewBox="0 0 10 10" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1 9L9 1M9 1H3M9 1V7"/></svg></a></div>
       </div></div>
     </div>
@@ -507,7 +513,7 @@ body.resizing .cb-wrap { transition:none !important }
         </div>
       </div>
       <div class="cb-wrap"><div class="cb">
-        <p class="exp-para" data-i="8b-para">Co-fondateur de la première radio en ligne dédiée à la musique de jeux vidéo. Stratégie éditoriale, TikTok (3,3 M de vues, 9 % d'engagement) et newsletters à 45 % d'ouverture — 4 000 auditeurs réguliers.</p>
+        <p class="exp-para" data-i="8b-para"><span class="screen-text">J'ai cofondé la première radio en ligne dédiée aux musiques de jeux vidéo avec 4 000 auditeurs réguliers. J'ai réfléchi à la conception de l'UI/UX du projet, assuré la tenue du site web et du planning éditorial, organisé des événements et accompagné le développement du projet à travers une incubation d'un an à Hotel71, puis de trois mois à la French Tech. J'ai également défini la stratégie éditoriale, animé les réseaux sociaux notamment TikTok 3,3 M de vues.</span><span class="print-text">Co-fondateur de la première radio en ligne dédiée aux musiques de jeux vidéo. Conception UI/UX, gestion du site web et du planning éditorial, organisation d'événements et accompagnement du projet en incubation à Hotel71 puis à la French Tech. Définition de la stratégie éditoriale, animation TikTok, gestion des newsletters et développement de l'audience.</span></p>
         <div class="card-link-row"><a class="card-link" href="https://8beats.co" target="_blank">Écouter <svg viewBox="0 0 10 10" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1 9L9 1M9 1H3M9 1V7"/></svg></a></div>
       </div></div>
     </div>
@@ -527,7 +533,7 @@ body.resizing .cb-wrap { transition:none !important }
         </div>
       </div>
       <div class="cb-wrap"><div class="cb">
-        <p class="exp-para" data-i="pp-para">Studio de design graphique fondé en 2017. Identités visuelles, chartes graphiques et campagnes cross-canal pour une dizaine de clients — visuels Photoshop/Canva, posts Instagram, dossiers presse, supports print et digital.</p>
+        <p class="exp-para" data-i="pp-para"><span class="screen-text">J'ai conçu des identités visuelles, des chartes graphiques et des campagnes cross-canal pour une clientèle de divers secteurs. J'ai également réalisé des visuels sur Photoshop et Canva, des contenus pour Instagram, des dossiers de presse et des supports print et digitaux.</span><span class="print-text">Conception d'identités visuelles, chartes graphiques et campagnes cross-canal pour des clients de divers secteurs. Réalisation de visuels Photoshop/Canva, contenus Instagram, dossiers de presse et supports print et digital.</span></p>
       </div></div>
     </div>
 
@@ -546,7 +552,7 @@ body.resizing .cb-wrap { transition:none !important }
         </div>
       </div>
       <div class="cb-wrap"><div class="cb">
-        <p class="exp-para" data-i="po-para">Co-fondateur du label Palm Off de 2014 à 2017. Identité de marque, relations presse et production d'une dizaine de concerts et soirées à Lyon, Paris et Séoul — emailing et stratégie cross-canal en support.</p>
+        <p class="exp-para" data-i="po-para"><span class="screen-text">J'ai cofondé le label Palm Off entre 2014 et 2017. J'ai développé l'identité de marque, assuré les relations presse et participé à la production d'une dizaine d'événements à Lyon, Paris et Séoul, tout en gérant les emailings et la stratégie cross-canal.</span><span class="print-text">Co-fondateur du label Palm Off (2014–2017). Développement de l'identité de marque, relations presse et production d'une dizaine d'événements à Lyon, Paris et Séoul — emailings et stratégie cross-canal.</span></p>
         <div class="card-link-row"><a class="card-link" href="https://soundcloud.com/palmoff" target="_blank">Écouter sur SoundCloud <svg viewBox="0 0 10 10" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1 9L9 1M9 1H3M9 1V7"/></svg></a></div>
       </div></div>
     </div>
