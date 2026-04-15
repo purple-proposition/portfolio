@@ -165,15 +165,17 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .ep-body { padding:var(--sp); display:flex; flex-direction:column; gap:var(--sp) }
 .ep-title { font-size:var(--t-md); font-weight:600; color:var(--ink) }
 .ep-desc { font-size:var(--t-base); color:var(--ink-2); line-height:1.6 }
-/* ── Photo fan popup ── */
-#exp-popup.photo-only { width:260px !important; height:130px !important; background:none !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important; border-radius:0 !important; box-shadow:none !important; padding:0 !important; overflow:visible !important }
-.ep-fan { position:relative; width:260px; height:130px }
-.ep-fan img { position:absolute; width:96px; height:72px; left:50%; bottom:16px; margin-left:-48px; object-fit:cover; border-radius:10px; transform-origin:bottom center }
-.ep-fan img:nth-child(1) { transform:rotate(-16deg); z-index:1 }
-.ep-fan img:nth-child(2) { transform:rotate(-8deg);  z-index:2 }
-.ep-fan img:nth-child(3) { transform:rotate(0deg);   z-index:3 }
-.ep-fan img:nth-child(4) { transform:rotate(8deg);   z-index:4 }
-.ep-fan img:nth-child(5) { transform:rotate(16deg);  z-index:5 }
+/* ── Photo stack popup ── */
+#exp-popup.photo-only { width:220px !important; height:158px !important; background:none !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important; border-radius:0 !important; box-shadow:none !important; padding:0 !important; overflow:visible !important; transform:none !important; transition:opacity var(--dur-fast) var(--ease) !important }
+.ep-stack { position:relative; width:220px; height:158px; flex-shrink:0 }
+.ep-stack img { position:absolute; width:152px; height:114px; left:50%; top:50%; margin-left:-76px; margin-top:-57px; object-fit:cover; border-radius:12px; will-change:transform,opacity }
+.ep-stack img:nth-child(1) { z-index:1; animation:stack-1 .38s ease forwards }
+.ep-stack img:nth-child(2) { z-index:2; animation:stack-2 .38s ease .07s forwards }
+.ep-stack img:nth-child(3) { z-index:3; animation:stack-3 .38s ease .14s forwards }
+@keyframes stack-1 { from{opacity:0;transform:rotate(6deg) translate(18px,20px)} to{opacity:1;transform:rotate(6deg) translate(18px,6px)} }
+@keyframes stack-2 { from{opacity:0;transform:rotate(-3deg) translate(-12px,16px)} to{opacity:1;transform:rotate(-3deg) translate(-12px,3px)} }
+@keyframes stack-3 { from{opacity:0;transform:rotate(1deg) translate(3px,14px)} to{opacity:1;transform:rotate(1deg) translate(3px,-3px)} }
+@media (prefers-reduced-motion:reduce) { .ep-stack img { animation-duration:.01ms !important } }
 /* ── Card popup separator ── */
 .ep-sep { height:1px; background:rgba(0,0,0,.08); margin:0 16px }
 .ep-footer { padding:var(--sp) }
@@ -729,7 +731,7 @@ function showPopup(d, anchor) {
     document.querySelector('.ep-sep').style.display = 'none';
     const body = document.querySelector('#exp-popup .ep-body');
     body.style.padding = '0';
-    body.innerHTML = `<div class="ep-fan">${srcs.map(s=>`<img src="images/${s}" alt="${d.title}">`).join('')}</div>`;
+    body.innerHTML = `<div class="ep-stack">${srcs.slice(0,3).map(s=>`<img src="images/${s}" alt="${d.title}">`).join('')}</div>`;
     requestAnimationFrame(() => {
       positionPopup(anchor, true);
       epPopup.classList.add('visible');
