@@ -49,7 +49,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 :root { --dur: .52s; --dur-fast: .12s; --ease: cubic-bezier(.16,1,.3,1) }
 
 /* ── Card ── */
-.card { background:var(--card-bg); border-radius:var(--r); box-shadow:var(--shadow); overflow:hidden; transition:box-shadow var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease) }
+.card { background:var(--card-bg); border-radius:var(--r); overflow:hidden; transition:transform var(--dur-fast) var(--ease) }
 
 /* ── Drawer ── */
 /* grid-template-rows animates the height — no JS height measurement needed */
@@ -159,28 +159,16 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 
 /* ── Exp popup ── */
 #exp-popup { position:fixed; z-index:9998; width:268px; background:rgba(250,250,250,.92); backdrop-filter:blur(20px) saturate(1.8); -webkit-backdrop-filter:blur(20px) saturate(1.8); border-radius:var(--r); box-shadow:var(--shadow-h); overflow:hidden; pointer-events:none; opacity:0; transform:translateY(8px) scale(.97); transition:opacity var(--dur-fast) var(--ease),transform var(--dur-fast) var(--ease) }
-#exp-popup.visible { opacity:1; transform:translateY(0) scale(1); pointer-events:all }
+#exp-popup.visible { opacity:1; transform:translateY(0) scale(1); }
 .ep-img { width:100%; height:130px; background:var(--tag-bg); display:flex; align-items:center; justify-content:center; font-size:36px }
 .ep-img img { width:100%; height:100%; object-fit:cover; display:block }
 .ep-body { padding:var(--sp); display:flex; flex-direction:column; gap:var(--sp) }
 .ep-title { font-size:var(--t-md); font-weight:600; color:var(--ink) }
 .ep-desc { font-size:var(--t-base); color:var(--ink-2); line-height:1.6 }
-/* ── Fan photo popup ── */
-#exp-popup.photo-only { background:none !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important; box-shadow:none !important; border-radius:0; overflow:visible; width:auto; padding:0; transition:none !important }
-.ep-fan { position:relative; }
-.ep-fan-photo {
-  position:absolute;
-  width:250px; height:auto;
-  border-radius:14px; overflow:hidden;
-  box-shadow:0 8px 28px rgba(0,0,0,.28), 0 2px 8px rgba(0,0,0,.14);
-  transition:transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
-  cursor:pointer;
-  top:50%; left:50%; margin-left:-125px;
-}
-.ep-fan-photo img { width:100%; height:auto; display:block; pointer-events:none }
-.ep-fan-photo::after { content:''; position:absolute; inset:0; background:rgba(0,0,0,0); transition:background .5s cubic-bezier(.16,1,.3,1); pointer-events:none }
-.ep-fan-photo.behind::after { background:rgba(0,0,0,.38) }
-.ep-fan-photo.behind:hover::after { background:rgba(0,0,0,0) }
+/* ── Photo grid popup ── */
+#exp-popup.photo-only { width:256px !important; overflow:hidden !important; background:var(--card-bg) !important; backdrop-filter:blur(20px) saturate(1.8) !important; -webkit-backdrop-filter:blur(20px) saturate(1.8) !important; border-radius:var(--r) !important; padding:8px !important }
+.ep-photo-grid { display:grid; grid-template-columns:1fr 1fr; gap:6px }
+.ep-photo-grid img { width:100%; height:100px; object-fit:cover; border-radius:10px; display:block }
 /* ── Card popup separator ── */
 .ep-sep { height:1px; background:rgba(0,0,0,.08); margin:0 16px }
 .ep-footer { padding:var(--sp) }
@@ -234,8 +222,8 @@ body.resizing .cb-wrap { transition:none !important }
 
 /* ── Hover: only on pointer devices ── */
 @media (hover: hover) {
-  .card:hover { transform:scale(1.018); box-shadow:var(--shadow-h) }
-  .exp-card:hover { transform:scale(1.012); box-shadow:var(--shadow-h) }
+  .card:hover { transform:scale(1.018) }
+  .exp-card:hover { transform:scale(1.012) }
   .contact-btn:hover { background:#525252; color:#FAFAFA }
   .chip:hover,.chip.on:hover { background:#525252; color:#FAFAFA }
   .lang-btn:hover { background:#525252; color:#FAFAFA }
@@ -548,7 +536,7 @@ body.resizing .cb-wrap { transition:none !important }
         </div>
       </div>
       <div class="cb-wrap"><div class="cb">
-        <p class="exp-para" data-i="po-para"><span class="screen-text">J'ai cofondé le label Palm Off entre 2014 et 2017. J'ai développé l'identité de marque, assuré les relations presse et participé à la production d'une dizaine d'événements à Lyon, Paris et Séoul, tout en gérant les emailings et la stratégie cross-canal.</span><span class="print-text">Co-fondateur du label Palm Off (2014–2017). Développement de l'identité de marque, relations presse et production d'une dizaine d'événements à Lyon, Paris et Séoul — emailings et stratégie cross-canal.</span></p>
+        <p class="exp-para" data-i="po-para"><span class="screen-text">J'ai cofondé et développé l'identité de marque, assuré les relations presse et participé à la production d'une dizaine d'événements à Lyon, Paris et Séoul, tout en gérant les emailings et la stratégie cross-canal.</span><span class="print-text">Co-fondateur du label Palm Off (2014–2017). Développement de l'identité de marque, relations presse et production d'une dizaine d'événements à Lyon, Paris et Séoul — emailings et stratégie cross-canal.</span></p>
         <div class="card-link-row"><a class="card-link" href="https://soundcloud.com/palmoff" target="_blank">Écouter sur SoundCloud <svg viewBox="0 0 10 10" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1 9L9 1M9 1H3M9 1V7"/></svg></a></div>
       </div></div>
     </div>
@@ -698,33 +686,6 @@ const epTitle      = document.getElementById('ep-title');
 const epDesc       = document.getElementById('ep-desc');
 const epLink       = document.getElementById('ep-link');
 let epT;
-let currentFanBaseT = [];
-
-/* ── Fan layout helper — works for any N photos ── */
-function fanLayout(n) {
-  const mid    = Math.floor(n / 2);
-  /* Same spread/angle feel as Voyage (3 photos) regardless of count */
-  const maxX   = 60;
-  const maxRot = n <= 3 ? 10 : 6;
-  const step   = mid > 0 ? 1 / mid : 1;
-  const transforms = Array.from({length: n}, (_, i) => {
-    const frac = (i - mid) * step;
-    const x    = Math.round(frac * maxX);
-    const a    = +(frac * maxRot).toFixed(1);
-    /* translateY(-50%) centres each photo vertically at top:50% */
-    if (x === 0 && a === 0) return 'translateY(-50%)';
-    if (x === 0)            return `translateY(-50%) rotate(${a}deg)`;
-    return `translateY(-50%) translateX(${x}px) rotate(${a}deg)`;
-  });
-  /* z-indices: center highest, decrease outward */
-  const zIndices = Array.from({length: n}, (_, i) => {
-    const dist = Math.abs(i - mid);
-    return (n - dist * 2) + (i > mid ? 1 : 0);
-  });
-  zIndices[mid] = n * 2;
-  const fanW = 250 + maxX * 2 + 40; /* fixed width — same as 3-photo fan */
-  return { transforms, zIndices, mid, fanW, fanH: n <= 3 ? 230 : 380 };
-}
 
 function positionPopup(anchor, isPhoto) {
   const r   = anchor.getBoundingClientRect();
@@ -752,69 +713,13 @@ function showPopup(d, anchor) {
 
   if (d.photos) {
     epPopup.classList.add('photo-only');
-    epImg.style.display   = 'none';
-    epLink.style.display  = 'none';
-    document.querySelector('.ep-sep').style.display = 'none';
-    document.querySelector('#exp-popup .ep-body').style.padding = '0';
-
-    const srcs = d.photoSrc || ['travel-1.jpg','travel-2.jpg','travel-3.jpg'];
-    const lay  = fanLayout(srcs.length);
-    currentFanBaseT = lay.transforms;
-
-    document.querySelector('#exp-popup .ep-body').innerHTML = `
-      <div class="ep-fan" style="width:${lay.fanW}px;height:${lay.fanH}px">
-        ${srcs.map(s=>`<div class="ep-fan-photo"><img src="images/${s}" alt="${d.title}"></div>`).join('')}
-      </div>
-    `;
-
-    const fanPhotos = [...epPopup.querySelectorAll('.ep-fan-photo')];
-    const { transforms: baseT, zIndices: baseZ, mid } = lay;
-
-    /* Initial state: hidden, scaled down — set before first paint */
-    fanPhotos.forEach((p, i) => {
-      p.style.transition = 'none';
-      p.style.opacity    = '0';
-      p.style.transform  = baseT[i] + ' scale(.84)';
-      p.style.zIndex     = String(baseZ[i]);
-      if (i !== mid) p.classList.add('behind');
-    });
-
-    /* Attach hover events */
-    fanPhotos.forEach((photo, i) => {
-      photo.addEventListener('mouseenter', () => {
-        fanPhotos.forEach((p, j) => {
-          p.style.zIndex = j === i ? '99' : String(baseZ[j]);
-          if (i !== mid && j === mid) p.classList.add('behind');
-          if (j === i)                p.classList.remove('behind');
-        });
-        photo.style.transform = baseT[i] + ' scale(1.04)';
-        photo.style.boxShadow = '0 16px 40px rgba(0,0,0,.38), 0 4px 12px rgba(0,0,0,.2)';
-      });
-      photo.addEventListener('mouseleave', () => {
-        photo.style.transform = baseT[i];
-        photo.style.boxShadow = '';
-        fanPhotos.forEach((p, j) => {
-          p.style.zIndex = String(baseZ[j]);
-          p.classList.toggle('behind', j !== mid);
-        });
-      });
-    });
-
-    /* Double-RAF: let browser lay out the popup, measure, then position + animate */
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      positionPopup(anchor, true);
+    const srcs = d.photoSrc || [];
+    document.querySelector('#exp-popup .ep-body').innerHTML =
+      `<div class="ep-photo-grid">${srcs.map(s=>`<img src="images/${s}" alt="${d.title}">`).join('')}</div>`;
+    requestAnimationFrame(() => {
+      positionPopup(anchor, false);
       epPopup.classList.add('visible');
-
-      fanPhotos.forEach((p, i) => {
-        setTimeout(() => {
-          p.style.transition = 'opacity .28s cubic-bezier(.16,1,.3,1), transform .38s cubic-bezier(.16,1,.3,1), box-shadow .4s cubic-bezier(.16,1,.3,1)';
-          p.style.opacity    = '1';
-          p.style.transform  = baseT[i];
-        }, i * 50);
-      });
-      setTimeout(() => fanPhotos.forEach(p => { p.style.transition = ''; p.style.opacity = ''; }), 700);
-    }));
-
+    });
   } else {
     epPopup.classList.remove('photo-only');
     document.querySelector('#exp-popup .ep-body').style.padding = '';
@@ -841,19 +746,7 @@ function showPopup(d, anchor) {
   }
 }
 function hidePopup() {
-  epT = setTimeout(() => {
-    if (epPopup.classList.contains('photo-only')) {
-      const photos = [...epPopup.querySelectorAll('.ep-fan-photo')];
-      photos.forEach((p, i) => {
-        p.style.transition = 'opacity .2s ease-in, transform .28s cubic-bezier(.4,0,1,1)';
-        p.style.opacity    = '0';
-        p.style.transform  = (currentFanBaseT[i] || 'rotate(0deg)') + ' scale(.9)';
-      });
-      setTimeout(() => epPopup.classList.remove('visible'), 300);
-    } else {
-      epPopup.classList.remove('visible');
-    }
-  }, 120);
+  epT = setTimeout(() => epPopup.classList.remove('visible'), 120);
 }
 
 epPopup.addEventListener('mouseenter', () => clearTimeout(epT));
