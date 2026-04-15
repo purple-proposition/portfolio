@@ -166,57 +166,26 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .ep-title { font-size:var(--t-md); font-weight:600; color:var(--ink) }
 .ep-desc { font-size:var(--t-base); color:var(--ink-2); line-height:1.6 }
 /* ── Photo stack popup ── */
-/* Container : transparent, overflow visible pour que les cartes dépassent légèrement */
+/* Le container gère l'entrée (opacity + scale natif du popup).
+   Les photos sont statiques dans leur position finale — aucun @keyframes,
+   aucun will-change individuel, zéro jank. */
 #exp-popup.photo-only {
-  width:248px !important; height:176px !important;
+  width:264px !important; height:194px !important;
   background:none !important; backdrop-filter:none !important;
   -webkit-backdrop-filter:none !important; border-radius:0 !important;
-  box-shadow:none !important; padding:0 !important; overflow:visible !important;
-  /* Désactive le scale/translateY du popup générique — on anime seulement opacity */
-  transform:none !important; transition:opacity var(--dur-fast) var(--ease) !important
+  box-shadow:none !important; padding:0 !important; overflow:visible !important
 }
-/* Conteneur de la pile — même dimensions que le popup */
-.ep-stack { position:relative; width:248px; height:176px; flex-shrink:0 }
-/* Toutes les images : centrées absolument, même base de 184×138 */
+.ep-stack { position:relative; width:264px; height:194px; flex-shrink:0 }
 .ep-stack img {
   position:absolute;
-  width:184px; height:138px;
+  width:212px; height:160px;
   left:50%; top:50%;
-  margin-left:-92px; margin-top:-69px;
-  object-fit:cover; border-radius:12px;
-  /* GPU layer déclaré seulement sur transform+opacity, jamais sur layout */
-  will-change:transform,opacity;
-  /* opacity:0 par défaut — chaque keyframe la ramène à sa valeur finale */
-  opacity:0
+  margin-left:-106px; margin-top:-80px;
+  object-fit:cover; border-radius:12px
 }
-/* Carte du fond — décalée bas-droite, plus petite, translucide */
-.ep-stack img:nth-child(1) { z-index:1; animation:ps-back  .28s ease-out          forwards }
-/* Carte du milieu — décalée bas-gauche */
-.ep-stack img:nth-child(2) { z-index:2; animation:ps-mid   .28s ease-out .06s     forwards }
-/* Carte principale — la plus grande, z-index dominant */
-.ep-stack img:nth-child(3) { z-index:3; animation:ps-front .28s ease-out .12s     forwards }
-
-/* Chaque keyframe encode la position finale complète :
-   le "from" est identique mais avec translateY +16px → glisse vers le haut */
-@keyframes ps-back {
-  from { opacity:0;   transform:rotate(7deg)  translate(26px, 26px) scale(.87) }
-  to   { opacity:.55; transform:rotate(7deg)  translate(26px, 10px) scale(.87) }
-}
-@keyframes ps-mid {
-  from { opacity:0;   transform:rotate(-5deg) translate(-22px, 22px) scale(.93) }
-  to   { opacity:.75; transform:rotate(-5deg) translate(-22px,  6px) scale(.93) }
-}
-@keyframes ps-front {
-  from { opacity:0;   transform:rotate(1.5deg) translate(3px, 20px) }
-  to   { opacity:1;   transform:rotate(1.5deg) translate(3px, -4px) }
-}
-/* prefers-reduced-motion : apparition instantanée sans mouvement */
-@media (prefers-reduced-motion:reduce) {
-  .ep-stack img { animation:ps-static .01ms forwards }
-  @keyframes ps-static {
-    to { opacity:1; transform:rotate(0deg) translate(0,0) scale(1) }
-  }
-}
+.ep-stack img:nth-child(1) { z-index:1; opacity:.5;  transform:rotate(7deg)  translate(30px,12px) scale(.87) }
+.ep-stack img:nth-child(2) { z-index:2; opacity:.75; transform:rotate(-5deg) translate(-24px,6px) scale(.93) }
+.ep-stack img:nth-child(3) { z-index:3; opacity:1;   transform:rotate(1.5deg) translate(3px,-4px) }
 /* ── Card popup separator ── */
 .ep-sep { height:1px; background:rgba(0,0,0,.08); margin:0 16px }
 .ep-footer { padding:var(--sp) }
@@ -572,6 +541,7 @@ body.resizing .cb-wrap { transition:none !important }
       </div>
       <div class="cb-wrap"><div class="cb">
         <p class="exp-para" data-i="pp-para"><span class="screen-text">J'ai conçu des identités visuelles, des chartes graphiques et des campagnes cross-canal pour une clientèle de divers secteurs. J'ai également réalisé des visuels sur Photoshop et Canva, des contenus pour Instagram, des dossiers de presse et des supports print et digitaux.</span><span class="print-text">Conception d'identités visuelles, chartes graphiques et campagnes cross-canal pour des clients de divers secteurs. Réalisation de visuels Photoshop/Canva, contenus Instagram, dossiers de presse et supports print et digital.</span></p>
+        <div class="card-link-row"><a class="card-link" href="https://www.purpleproposition.fr" target="_blank">Voir le portfolio <svg viewBox="0 0 10 10" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1 9L9 1M9 1H3M9 1V7"/></svg></a></div>
       </div></div>
     </div>
 
@@ -770,6 +740,7 @@ function showPopup(d, anchor) {
     const srcs = d.photoSrc || [];
     epImg.style.display = 'none';
     document.querySelector('.ep-sep').style.display = 'none';
+    document.querySelector('.ep-footer').style.display = 'none';
     const body = document.querySelector('#exp-popup .ep-body');
     body.style.padding = '0';
     body.innerHTML = `<div class="ep-stack">${srcs.slice(0,3).map(s=>`<img src="images/${s}" alt="${d.title}">`).join('')}</div>`;
@@ -782,6 +753,7 @@ function showPopup(d, anchor) {
     document.querySelector('#exp-popup .ep-body').style.padding = '';
     epImg.style.display = '';
     document.querySelector('.ep-sep').style.display = '';
+    document.querySelector('.ep-footer').style.display = '';
     if (d.preview) {
       epImg.innerHTML = `<img src="images/${d.preview}" alt="${d.title}">`;
     } else {
