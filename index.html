@@ -559,7 +559,7 @@ body.resizing .cb-wrap { transition:none !important }
       </div></div>
     </div>
 
-    <div class="card exp-card" data-popup="pp">
+    <div class="card exp-card">
       <div class="ch">
         <div class="ch-l">
           <div class="exp-logo"><img src="images/logo-pp.jpeg" alt="Purple Proposition"></div>
@@ -817,7 +817,6 @@ epPopup.addEventListener('mouseleave', hidePopup);
 
 /* ── Exp popups ── */
 const expData = {
-  pp: {title:'Purple Proposition', photos:true, photoSrc:['pp-1.jpg','pp-2.jpg','pp-3.jpg','pp-4.jpg','pp-5.jpg']}
 };
 document.querySelectorAll('.exp-card[data-popup]').forEach(card => {
   card.addEventListener('mouseenter', () => {
