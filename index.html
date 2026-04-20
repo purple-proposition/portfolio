@@ -93,7 +93,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .row { display:grid; gap:var(--gap); align-items:start }
 .col-2 { grid-template-columns:1fr 1fr }
 .col-3 { grid-template-columns:1fr 1fr 1fr }
-.skills-right { display:flex; flex-direction:column; gap:var(--gap) }
+.skills-left, .skills-right { display:flex; flex-direction:column; gap:var(--gap) }
 
 /* ── Contact buttons ── */
 .contact-btns { display:flex; flex-wrap:wrap; gap:12px }
@@ -334,9 +334,9 @@ body.resizing .cb-wrap { transition:none !important }
   /* Outils : masque les niveaux (séparateur + badge) */
   .chip-sep, .chip-lvl { display:none !important }
 
-  /* Compétences : 3 colonnes sur une ligne */
-  [data-section="skills"] { grid-template-columns:1fr 1fr 1fr !important }
-  .skills-right { display:contents !important }
+  /* Compétences : grille 2×2 */
+  [data-section="skills"] { grid-template-columns:1fr 1fr !important }
+  .skills-left, .skills-right { display:contents !important }
 
   /* Hero: boutons stylés avec vraies infos — LinkedIn affiché et cliquable */
   .contact-btn span[data-i] { display:none !important }
@@ -416,31 +416,57 @@ body.resizing .cb-wrap { transition:none !important }
   <div class="section-title"><h2 data-i="section-skills">Compétences</h2><button class="section-toggle" data-section="skills"><i data-lucide="chevron-up"></i></button></div>
   <div class="row col-2" data-section="skills">
 
-    <!-- Colonne gauche : Expertises -->
-    <div class="card">
-      <div class="ch">
-        <div class="ch-l">
-          <i data-lucide="sparkles" class="ch-icon"></i>
-          <span class="ch-label" data-i="expertise-label">Expertises</span>
+    <!-- Colonne gauche : Expertises + Soft skills -->
+    <div class="skills-left">
+
+      <div class="card">
+        <div class="ch">
+          <div class="ch-l">
+            <i data-lucide="sparkles" class="ch-icon"></i>
+            <span class="ch-label" data-i="expertise-label">Expertises</span>
+          </div>
+          <div class="ch-right"><button class="ch-toggle"><i data-lucide="chevron-up"></i></button></div>
         </div>
-        <div class="ch-right"><button class="ch-toggle"><i data-lucide="chevron-up"></i></button></div>
+        <div class="cb-wrap"><div class="cb">
+          <div class="chips">
+            <span class="chip" data-tip="Animation de communautés et engagement sur les réseaux sociaux.">Community management</span>
+            <span class="chip" data-tip="Supervision créative : cohérence visuelle, identité de marque et direction de production.">Direction artistique</span>
+            <span class="chip" data-tip="Optimisation du référencement naturel : contenu, maillage, performance.">SEO</span>
+            <span class="chip" data-tip="Création, planification et distribution de contenus multicanaux.">Production de contenu</span>
+            <span class="chip" data-tip="Stratégie éditoriale cross-canal : Instagram, TikTok, LinkedIn.">Réseaux sociaux</span>
+            <span class="chip" data-tip="Production de contenus courts : stratégie, tournage, montage, distribution.">TikTok</span>
+            <span class="chip" data-tip="Séquences d'emails automatisées, A/B tests et segmentation audience.">Email marketing</span>
+            <span class="chip" data-tip="Pilotage de projets de A à Z : planification, coordination équipe, suivi de livrables.">Gestion de projet</span>
+            <span class="chip" data-tip="Conception d'interfaces et expériences utilisateurs : wireframes, maquettes, prototypes.">UI/UX design</span>
+            <span class="chip" data-tip="Rédaction persuasive pour le web, les campagnes et les supports marketing.">Copywriting</span>
+            <span class="chip" data-tip="Lecture de données, tableaux de bord KPI et optimisation continue.">Analytics</span>
+            <span class="chip" data-tip="Identités visuelles, chartes graphiques et positionnement de marque.">Branding</span>
+          </div>
+        </div></div>
       </div>
-      <div class="cb-wrap"><div class="cb">
-        <div class="chips">
-          <span class="chip" data-tip="Animation de communautés et engagement sur les réseaux sociaux.">Community management</span>
-          <span class="chip" data-tip="Supervision créative : cohérence visuelle, identité de marque et direction de production.">Direction artistique</span>
-          <span class="chip" data-tip="Optimisation du référencement naturel : contenu, maillage, performance.">SEO</span>
-          <span class="chip" data-tip="Création, planification et distribution de contenus multicanaux.">Production de contenu</span>
-          <span class="chip" data-tip="Stratégie éditoriale cross-canal : Instagram, TikTok, LinkedIn.">Réseaux sociaux</span>
-          <span class="chip" data-tip="Production de contenus courts : stratégie, tournage, montage, distribution.">TikTok</span>
-          <span class="chip" data-tip="Séquences d'emails automatisées, A/B tests et segmentation audience.">Email marketing</span>
-          <span class="chip" data-tip="Pilotage de projets de A à Z : planification, coordination équipe, suivi de livrables.">Gestion de projet</span>
-          <span class="chip" data-tip="Conception d'interfaces et expériences utilisateurs : wireframes, maquettes, prototypes.">UI/UX design</span>
-          <span class="chip" data-tip="Rédaction persuasive pour le web, les campagnes et les supports marketing.">Copywriting</span>
-          <span class="chip" data-tip="Lecture de données, tableaux de bord KPI et optimisation continue.">Analytics</span>
-          <span class="chip" data-tip="Identités visuelles, chartes graphiques et positionnement de marque.">Branding</span>
+
+      <div class="card">
+        <div class="ch">
+          <div class="ch-l">
+            <i data-lucide="zap" class="ch-icon"></i>
+            <span class="ch-label">Soft skills</span>
+          </div>
+          <div class="ch-right"><button class="ch-toggle"><i data-lucide="chevron-up"></i></button></div>
         </div>
-      </div></div>
+        <div class="cb-wrap"><div class="cb">
+          <div class="chips">
+            <span class="chip" data-tip="Je prends les sujets à bras le corps sans attendre qu'on me les confie.">Prise d'initiative</span>
+            <span class="chip" data-tip="Je change de contexte, d'outil ou de méthode sans perdre en efficacité.">Adaptabilité</span>
+            <span class="chip" data-tip="Je cherche constamment à comprendre, tester et apprendre de nouveaux domaines.">Curiosité</span>
+            <span class="chip" data-tip="Je trouve des angles originaux sur des sujets connus.">Créativité</span>
+            <span class="chip" data-tip="Je travaille avec structure, même sur des projets ouverts ou flous.">Rigueur</span>
+            <span class="chip" data-tip="Je collabore facilement avec des profils variés : créatifs, tech, commercial.">Esprit d'équipe</span>
+            <span class="chip" data-tip="Je gère mes projets de bout en bout sans avoir besoin d'un suivi constant.">Autonomie</span>
+            <span class="chip" data-tip="Je m'exprime clairement à l'écrit comme à l'oral, en interne ou face à des clients.">Communication</span>
+          </div>
+        </div></div>
+      </div>
+
     </div>
 
     <!-- Colonne droite : Outils (haut) + Langues (bas) -->
