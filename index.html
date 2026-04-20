@@ -93,6 +93,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .row { display:grid; gap:var(--gap); align-items:start }
 .col-2 { grid-template-columns:1fr 1fr }
 .col-3 { grid-template-columns:1fr 1fr 1fr }
+.skills-right { display:flex; flex-direction:column; gap:var(--gap) }
 
 /* ── Contact buttons ── */
 .contact-btns { display:flex; flex-wrap:wrap; gap:12px }
@@ -335,6 +336,7 @@ body.resizing .cb-wrap { transition:none !important }
 
   /* Compétences : 3 colonnes sur une ligne */
   [data-section="skills"] { grid-template-columns:1fr 1fr 1fr !important }
+  .skills-right { display:contents !important }
 
   /* Hero: boutons stylés avec vraies infos — LinkedIn affiché et cliquable */
   .contact-btn span[data-i] { display:none !important }
@@ -412,30 +414,9 @@ body.resizing .cb-wrap { transition:none !important }
 
   <!-- COMPÉTENCES -->
   <div class="section-title"><h2 data-i="section-skills">Compétences</h2><button class="section-toggle" data-section="skills"><i data-lucide="chevron-up"></i></button></div>
-  <div class="row col-3" data-section="skills">
+  <div class="row col-2" data-section="skills">
 
-    <div class="card">
-      <div class="ch">
-        <div class="ch-l">
-          <i data-lucide="wrench" class="ch-icon"></i>
-          <span class="ch-label" data-i="tools-label">Outils</span>
-        </div>
-        <div class="ch-right"><button class="ch-toggle"><i data-lucide="chevron-up"></i></button></div>
-      </div>
-      <div class="cb-wrap"><div class="cb">
-        <div class="chips">
-          <span class="chip on" data-tip="Production de contenus et automatisation de tâches éditoriales.">Claude<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
-          <span class="chip on" data-tip="Analyse de données, reporting et tableaux de bord KPI.">Excel<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
-          <span class="chip on" data-tip="Conception d'interfaces, identités visuelles et maquettes.">Figma<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
-          <span class="chip on" data-tip="Montage de contenus vidéo pour TikTok et réseaux sociaux.">Final Cut Pro<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
-          <span class="chip on" data-tip="Suivi des audiences, analyse du trafic et optimisation des conversions.">Google Analytics<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
-          <span class="chip on" data-tip="Campagnes d'outreach email à froid : séquences et A/B tests.">Lemlist<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
-          <span class="chip on" data-tip="Gestion de projets, bases de données éditoriales et wikis.">Notion<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
-          <span class="chip on" data-tip="Retouche photo, visuels pour campagnes réseaux sociaux.">Photoshop<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
-        </div>
-      </div></div>
-    </div>
-
+    <!-- Colonne gauche : Expertises -->
     <div class="card">
       <div class="ch">
         <div class="ch-l">
@@ -462,21 +443,48 @@ body.resizing .cb-wrap { transition:none !important }
       </div></div>
     </div>
 
-    <div class="card">
-      <div class="ch">
-        <div class="ch-l">
-          <i data-lucide="globe" class="ch-icon"></i>
-          <span class="ch-label" data-i="lang-title">Langues</span>
+    <!-- Colonne droite : Outils (haut) + Langues (bas) -->
+    <div class="skills-right">
+
+      <div class="card">
+        <div class="ch">
+          <div class="ch-l">
+            <i data-lucide="wrench" class="ch-icon"></i>
+            <span class="ch-label" data-i="tools-label">Outils</span>
+          </div>
+          <div class="ch-right"><button class="ch-toggle"><i data-lucide="chevron-up"></i></button></div>
         </div>
-        <div class="ch-right"><button class="ch-toggle"><i data-lucide="chevron-up"></i></button></div>
+        <div class="cb-wrap"><div class="cb">
+          <div class="chips">
+            <span class="chip on" data-tip="Production de contenus et automatisation de tâches éditoriales.">Claude<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
+            <span class="chip on" data-tip="Analyse de données, reporting et tableaux de bord KPI.">Excel<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
+            <span class="chip on" data-tip="Conception d'interfaces, identités visuelles et maquettes.">Figma<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
+            <span class="chip on" data-tip="Montage de contenus vidéo pour TikTok et réseaux sociaux.">Final Cut Pro<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
+            <span class="chip on" data-tip="Suivi des audiences, analyse du trafic et optimisation des conversions.">Google Analytics<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
+            <span class="chip on" data-tip="Campagnes d'outreach email à froid : séquences et A/B tests.">Lemlist<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
+            <span class="chip on" data-tip="Gestion de projets, bases de données éditoriales et wikis.">Notion<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
+            <span class="chip on" data-tip="Retouche photo, visuels pour campagnes réseaux sociaux.">Photoshop<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
+          </div>
+        </div></div>
       </div>
-      <div class="cb-wrap"><div class="cb">
-        <div class="lang-btns">
-          <button class="lang-btn" onclick="setLang('fr')"><span class="lang-flag">🇫🇷</span><span>Français</span><span class="lang-sep"></span><span class="lang-lvl" data-i="lang-fr-lvl">Natif</span></button>
-          <button class="lang-btn" onclick="setLang('en')"><span class="lang-flag">🇬🇧</span><span>English</span><span class="lang-sep"></span><span class="lang-lvl" data-i="lang-en-lvl">Courant</span></button>
-          <button class="lang-btn" onclick="setLang('es')"><span class="lang-flag">🇪🇸</span><span>Español</span><span class="lang-sep"></span><span class="lang-lvl" data-i="lang-es-lvl">Conversationnel</span></button>
+
+      <div class="card">
+        <div class="ch">
+          <div class="ch-l">
+            <i data-lucide="globe" class="ch-icon"></i>
+            <span class="ch-label" data-i="lang-title">Langues</span>
+          </div>
+          <div class="ch-right"><button class="ch-toggle"><i data-lucide="chevron-up"></i></button></div>
         </div>
-      </div></div>
+        <div class="cb-wrap"><div class="cb">
+          <div class="lang-btns">
+            <button class="lang-btn" onclick="setLang('fr')"><span class="lang-flag">🇫🇷</span><span>Français</span><span class="lang-sep"></span><span class="lang-lvl" data-i="lang-fr-lvl">Natif</span></button>
+            <button class="lang-btn" onclick="setLang('en')"><span class="lang-flag">🇬🇧</span><span>English</span><span class="lang-sep"></span><span class="lang-lvl" data-i="lang-en-lvl">Courant</span></button>
+            <button class="lang-btn" onclick="setLang('es')"><span class="lang-flag">🇪🇸</span><span>Español</span><span class="lang-sep"></span><span class="lang-lvl" data-i="lang-es-lvl">Conversationnel</span></button>
+          </div>
+        </div></div>
+      </div>
+
     </div>
 
   </div>
