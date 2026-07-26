@@ -49,7 +49,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 :root { --dur: .52s; --dur-fast: .12s; --ease: cubic-bezier(.16,1,.3,1) }
 
 /* ── Card ── */
-.card { background:var(--card-bg); border-radius:var(--r); overflow:hidden; transition:transform var(--dur-fast) var(--ease) }
+.card { background:var(--card-bg); border-radius:var(--r); overflow:hidden; box-shadow:none; transition:transform var(--dur-fast) var(--ease) }
 
 /* ── Drawer ── */
 /* grid-template-rows animates the height — no JS height measurement needed */
@@ -192,6 +192,23 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .ep-footer { padding:var(--sp) }
 .ep-link { display:inline-flex; align-items:center; gap:var(--sp-sm); padding:var(--sp-sm) var(--sp); background:var(--tag-bg); color:var(--tag-ink); border-radius:var(--r-sm); font-size:var(--t-base); text-decoration:none; transition:background var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease) }
 
+/* ── Stats popup (chip data-viz) ── */
+#stats-popup { position:fixed; z-index:9998; width:300px; background:rgba(250,250,250,.92); backdrop-filter:blur(20px) saturate(1.8); -webkit-backdrop-filter:blur(20px) saturate(1.8); border-radius:var(--r); overflow:hidden; pointer-events:none; opacity:0; transform:translateY(8px) scale(.97); transition:opacity var(--dur-fast) var(--ease),transform var(--dur-fast) var(--ease) }
+#stats-popup.visible { opacity:1; transform:translateY(0) scale(1) }
+.sp-body { padding:var(--sp); display:flex; flex-direction:column; gap:var(--sp) }
+.sp-title { font-size:var(--t-md); font-weight:600; color:var(--ink) }
+.sp-subtitle { font-size:var(--t-sm); color:var(--ink-2); margin-top:-10px }
+.sp-row { display:flex; flex-direction:column; gap:6px }
+.sp-row-head { display:flex; align-items:baseline; justify-content:space-between }
+.sp-city { font-size:var(--t-base); font-weight:600; color:var(--ink) }
+.sp-period { font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:var(--ink-2); opacity:.7; text-transform:uppercase }
+.sp-bar-line { display:flex; align-items:center; gap:8px }
+.sp-bar-label { font-family:var(--mono); font-size:10px; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-2); width:56px; flex-shrink:0 }
+.sp-bar-track { flex:1; height:6px; background:var(--tag-bg); border-radius:99px; overflow:hidden }
+.sp-bar-fill { display:block; height:100%; width:0%; border-radius:99px; background:var(--ink); opacity:.55; transition:width .6s cubic-bezier(.16,1,.3,1) }
+.sp-bar-fill.clic { background:#1D4ED8; opacity:1 }
+.sp-bar-val { font-family:var(--mono); font-size:11px; color:var(--ink); width:32px; text-align:right; flex-shrink:0 }
+
 .card { transition-property:box-shadow,transform; transition-duration:var(--dur),var(--dur); transition-timing-function:var(--ease),var(--ease) }
 /* ── Experience paragraph ── */
 .exp-para { font-size:var(--t-md); color:var(--tag-ink); line-height:1.65 }
@@ -210,8 +227,8 @@ body.resizing .cb-wrap { transition:none !important }
 
 /* ── Hover: only on pointer devices ── */
 @media (hover: hover) {
-  .card:hover { transform:scale(1.018) }
-  .exp-card:hover { transform:scale(1.012) }
+  .card:hover { transform:scale(1.018); box-shadow:var(--shadow-h) }
+  .exp-card:hover { transform:scale(1.012); box-shadow:var(--shadow-h) }
   .contact-btn:hover { background:#525252; color:#FAFAFA }
   .chip:hover,.chip.on:hover { background:#525252; color:#FAFAFA }
   .lang-btn:hover { background:#525252; color:#FAFAFA }
@@ -250,6 +267,7 @@ body.resizing .cb-wrap { transition:none !important }
   .lang-btns,.int-btns { gap:8px }
   .section-title h2 { font-size:24px }
   #exp-popup { display:none }
+  #stats-popup { display:none }
   #tip { display:none }
 }
 @media print {
@@ -299,7 +317,7 @@ body.resizing .cb-wrap { transition:none !important }
   .card { box-shadow:none !important }
 
   /* Masque les éléments interactifs et non-CV */
-  .ch-toggle,.ch-action,.section-toggle,#exp-popup,#tip,footer { display:none !important }
+  .ch-toggle,.ch-action,.section-toggle,#exp-popup,#stats-popup,#tip,footer { display:none !important }
 
   /* Outils : masque les niveaux (séparateur + badge) */
   .chip-sep, .chip-lvl { display:none !important }
@@ -336,6 +354,10 @@ body.resizing .cb-wrap { transition:none !important }
 </div>
 
 <div id="tip"></div>
+
+<div id="stats-popup">
+  <div class="sp-body" id="sp-body"></div>
+</div>
 
 <main class="page">
 
@@ -405,7 +427,7 @@ body.resizing .cb-wrap { transition:none !important }
             <span class="chip" data-tip="Création, planification et distribution de contenus multicanaux.">Production de contenu</span>
             <span class="chip" data-tip="Stratégie éditoriale cross-canal : Instagram, TikTok, LinkedIn.">Réseaux sociaux</span>
             <span class="chip" data-tip="Production de contenus courts : stratégie, tournage, montage, distribution.">TikTok</span>
-            <span class="chip" data-tip="Séquences d'emails automatisées, A/B tests et segmentation audience.">Email marketing</span>
+            <span class="chip" data-tip="Séquences d'emails automatisées, A/B tests et segmentation audience." data-stats="email-marketing">Email marketing</span>
             <span class="chip" data-tip="Pilotage de projets de A à Z : planification, coordination équipe, suivi de livrables.">Gestion de projet</span>
             <span class="chip" data-tip="Conception d'interfaces et expériences utilisateurs : wireframes, maquettes, prototypes.">UI/UX design</span>
             <span class="chip" data-tip="Rédaction persuasive pour le web, les campagnes et les supports marketing.">Copywriting</span>
@@ -458,6 +480,7 @@ body.resizing .cb-wrap { transition:none !important }
             <span class="chip on" data-tip="Montage de contenus vidéo pour TikTok et réseaux sociaux.">Final Cut Pro<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
             <span class="chip on" data-tip="Suivi des audiences, analyse du trafic et optimisation des conversions.">Google Analytics<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
             <span class="chip on" data-tip="Campagnes d'outreach email à froid : séquences et A/B tests.">Lemlist<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
+            <span class="chip on" data-tip="Newsletters, automatisation email et gestion de listes de contacts.">Brevo<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
             <span class="chip on" data-tip="Gestion de projets, bases de données éditoriales et wikis.">Notion<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
             <span class="chip on" data-tip="Retouche photo, visuels pour campagnes réseaux sociaux.">Photoshop<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
           </div>
@@ -770,7 +793,7 @@ document.querySelectorAll('[data-int]').forEach(btn => {
 /* ── Tooltips ── */
 const tip = document.getElementById('tip');
 let tipT;
-document.querySelectorAll('.chip[data-tip]').forEach(chip => {
+document.querySelectorAll('.chip[data-tip]:not([data-stats])').forEach(chip => {
   chip.addEventListener('mouseenter', () => {
     clearTimeout(tipT);
     tip.textContent = chip.dataset.tip;
@@ -783,6 +806,77 @@ document.querySelectorAll('.chip[data-tip]').forEach(chip => {
     });
   });
   chip.addEventListener('mouseleave', () => { tipT = setTimeout(() => { tip.style.opacity='0'; tip.style.transform='translateY(4px)'; }, 80); });
+});
+
+/* ── Stats popups (chip data-viz) ── */
+const statsPopup = document.getElementById('stats-popup');
+const spBody      = document.getElementById('sp-body');
+let statsT;
+
+const statsData = {
+  'email-marketing': {
+    title: 'Email marketing — Village des Recruteurs',
+    subtitle: '12 campagnes envoyées · 4 721 destinataires',
+    rows: [
+      { city:'Bordeaux', period:'18–22 mai',   ouverture:29, clic:0  },
+      { city:'Toulouse', period:'9 juil.',     ouverture:44, clic:31 },
+      { city:'Lyon',     period:'15–17 juil.', ouverture:55, clic:41 },
+      { city:'Dijon',    period:'21–22 juil.', ouverture:52, clic:42 },
+      { city:'Orléans',  period:'23 juil.',    ouverture:70, clic:56 },
+    ]
+  }
+};
+
+function showStatsPopup(d, anchor) {
+  spBody.innerHTML = `
+    <div class="sp-title">${d.title}</div>
+    <div class="sp-subtitle">${d.subtitle}</div>
+    ${d.rows.map(r => `
+      <div class="sp-row">
+        <div class="sp-row-head"><span class="sp-city">${r.city}</span><span class="sp-period">${r.period}</span></div>
+        <div class="sp-bar-line">
+          <span class="sp-bar-label">Ouverture</span>
+          <div class="sp-bar-track"><span class="sp-bar-fill" data-target="${r.ouverture}"></span></div>
+          <span class="sp-bar-val">${r.ouverture}%</span>
+        </div>
+        <div class="sp-bar-line">
+          <span class="sp-bar-label">Clic</span>
+          <div class="sp-bar-track"><span class="sp-bar-fill clic" data-target="${r.clic}"></span></div>
+          <span class="sp-bar-val">${r.clic}%</span>
+        </div>
+      </div>
+    `).join('')}
+  `;
+  const r = anchor.getBoundingClientRect();
+  requestAnimationFrame(() => {
+    const pw = statsPopup.offsetWidth, ph = statsPopup.offsetHeight;
+    const left = Math.max(8, Math.min(r.left + r.width/2 - pw/2, window.innerWidth - pw - 8));
+    let top = r.top - ph - 12;
+    if (top < 8) top = r.bottom + 12;
+    statsPopup.style.left = left + 'px';
+    statsPopup.style.top  = top  + 'px';
+    statsPopup.classList.add('visible');
+    requestAnimationFrame(() => {
+      spBody.querySelectorAll('.sp-bar-fill').forEach(el => { el.style.width = el.dataset.target + '%'; });
+    });
+  });
+}
+function hideStatsPopup() {
+  statsT = setTimeout(() => {
+    statsPopup.classList.remove('visible');
+    spBody.querySelectorAll('.sp-bar-fill').forEach(el => { el.style.width = '0%'; });
+  }, 120);
+}
+statsPopup.addEventListener('mouseenter', () => clearTimeout(statsT));
+statsPopup.addEventListener('mouseleave', hideStatsPopup);
+
+document.querySelectorAll('.chip[data-stats]').forEach(chip => {
+  chip.addEventListener('mouseenter', () => {
+    clearTimeout(statsT);
+    const d = statsData[chip.dataset.stats];
+    if (d) showStatsPopup(d, chip);
+  });
+  chip.addEventListener('mouseleave', hideStatsPopup);
 });
 
 /* ── Resize: disable drawer transitions during window resize ── */
