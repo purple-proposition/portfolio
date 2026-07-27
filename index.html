@@ -6,7 +6,6 @@
 <title>Jesse Sotomayor</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/lucide@0.525.0/dist/umd/lucide.min.js"></script>
 <style>
 :root {
   /* ── 4px grid spacing ── */
@@ -71,7 +70,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 :root { --dur: .52s; --dur-fast: .12s; --ease: cubic-bezier(.16,1,.3,1) }
 
 /* ── Card ── */
-.card { background:var(--card-bg); backdrop-filter:blur(24px) saturate(1.6); -webkit-backdrop-filter:blur(24px) saturate(1.6); border-radius:var(--r); overflow:hidden; box-shadow:none; transition:transform var(--dur-fast) var(--ease) }
+.card { background:var(--card-bg); backdrop-filter:blur(18px) saturate(1.5); -webkit-backdrop-filter:blur(18px) saturate(1.5); border-radius:var(--r); overflow:hidden; box-shadow:none; transition:transform var(--dur-fast) var(--ease) }
 
 /* ── Drawer ── */
 /* grid-template-rows animates the height — no JS height measurement needed */
@@ -244,6 +243,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .sp-row-head { display:flex; align-items:baseline; justify-content:space-between }
 .sp-city { font-size:var(--t-base); font-weight:600; color:var(--ink) }
 .sp-period { font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:var(--ink-2); opacity:.7; text-transform:uppercase }
+.sp-recipients { font-size:11px; color:var(--ink-2) }
 .sp-bar-line { display:flex; align-items:center; gap:8px }
 .sp-bar-label { font-family:var(--mono); font-size:10px; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-2); width:56px; flex-shrink:0 }
 .sp-bar-track { flex:1; height:6px; background:rgba(23,23,23,.12); border-radius:99px; overflow:hidden }
@@ -312,6 +312,10 @@ body.resizing .cb-wrap { transition:none !important }
   #exp-popup { display:none }
   #stats-popup { display:none }
   #tip { display:none }
+  /* Perf/batterie mobile : le fond animé + le flou verre coûtent cher à recalculer
+     en continu sur un GPU de tel — on fige le fond et on allège le flou. */
+  html { animation-play-state:paused }
+  .card { backdrop-filter:blur(10px) saturate(1.3); -webkit-backdrop-filter:blur(10px) saturate(1.3) }
 }
 @media print {
   /* A4 — marges réduites pour maximiser l'espace utile */
@@ -412,7 +416,7 @@ body.resizing .cb-wrap { transition:none !important }
         <span class="ch-label">Portfolio<span class="ch-label-suffix"></span></span>
       </div>
       <div class="ch-right" style="display:flex;align-items:center;gap:16px">
-        <button class="ch-toggle"><i data-lucide="chevron-up"></i></button>
+        <button class="ch-toggle"><svg viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></svg></button>
       </div>
     </div>
     <div class="cb-wrap"><div class="cb">
@@ -448,7 +452,7 @@ body.resizing .cb-wrap { transition:none !important }
   </div>
 
   <!-- COMPÉTENCES -->
-  <div class="section-title"><h2 data-i="section-skills">Compétences</h2><button class="section-toggle" data-section="skills"><i data-lucide="chevron-up"></i></button></div>
+  <div class="section-title"><h2 data-i="section-skills">Compétences</h2><button class="section-toggle" data-section="skills"><svg viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></svg></button></div>
   <div class="row col-2" data-section="skills">
 
     <!-- Colonne gauche : Expertises + Soft skills -->
@@ -460,7 +464,7 @@ body.resizing .cb-wrap { transition:none !important }
             <span class="ch-icon">✨</span>
             <span class="ch-label" data-i="expertise-label">Expertises</span>
           </div>
-          <div class="ch-right"><button class="ch-toggle"><i data-lucide="chevron-up"></i></button></div>
+          <div class="ch-right"><button class="ch-toggle"><svg viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></svg></button></div>
         </div>
         <div class="cb-wrap"><div class="cb">
           <div class="chips chips-compact">
@@ -496,18 +500,18 @@ body.resizing .cb-wrap { transition:none !important }
             <span class="ch-icon">⚡</span>
             <span class="ch-label">Soft skills</span>
           </div>
-          <div class="ch-right"><button class="ch-toggle"><i data-lucide="chevron-up"></i></button></div>
+          <div class="ch-right"><button class="ch-toggle"><svg viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></svg></button></div>
         </div>
         <div class="cb-wrap"><div class="cb">
           <div class="chips">
-            <span class="chip" data-tip="Je prends les sujets à bras le corps sans attendre qu'on me les confie.">Prise d'initiative</span>
-            <span class="chip" data-tip="Je change de contexte, d'outil ou de méthode sans perdre en efficacité.">Adaptabilité</span>
-            <span class="chip" data-tip="Je cherche constamment à comprendre, tester et apprendre de nouveaux domaines.">Curiosité</span>
-            <span class="chip" data-tip="Je trouve des angles originaux sur des sujets connus.">Créativité</span>
-            <span class="chip" data-tip="Je travaille avec structure, même sur des projets ouverts ou flous.">Rigueur</span>
-            <span class="chip" data-tip="Je collabore facilement avec des profils variés : créatifs, tech, commercial.">Esprit d'équipe</span>
-            <span class="chip" data-tip="Je gère mes projets de bout en bout sans avoir besoin d'un suivi constant.">Autonomie</span>
-            <span class="chip" data-tip="Je m'exprime clairement à l'écrit comme à l'oral, en interne ou face à des clients.">Communication</span>
+            <span class="chip" data-tip="Je prends les sujets à bras le corps sans attendre qu'on me les confie." data-stats="prise-initiative">Prise d'initiative</span>
+            <span class="chip" data-tip="Je change de contexte, d'outil ou de méthode sans perdre en efficacité." data-stats="adaptabilite">Adaptabilité</span>
+            <span class="chip" data-tip="Je cherche constamment à comprendre, tester et apprendre de nouveaux domaines." data-stats="curiosite">Curiosité</span>
+            <span class="chip" data-tip="Je trouve des angles originaux sur des sujets connus." data-stats="creativite">Créativité</span>
+            <span class="chip" data-tip="Je travaille avec structure, même sur des projets ouverts ou flous." data-stats="rigueur">Rigueur</span>
+            <span class="chip" data-tip="Je collabore facilement avec des profils variés : créatifs, tech, commercial." data-stats="esprit-equipe">Esprit d'équipe</span>
+            <span class="chip" data-tip="Je gère mes projets de bout en bout sans avoir besoin d'un suivi constant." data-stats="autonomie">Autonomie</span>
+            <span class="chip" data-tip="Je m'exprime clairement à l'écrit comme à l'oral, en interne ou face à des clients." data-stats="communication">Communication</span>
           </div>
         </div></div>
       </div>
@@ -518,7 +522,7 @@ body.resizing .cb-wrap { transition:none !important }
             <span class="ch-icon">⭐</span>
             <span class="ch-label" data-i="int-title">Centres d'intérêt</span>
           </div>
-          <div class="ch-right"><button class="ch-toggle"><i data-lucide="chevron-up"></i></button></div>
+          <div class="ch-right"><button class="ch-toggle"><svg viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></svg></button></div>
         </div>
         <div class="cb-wrap"><div class="cb">
           <div class="int-btns">
@@ -542,32 +546,32 @@ body.resizing .cb-wrap { transition:none !important }
             <span class="ch-icon">🔧</span>
             <span class="ch-label" data-i="tools-label">Outils</span>
           </div>
-          <div class="ch-right"><button class="ch-toggle"><i data-lucide="chevron-up"></i></button></div>
+          <div class="ch-right"><button class="ch-toggle"><svg viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></svg></button></div>
         </div>
         <div class="cb-wrap"><div class="cb">
           <div class="chips chips-compact">
-            <span class="chip on" data-tip="Production de contenus et automatisation de tâches éditoriales.">Claude<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
-            <span class="chip on" data-tip="Analyse de données, reporting et tableaux de bord KPI.">Excel<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
-            <span class="chip on" data-tip="Conception d'interfaces, identités visuelles et maquettes.">Figma<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
-            <span class="chip on" data-tip="Montage de contenus vidéo pour TikTok et réseaux sociaux.">Final Cut Pro<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
-            <span class="chip on" data-tip="Suivi des audiences, analyse du trafic et optimisation des conversions.">Google Analytics<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
-            <span class="chip on" data-tip="Campagnes d'outreach email à froid : séquences et A/B tests.">Lemlist<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
-            <span class="chip on" data-tip="Newsletters, automatisation email et gestion de listes de contacts.">Brevo<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
-            <span class="chip on" data-tip="Gestion de projets, bases de données éditoriales et wikis.">Notion<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
-            <span class="chip on" data-tip="Retouche photo, visuels pour campagnes réseaux sociaux.">Photoshop<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
-            <span class="chip on" data-tip="CRM et ERP : migration, configuration et usage quotidien.">Odoo<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
-            <span class="chip on" data-tip="Campagnes de référencement payant sur le réseau Google.">Google Ads<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
-            <span class="chip on" data-tip="Campagnes publicitaires sur Facebook et Instagram.">Meta Ads<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
-            <span class="chip on" data-tip="Création rapide de visuels pour réseaux sociaux et supports marketing.">Canva<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
-            <span class="chip on" data-tip="Suite bureautique : Word, PowerPoint, Outlook.">Microsoft 365<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
-            <span class="chip on" data-tip="Création et gestion de sites web.">WordPress<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
-            <span class="chip on" data-tip="Production de contenus courts : stratégie, tournage, montage, distribution.">TikTok<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
-            <span class="chip on" data-tip="Publication et gestion de contenu, stories et reels.">Instagram<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
-            <span class="chip on" data-tip="Réseautage professionnel et publication de contenu.">LinkedIn<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
-            <span class="chip on" data-tip="CRM et marketing automation.">HubSpot<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
-            <span class="chip on" data-tip="Ancien CRM, migré vers Odoo.">Sellsy<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
-            <span class="chip on" data-tip="Automatisation de workflows entre applications.">n8n<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
-            <span class="chip on" data-tip="Automatisation de workflows entre applications.">Make<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
+            <span class="chip on" data-tip="Production de contenus et automatisation de tâches éditoriales." data-stats="outil-claude">Claude<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
+            <span class="chip on" data-tip="Analyse de données, reporting et tableaux de bord KPI." data-stats="outil-excel">Excel<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
+            <span class="chip on" data-tip="Conception d'interfaces, identités visuelles et maquettes." data-stats="outil-figma">Figma<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
+            <span class="chip on" data-tip="Montage de contenus vidéo pour TikTok et réseaux sociaux." data-stats="outil-fcp">Final Cut Pro<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
+            <span class="chip on" data-tip="Suivi des audiences, analyse du trafic et optimisation des conversions." data-stats="outil-ga">Google Analytics<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
+            <span class="chip on" data-tip="Campagnes d'outreach email à froid : séquences et A/B tests." data-stats="outil-lemlist">Lemlist<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
+            <span class="chip on" data-tip="Newsletters, automatisation email et gestion de listes de contacts." data-stats="outil-brevo">Brevo<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
+            <span class="chip on" data-tip="Gestion de projets, bases de données éditoriales et wikis." data-stats="outil-notion">Notion<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
+            <span class="chip on" data-tip="Retouche photo, visuels pour campagnes réseaux sociaux." data-stats="outil-photoshop">Photoshop<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
+            <span class="chip on" data-tip="CRM et ERP : migration, configuration et usage quotidien." data-stats="outil-odoo">Odoo<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
+            <span class="chip on" data-tip="Campagnes de référencement payant sur le réseau Google." data-stats="outil-google-ads">Google Ads<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
+            <span class="chip on" data-tip="Campagnes publicitaires sur Facebook et Instagram." data-stats="outil-meta-ads">Meta Ads<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
+            <span class="chip on" data-tip="Création rapide de visuels pour réseaux sociaux et supports marketing." data-stats="outil-canva">Canva<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
+            <span class="chip on" data-tip="Suite bureautique : Word, PowerPoint, Outlook." data-stats="outil-ms365">Microsoft 365<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
+            <span class="chip on" data-tip="Création et gestion de sites web." data-stats="outil-wordpress">WordPress<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
+            <span class="chip on" data-tip="Production de contenus courts : stratégie, tournage, montage, distribution." data-stats="outil-tiktok">TikTok<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
+            <span class="chip on" data-tip="Publication et gestion de contenu, stories et reels." data-stats="outil-instagram">Instagram<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
+            <span class="chip on" data-tip="Réseautage professionnel et publication de contenu." data-stats="outil-linkedin">LinkedIn<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
+            <span class="chip on" data-tip="CRM et marketing automation." data-stats="outil-hubspot">HubSpot<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
+            <span class="chip on" data-tip="Ancien CRM, migré vers Odoo." data-stats="outil-sellsy">Sellsy<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
+            <span class="chip on" data-tip="Automatisation de workflows entre applications." data-stats="outil-n8n">n8n<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
+            <span class="chip on" data-tip="Automatisation de workflows entre applications." data-stats="outil-make">Make<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
           </div>
         </div></div>
       </div>
@@ -578,7 +582,7 @@ body.resizing .cb-wrap { transition:none !important }
             <span class="ch-icon">🌐</span>
             <span class="ch-label" data-i="lang-title">Langues</span>
           </div>
-          <div class="ch-right"><button class="ch-toggle"><i data-lucide="chevron-up"></i></button></div>
+          <div class="ch-right"><button class="ch-toggle"><svg viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></svg></button></div>
         </div>
         <div class="cb-wrap"><div class="cb">
           <div class="lang-btns">
@@ -594,7 +598,7 @@ body.resizing .cb-wrap { transition:none !important }
   </div>
 
   <!-- EXPÉRIENCE -->
-  <div class="section-title"><h2 data-i="section-exp">Expérience</h2><button class="section-toggle" data-section="exp"><i data-lucide="chevron-up"></i></button></div>
+  <div class="section-title"><h2 data-i="section-exp">Expérience</h2><button class="section-toggle" data-section="exp"><svg viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></svg></button></div>
   <div class="row col-2" data-section="exp">
 
     <div class="card exp-card">
@@ -608,7 +612,7 @@ body.resizing .cb-wrap { transition:none !important }
         </div>
         <div class="ch-right">
           <span class="ch-r current" data-i="since">Depuis 2025</span>
-          <button class="ch-toggle"><i data-lucide="chevron-up"></i></button>
+          <button class="ch-toggle"><svg viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></svg></button>
         </div>
       </div>
       <div class="cb-wrap"><div class="cb">
@@ -628,7 +632,7 @@ body.resizing .cb-wrap { transition:none !important }
         </div>
         <div class="ch-right">
           <span class="ch-r current" data-i="since2">Depuis 2021</span>
-          <button class="ch-toggle"><i data-lucide="chevron-up"></i></button>
+          <button class="ch-toggle"><svg viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></svg></button>
         </div>
       </div>
       <div class="cb-wrap"><div class="cb">
@@ -648,7 +652,7 @@ body.resizing .cb-wrap { transition:none !important }
         </div>
         <div class="ch-right">
           <span class="ch-r">2017 – 2021</span>
-          <button class="ch-toggle"><i data-lucide="chevron-up"></i></button>
+          <button class="ch-toggle"><svg viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></svg></button>
         </div>
       </div>
       <div class="cb-wrap"><div class="cb">
@@ -668,7 +672,7 @@ body.resizing .cb-wrap { transition:none !important }
         </div>
         <div class="ch-right">
           <span class="ch-r">2014 – 2017</span>
-          <button class="ch-toggle"><i data-lucide="chevron-up"></i></button>
+          <button class="ch-toggle"><svg viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></svg></button>
         </div>
       </div>
       <div class="cb-wrap"><div class="cb">
@@ -680,7 +684,7 @@ body.resizing .cb-wrap { transition:none !important }
   </div>
 
   <!-- FORMATION -->
-  <div class="section-title"><h2 data-i="section-edu">Formation</h2><button class="section-toggle" data-section="edu"><i data-lucide="chevron-up"></i></button></div>
+  <div class="section-title"><h2 data-i="section-edu">Formation</h2><button class="section-toggle" data-section="edu"><svg viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></svg></button></div>
   <div class="row col-2" data-section="edu">
 
     <div class="card exp-card">
@@ -694,7 +698,7 @@ body.resizing .cb-wrap { transition:none !important }
         </div>
         <div class="ch-right">
           <span class="ch-r current">2026 – 2027</span>
-          <button class="ch-toggle"><i data-lucide="chevron-up"></i></button>
+          <button class="ch-toggle"><svg viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></svg></button>
         </div>
       </div>
       <div class="cb-wrap"><div class="cb">
@@ -713,7 +717,7 @@ body.resizing .cb-wrap { transition:none !important }
         </div>
         <div class="ch-right">
           <span class="ch-r">2025 – 2026</span>
-          <button class="ch-toggle"><i data-lucide="chevron-up"></i></button>
+          <button class="ch-toggle"><svg viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></svg></button>
         </div>
       </div>
       <div class="cb-wrap"><div class="cb">
@@ -874,24 +878,37 @@ function fanState(phase) {
   if (p < .96) return LEFT;
   return mix(LEFT, FRONT, smooth((p-.96)/.04));
 }
-epPopup.addEventListener('mousemove', (e) => {
-  if (!epPopup.classList.contains('photo-only')) return;
+let fanRatio = null, fanTarget = 0.5, fanRAF = null;
+function fanLoop() {
   const stack = epPopup.querySelector('.ep-stack');
-  if (!stack) return;
-  stack.classList.add('manual');
-  const rect = epPopup.getBoundingClientRect();
-  const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+  if (!stack || !stack.classList.contains('manual')) { fanRAF = null; return; }
+  fanRatio += (fanTarget - fanRatio) * 0.09;
   [...stack.querySelectorAll('img')].forEach((img, i) => {
-    const s = fanState((ratio + i / 3) % 1);
+    const s = fanState((fanRatio + i / 3) % 1);
     img.style.transform = `rotate(${s.rot}deg) translate(${s.tx}%, ${s.ty}%) scale(${s.scale})`;
     img.style.opacity = s.opacity;
     img.style.zIndex = s.z;
   });
+  fanRAF = Math.abs(fanTarget - fanRatio) > 0.0008 ? requestAnimationFrame(fanLoop) : null;
+}
+epPopup.addEventListener('mousemove', (e) => {
+  if (!epPopup.classList.contains('photo-only')) return;
+  const stack = epPopup.querySelector('.ep-stack');
+  if (!stack) return;
+  const rect = epPopup.getBoundingClientRect();
+  fanTarget = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+  if (!stack.classList.contains('manual')) {
+    stack.classList.add('manual');
+    fanRatio = fanTarget;
+  }
+  if (!fanRAF) fanRAF = requestAnimationFrame(fanLoop);
 });
 epPopup.addEventListener('mouseleave', () => {
   const stack = epPopup.querySelector('.ep-stack');
   if (!stack) return;
   stack.classList.remove('manual');
+  if (fanRAF) { cancelAnimationFrame(fanRAF); fanRAF = null; }
+  fanRatio = null;
   stack.querySelectorAll('img').forEach(img => { img.style.transform = ''; img.style.opacity = ''; img.style.zIndex = ''; });
 });
 
@@ -946,12 +963,11 @@ let statsT;
 
 const statsData = {
   'email-marketing': {
-    subtitle: '9 campagnes envoyées · 2 958 destinataires',
     rows: [
-      { city:'Campagne 1', period:'9 juil.',     ouverture:44, clic:31 },
-      { city:'Campagne 2', period:'15–17 juil.', ouverture:55, clic:41 },
-      { city:'Campagne 3', period:'21–22 juil.', ouverture:52, clic:42 },
-      { city:'Campagne 4', period:'23 juil.',    ouverture:70, clic:56 },
+      { city:'Campagne 1', period:'9 juil.',     recipients:643,  ouverture:44, clic:31 },
+      { city:'Campagne 2', period:'15–17 juil.', recipients:1554, ouverture:55, clic:41 },
+      { city:'Campagne 3', period:'21–22 juil.', recipients:529,  ouverture:52, clic:42 },
+      { city:'Campagne 4', period:'23 juil.',    recipients:232,  ouverture:70, clic:56 },
     ],
     tools: ['Odoo','Brevo','Lemlist']
   },
@@ -976,6 +992,17 @@ const statsData = {
   'evenementiel-b2b':      { tools:[] },
   'relations-presse':      { tools:[] },
   'ab-testing':            { tools:[] },
+  'prise-initiative': { tools:[] }, 'adaptabilite': { tools:[] }, 'curiosite': { tools:[] },
+  'creativite': { tools:[] }, 'rigueur': { tools:[] }, 'esprit-equipe': { tools:[] },
+  'autonomie': { tools:[] }, 'communication': { tools:[] },
+  'outil-claude': { tools:[] }, 'outil-excel': { tools:[] }, 'outil-figma': { tools:[] },
+  'outil-fcp': { tools:[] }, 'outil-ga': { tools:[] }, 'outil-lemlist': { tools:[] },
+  'outil-brevo': { tools:[] }, 'outil-notion': { tools:[] }, 'outil-photoshop': { tools:[] },
+  'outil-odoo': { tools:[] }, 'outil-google-ads': { tools:[] }, 'outil-meta-ads': { tools:[] },
+  'outil-canva': { tools:[] }, 'outil-ms365': { tools:[] }, 'outil-wordpress': { tools:[] },
+  'outil-tiktok': { tools:[] }, 'outil-instagram': { tools:[] }, 'outil-linkedin': { tools:[] },
+  'outil-hubspot': { tools:[] }, 'outil-sellsy': { tools:[] }, 'outil-n8n': { tools:[] },
+  'outil-make': { tools:[] },
 };
 
 function showStatsPopup(d, anchor) {
@@ -988,10 +1015,13 @@ function showStatsPopup(d, anchor) {
   if (d.rows) {
     spBody.innerHTML = `
       ${descHtml}
-      <div class="sp-subtitle">${d.subtitle}</div>
       ${d.rows.map(r => `
         <div class="sp-row">
-          <div class="sp-row-head"><span class="sp-city">${r.city}</span><span class="sp-period">${r.period}</span></div>
+          <div class="sp-row-head">
+            <span class="sp-city">${r.city}</span>
+            <span class="sp-period">${r.period}</span>
+          </div>
+          <div class="sp-recipients">${r.recipients.toLocaleString('fr-FR')} destinataires</div>
           <div class="sp-bar-line">
             <span class="sp-bar-label">Ouverture</span>
             <div class="sp-bar-track"><span class="sp-bar-fill" data-target="${r.ouverture}"></span></div>
@@ -1049,8 +1079,6 @@ window.addEventListener('resize', () => {
   _resizeT = setTimeout(() => document.body.classList.remove('resizing'), 150);
 });
 
-/* ── Lucide icons ── */
-lucide.createIcons();
 </script>
 </body>
 </html>
