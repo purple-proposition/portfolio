@@ -243,7 +243,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .sp-row-head { display:flex; align-items:baseline; justify-content:space-between }
 .sp-city { font-size:var(--t-base); font-weight:600; color:var(--ink) }
 .sp-period { font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:var(--ink-2); opacity:.7; text-transform:uppercase }
-.sp-recipients { font-size:11px; color:var(--ink-2) }
+.sp-recipients { font-size:11px; font-weight:400; color:var(--ink-2) }
 .sp-bar-line { display:flex; align-items:center; gap:8px }
 .sp-bar-label { font-family:var(--mono); font-size:10px; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-2); width:56px; flex-shrink:0 }
 .sp-bar-track { flex:1; height:6px; background:rgba(23,23,23,.12); border-radius:99px; overflow:hidden }
@@ -270,8 +270,6 @@ body.resizing .cb-wrap { transition:none !important }
 
 /* ── Hover: only on pointer devices ── */
 @media (hover: hover) {
-  .card:hover { transform:scale(1.018); box-shadow:var(--shadow-h) }
-  .exp-card:hover { transform:scale(1.012); box-shadow:var(--shadow-h) }
   .contact-btn:hover { background:#525252; color:#FAFAFA }
   .chip:hover,.chip.on:hover { background:#525252; color:#FAFAFA }
   .lang-btn:hover { background:#525252; color:#FAFAFA }
@@ -927,7 +925,7 @@ document.querySelectorAll('.exp-card[data-popup]').forEach(card => {
 const intData = {
   travel:  {title:'Voyage', photos:true, photoSrc:['travel-1.jpg','travel-2.jpg','travel-3.jpg'], url:null, label:null},
   cinema:  {title:'Cinéma', noImg:true, desc:'Mes coups de cœur cinéma, et les films qui traînent dans ma watchlist depuis trop longtemps.', url:'https://letterboxd.com/prplprpstn/', label:'Voir sur Letterboxd'},
-  musique: {title:'Musique', noImg:true, desc:'Mes critiques, et les sons qui tournent en boucle sur mes enceintes.', url:'https://record.club/purpleproposition', label:'Voir sur Record Club'},
+  musique: {title:'Musique', noImg:true, desc:'Mes critiques, et les musiques en boucle dans mes écouteurs.', url:'https://record.club/purpleproposition', label:'Voir sur Record Club'},
   lecture: {title:'Lecture', noImg:true, desc:'Mes coups de cœur littéraires, et les livres qui attendent sur ma table de chevet.', url:'https://www.goodreads.com/purpleproposition', label:'Voir sur Goodreads'},
 };
 document.querySelectorAll('[data-int]').forEach(btn => {
@@ -1018,10 +1016,9 @@ function showStatsPopup(d, anchor) {
       ${d.rows.map(r => `
         <div class="sp-row">
           <div class="sp-row-head">
-            <span class="sp-city">${r.city}</span>
+            <span class="sp-city">${r.city}<span class="sp-recipients"> · ${r.recipients.toLocaleString('fr-FR')} destinataires</span></span>
             <span class="sp-period">${r.period}</span>
           </div>
-          <div class="sp-recipients">${r.recipients.toLocaleString('fr-FR')} destinataires</div>
           <div class="sp-bar-line">
             <span class="sp-bar-label">Ouverture</span>
             <div class="sp-bar-track"><span class="sp-bar-fill" data-target="${r.ouverture}"></span></div>
