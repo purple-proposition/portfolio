@@ -39,7 +39,25 @@
   --shadow-h: 0 2px 8px rgba(0,0,0,.07), 0 10px 28px rgba(0,0,0,.09);
 }
 *,*::before,*::after { box-sizing:border-box; margin:0; padding:0 }
-html { min-height:100%; background:linear-gradient(135deg,#E8DDD2 0%,#EDE5DC 25%,#DDD8E8 60%,#D4D0E2 100%) fixed }
+html {
+  min-height:100%;
+  background-color:#EAF4FC;
+  background-image:
+    radial-gradient(at 15% 20%, #EAF4FC 0%, transparent 55%),
+    radial-gradient(at 85% 15%, #B28FCE 0%, transparent 55%),
+    radial-gradient(at 20% 85%, #F4B3C2 0%, transparent 55%),
+    radial-gradient(at 85% 85%, #A0D8EF 0%, transparent 55%);
+  background-size:180% 180%;
+  background-attachment:fixed;
+  animation:bg-flow 15s ease-in-out infinite;
+}
+@keyframes bg-flow {
+  0%, 100% { background-position: 0% 0%, 100% 0%, 0% 100%, 100% 100%; }
+  50%      { background-position: 30% 30%, 70% 20%, 20% 70%, 80% 80%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { animation:none }
+}
 body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antialiased; min-height:100vh }
 
 /* ── Page ── */
@@ -49,7 +67,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 :root { --dur: .52s; --dur-fast: .12s; --ease: cubic-bezier(.16,1,.3,1) }
 
 /* ── Card ── */
-.card { background:var(--card-bg); border-radius:var(--r); overflow:hidden; box-shadow:none; transition:transform var(--dur-fast) var(--ease) }
+.card { background:var(--card-bg); backdrop-filter:blur(24px) saturate(1.6); -webkit-backdrop-filter:blur(24px) saturate(1.6); border-radius:var(--r); overflow:hidden; box-shadow:none; transition:transform var(--dur-fast) var(--ease) }
 
 /* ── Drawer ── */
 /* grid-template-rows animates the height — no JS height measurement needed */
@@ -109,6 +127,9 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .chip.on { background:var(--tag-bg); color:var(--ink) }
 .chip-sep { display:inline-block; width:1px; height:10px; background:currentColor; opacity:.2; flex-shrink:0; margin:0 6px; vertical-align:middle }
 .chip-lvl { font-family:var(--mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; opacity:.6 }
+.chips-compact { gap:8px }
+.chips-compact .chip { padding:6px 10px }
+.chips-compact .chip-sep { margin:0 4px }
 
 /* ── Tooltip ── */
 #tip { position:fixed; z-index:9999; background:rgba(250,250,250,.55); backdrop-filter:blur(28px) saturate(2.2); -webkit-backdrop-filter:blur(28px) saturate(2.2); box-shadow:var(--shadow-h); color:#171717; font-family:var(--font); font-size:var(--t-base); line-height:1.6; padding:var(--sp-sm) var(--sp); border-radius:var(--r-sm); max-width:220px; pointer-events:none; opacity:0; transform:translateY(4px); transition:opacity .22s cubic-bezier(.16,1,.3,1),transform .22s cubic-bezier(.16,1,.3,1) }
@@ -154,8 +175,8 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .bdot { width:3px; height:3px; border-radius:50%; background:var(--ink-3); flex-shrink:0; margin-top:6px }
 
 /* ── Interests ── */
-.int-btns { display:flex; flex-wrap:wrap; gap:12px }
-.int-btn { display:inline-flex; align-items:center; gap:var(--sp-sm); padding:var(--sp-sm) 12px; background:var(--tag-bg); border:none; border-radius:var(--r-sm); font-family:var(--font); font-size:var(--t-base); color:var(--tag-ink); cursor:pointer; text-decoration:none; transition:background var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease) }
+.int-btns { display:flex; flex-wrap:wrap; gap:8px }
+.int-btn { display:inline-flex; align-items:center; gap:6px; padding:6px 10px; background:var(--tag-bg); border:none; border-radius:var(--r-sm); font-family:var(--font); font-size:var(--t-base); color:var(--tag-ink); cursor:pointer; text-decoration:none; transition:background var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease) }
 .int-ico { font-size:14px; flex-shrink:0 }
 
 /* ── Exp popup ── */
@@ -207,6 +228,9 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .sp-bar-fill { display:block; height:100%; width:0%; border-radius:99px; background:#1E90FF; transition:width .6s cubic-bezier(.16,1,.3,1) }
 .sp-bar-fill.clic { opacity:.55 }
 .sp-bar-val { font-family:var(--mono); font-size:11px; color:var(--ink); width:32px; text-align:right; flex-shrink:0 }
+.sp-tools-label { font-family:var(--mono); font-size:10px; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-2) }
+.sp-tools { display:flex; flex-wrap:wrap; gap:8px }
+.sp-tool-chip { display:inline-flex; align-items:center; padding:4px 10px; background:rgba(23,23,23,.08); border-radius:var(--r-pill); font-size:12px; color:var(--ink) }
 
 .card { transition-property:box-shadow,transform; transition-duration:var(--dur),var(--dur); transition-timing-function:var(--ease),var(--ease) }
 /* ── Experience paragraph ── */
@@ -374,7 +398,7 @@ body.resizing .cb-wrap { transition:none !important }
         <div class="avatar-box"><img src="images/avatar.jpeg" alt="Jesse Sotomayor"></div>
         <div class="hero-info">
           <h1 class="name">Jesse <em>Sotomayor</em></h1>
-          <p class="hero-desc" data-i="tagline-rest">Spécialisé en marketing digital, acquisition et communication, je conçois des projets à la croisée du contenu, du design et de la donnée, actuellement en fin de Bac+3, avant ma rentrée en Bac+4 à l'École du Digital.</p>
+          <p class="hero-desc" data-i="tagline-rest">Spécialisé en marketing digital, acquisition et communication, je conçois des projets à la croisée du contenu, du design et de la donnée, actuellement en fin de Bac+3, avant ma rentrée en Bac+4 à l'École Supérieure du Digital.</p>
         </div>
       </div>
       <div class="hero-sep"></div>
@@ -390,7 +414,10 @@ body.resizing .cb-wrap { transition:none !important }
               <span class="print-info">06 06 95 41 36</span>
             </a>
             <a href="https://www.linkedin.com/in/jessesotomayor/" target="_blank" class="contact-btn" aria-label="Se connecter sur LinkedIn">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" style="flex-shrink:0;width:13px;height:13px;fill:currentColor;stroke:none"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" style="flex-shrink:0;width:14px;height:14px;stroke:none">
+                <rect width="24" height="24" rx="4.5" fill="#0A66C2"/>
+                <path fill="#fff" d="M8.34 8.75H5.67v9.5h2.67v-9.5zM7 4a1.55 1.55 0 100 3.1A1.55 1.55 0 007 4zM18.5 18.25h-2.67v-4.98c0-1.19-.42-2-1.48-2-.81 0-1.29.55-1.5 1.08-.08.19-.1.45-.1.71v5.19h-2.67s.04-8.63 0-9.5h2.67v1.39c.36-.55 .99-1.34 2.4-1.34 1.75 0 3.06 1.16 3.06 3.66v5.79z"/>
+              </svg>
               <span data-i="cta-linkedin">Se connecter sur LinkedIn</span>
               <span class="print-info">linkedin.com/in/jessesotomayor</span>
             </a>
@@ -414,27 +441,26 @@ body.resizing .cb-wrap { transition:none !important }
           <div class="ch-right"><button class="ch-toggle"><i data-lucide="chevron-up"></i></button></div>
         </div>
         <div class="cb-wrap"><div class="cb">
-          <div class="chips">
-            <span class="chip" data-tip="Animation de communautés et engagement sur les réseaux sociaux.">Community management</span>
-            <span class="chip" data-tip="Supervision créative : cohérence visuelle, identité de marque et direction de production.">Direction artistique</span>
-            <span class="chip" data-tip="Optimisation du référencement naturel : contenu, maillage, performance.">SEO</span>
-            <span class="chip" data-tip="Création, planification et distribution de contenus multicanaux.">Production de contenu</span>
-            <span class="chip" data-tip="Stratégie éditoriale cross-canal : Instagram, TikTok, LinkedIn.">Réseaux sociaux</span>
+          <div class="chips chips-compact">
+            <span class="chip" data-tip="Animation de communautés, stratégie éditoriale et engagement sur Instagram, TikTok et LinkedIn." data-stats="community-management">Community management</span>
+            <span class="chip" data-tip="Supervision créative : cohérence visuelle, identité de marque et direction de production." data-stats="direction-artistique">Direction artistique</span>
+            <span class="chip" data-tip="Optimisation du référencement naturel : contenu, maillage, performance." data-stats="seo">SEO</span>
+            <span class="chip" data-tip="Création, planification et distribution de contenus multicanaux." data-stats="production-contenu">Production de contenu</span>
             <span class="chip" data-tip="Séquences d'emails automatisées, A/B tests et segmentation audience." data-stats="email-marketing">Email marketing</span>
-            <span class="chip" data-tip="Pilotage de projets de A à Z : planification, coordination équipe, suivi de livrables.">Gestion de projet</span>
-            <span class="chip" data-tip="Conception d'interfaces et expériences utilisateurs : wireframes, maquettes, prototypes.">UI/UX design</span>
-            <span class="chip" data-tip="Rédaction persuasive pour le web, les campagnes et les supports marketing.">Copywriting</span>
-            <span class="chip" data-tip="Lecture de données, tableaux de bord KPI et optimisation continue.">Analytics</span>
-            <span class="chip" data-tip="Identités visuelles, chartes graphiques et positionnement de marque.">Branding</span>
-            <span class="chip" data-tip="Gestion et suivi de la relation client via des outils CRM.">CRM</span>
-            <span class="chip" data-tip="Scénarios automatisés déclenchés par le comportement des contacts.">Marketing automation</span>
-            <span class="chip" data-tip="Découpage d'audience et tests comparatifs pour optimiser les conversions.">Segmentation & A/B testing</span>
-            <span class="chip" data-tip="Génération de trafic qualifié et construction de tunnels de conversion.">Acquisition digitale</span>
-            <span class="chip" data-tip="Mise en forme et communication des résultats via tableaux de bord.">Reporting</span>
-            <span class="chip" data-tip="Campagnes de référencement payant sur les moteurs de recherche.">SEA</span>
-            <span class="chip" data-tip="Production de contenu et automatisation assistées par IA.">IA générative</span>
-            <span class="chip" data-tip="Gestion de catalogues produits et parcours d'achat en ligne.">E-commerce</span>
-            <span class="chip" data-tip="Administration, mise à jour et refonte de sites web.">Gestion de site web</span>
+            <span class="chip" data-tip="Pilotage de projets de A à Z : planification, coordination équipe, suivi de livrables." data-stats="gestion-projet">Gestion de projet</span>
+            <span class="chip" data-tip="Conception d'interfaces et expériences utilisateurs : wireframes, maquettes, prototypes." data-stats="ui-ux">UI/UX design</span>
+            <span class="chip" data-tip="Rédaction persuasive pour le web, les campagnes et les supports marketing." data-stats="copywriting">Copywriting</span>
+            <span class="chip" data-tip="Lecture de données, tableaux de bord KPI et optimisation continue.">Google Analytics</span>
+            <span class="chip" data-tip="Identités visuelles, chartes graphiques et positionnement de marque." data-stats="branding">Branding</span>
+            <span class="chip" data-tip="Gestion et suivi de la relation client via des outils CRM." data-stats="crm">CRM</span>
+            <span class="chip" data-tip="Scénarios automatisés déclenchés par le comportement des contacts." data-stats="marketing-automation">Marketing automation</span>
+            <span class="chip" data-tip="Tests comparatifs pour optimiser les taux de conversion.">A/B testing</span>
+            <span class="chip" data-tip="Génération de trafic qualifié et construction de tunnels de conversion." data-stats="acquisition-digitale">Acquisition digitale</span>
+            <span class="chip" data-tip="Mise en forme et communication des résultats via tableaux de bord." data-stats="reporting">Reporting</span>
+            <span class="chip" data-tip="Campagnes de référencement payant sur les moteurs de recherche." data-stats="sea">SEA</span>
+            <span class="chip" data-tip="Production de contenu et automatisation assistées par IA." data-stats="ia-generative">IA générative</span>
+            <span class="chip" data-tip="Automatisation de tâches et connexion d'outils entre eux." data-stats="automatisation">Automatisation</span>
+            <span class="chip" data-tip="Administration, mise à jour et refonte de sites web." data-stats="gestion-site-web">Gestion de site web</span>
             <span class="chip" data-tip="Suivi des tendances et des pratiques de la concurrence.">Veille concurrentielle</span>
             <span class="chip" data-tip="Organisation de salons et rencontres professionnelles.">Événementiel B2B</span>
             <span class="chip" data-tip="Rédaction de communiqués et mise en relation avec les médias.">Relations presse</span>
@@ -464,6 +490,24 @@ body.resizing .cb-wrap { transition:none !important }
         </div></div>
       </div>
 
+      <div class="card">
+        <div class="ch">
+          <div class="ch-l">
+            <span class="ch-icon">⭐</span>
+            <span class="ch-label" data-i="int-title">Centres d'intérêt</span>
+          </div>
+          <div class="ch-right"><button class="ch-toggle"><i data-lucide="chevron-up"></i></button></div>
+        </div>
+        <div class="cb-wrap"><div class="cb">
+          <div class="int-btns">
+            <a class="int-btn" href="https://letterboxd.com/prplprpstn/" target="_blank"><span class="int-ico">🎬</span><span data-i="int-cinema">Cinéma</span></a>
+            <button class="int-btn"><span class="int-ico">💻</span><span data-i="int-tech">Nouvelles technologies</span></button>
+            <a class="int-btn" href="https://record.club/purpleproposition" target="_blank"><span class="int-ico">🎵</span><span>Musique</span></a>
+            <button class="int-btn" data-int="travel"><span class="int-ico">✈️</span><span>Voyage</span></button>
+          </div>
+        </div></div>
+      </div>
+
     </div>
 
     <!-- Colonne droite : Outils (haut) + Langues (bas) -->
@@ -478,7 +522,7 @@ body.resizing .cb-wrap { transition:none !important }
           <div class="ch-right"><button class="ch-toggle"><i data-lucide="chevron-up"></i></button></div>
         </div>
         <div class="cb-wrap"><div class="cb">
-          <div class="chips">
+          <div class="chips chips-compact">
             <span class="chip on" data-tip="Production de contenus et automatisation de tâches éditoriales.">Claude<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
             <span class="chip on" data-tip="Analyse de données, reporting et tableaux de bord KPI.">Excel<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
             <span class="chip on" data-tip="Conception d'interfaces, identités visuelles et maquettes.">Figma<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
@@ -494,7 +538,13 @@ body.resizing .cb-wrap { transition:none !important }
             <span class="chip on" data-tip="Création rapide de visuels pour réseaux sociaux et supports marketing.">Canva<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
             <span class="chip on" data-tip="Suite bureautique : Word, PowerPoint, Outlook.">Microsoft 365<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
             <span class="chip on" data-tip="Création et gestion de sites web.">WordPress<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
-            <span class="chip on" data-tip="Publication et gestion de contenu sur Instagram, TikTok et LinkedIn.">Réseaux sociaux<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
+            <span class="chip on" data-tip="Production de contenus courts : stratégie, tournage, montage, distribution.">TikTok<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
+            <span class="chip on" data-tip="Publication et gestion de contenu, stories et reels.">Instagram<span class="chip-sep"></span><span class="chip-lvl">Avancé</span></span>
+            <span class="chip on" data-tip="Réseautage professionnel et publication de contenu.">LinkedIn<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
+            <span class="chip on" data-tip="CRM et marketing automation.">HubSpot<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
+            <span class="chip on" data-tip="Ancien CRM, migré vers Odoo.">Sellsy<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
+            <span class="chip on" data-tip="Automatisation de workflows entre applications.">n8n<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
+            <span class="chip on" data-tip="Automatisation de workflows entre applications.">Make<span class="chip-sep"></span><span class="chip-lvl">Intermédiaire</span></span>
           </div>
         </div></div>
       </div>
@@ -539,7 +589,7 @@ body.resizing .cb-wrap { transition:none !important }
         </div>
       </div>
       <div class="cb-wrap"><div class="cb">
-        <p class="exp-para" data-i="je-para"><span class="screen-text">Chez Job Events, je pilote la refonte digitale de l'entreprise : nouveau site, migration du CRM vers Odoo et déploiement de Claude dans les usages quotidiens de l'équipe. En parallèle, je fais tourner les campagnes Lemlist, enrichis les bases prospects salon par salon et co-construis la stratégie éditoriale et social media.</span><span class="print-text">Refonte digitale chez Job Events : nouveau site, CRM Odoo, Claude déployé en interne. Campagnes Lemlist, enrichissement prospects et stratégie éditoriale en parallèle.</span></p>
+        <p class="exp-para" data-i="je-para"><span class="screen-text">Chez Job Events, je pilote la refonte digitale de l'entreprise : nouveau site, migration du CRM vers Odoo et déploiement de Claude dans les usages quotidiens de l'équipe. En parallèle, je fais tourner les campagnes marketing (newsletter, prospection), enrichis les bases prospects salon par salon et co-construis la stratégie éditoriale et social media.</span><span class="print-text">Refonte digitale chez Job Events : nouveau site, CRM Odoo, Claude déployé en interne. Campagnes marketing (newsletter, prospection), enrichissement prospects et stratégie éditoriale en parallèle.</span></p>
         <div class="card-link-row"><a class="card-link" href="https://levillagedesrecruteurs.fr" target="_blank">Voir le site <svg viewBox="0 0 10 10" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1 9L9 1M9 1H3M9 1V7"/></svg></a></div>
       </div></div>
     </div>
@@ -559,7 +609,7 @@ body.resizing .cb-wrap { transition:none !important }
         </div>
       </div>
       <div class="cb-wrap"><div class="cb">
-        <p class="exp-para" data-i="8b-para"><span class="screen-text">8Beats Radio, c'est la première radio en ligne dédiée à la musique de jeux vidéo, que j'ai cofondée et façonnée de bout en bout : UI/UX, site, planning éditorial. Entre événements, incubation à Hotel71 puis à la French Tech, et une présence TikTok qui dépasse 3,3 millions de vues, le projet réunit aujourd'hui 4 000 auditeurs réguliers.</span><span class="print-text">Cofondateur de 8Beats Radio, première radio en ligne dédiée aux jeux vidéo : UI/UX, planning éditorial, événements, incubation Hotel71/French Tech, TikTok à 3,3 M de vues.</span></p>
+        <p class="exp-para" data-i="8b-para"><span class="screen-text">J'ai cofondé 8Beats Radio, la première radio en ligne dédiée à la musique de jeux vidéo, et j'en ai façonné l'UI/UX, le site et le planning éditorial de bout en bout. Entre événements, incubation à Hotel71 puis à la French Tech, et une présence TikTok qui dépasse 3,3 millions de vues, le projet réunit aujourd'hui 4 000 auditeurs réguliers.</span><span class="print-text">Cofondateur de 8Beats Radio, première radio en ligne dédiée aux jeux vidéo : UI/UX, planning éditorial, événements, incubation Hotel71/French Tech, TikTok à 3,3 M de vues.</span></p>
         <div class="card-link-row"><a class="card-link" href="https://8beats.co" target="_blank">Écouter <svg viewBox="0 0 10 10" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1 9L9 1M9 1H3M9 1V7"/></svg></a></div>
       </div></div>
     </div>
@@ -579,7 +629,7 @@ body.resizing .cb-wrap { transition:none !important }
         </div>
       </div>
       <div class="cb-wrap"><div class="cb">
-        <p class="exp-para" data-i="pp-para"><span class="screen-text">Purple Proposition, c'est mon studio de design graphique : identités visuelles et chartes pour des clients de secteurs variés, déclinées en campagnes cross-canal. Visuels Photoshop et Canva, contenus Instagram, dossiers de presse, supports print et digital, tout y passe.</span><span class="print-text">Studio de design graphique : identités visuelles, chartes, campagnes cross-canal. Visuels Photoshop/Canva, contenus Instagram, dossiers de presse, supports print/digital.</span></p>
+        <p class="exp-para" data-i="pp-para"><span class="screen-text">Identités visuelles, chartes, campagnes cross-canal : c'est le cœur de Purple Proposition, mon studio de design graphique pour des clients de secteurs variés. Visuels pour réseaux sociaux, dossiers de presse, supports print et digital, tout y passe.</span><span class="print-text">Studio de design graphique : identités visuelles, chartes, campagnes cross-canal. Visuels pour réseaux sociaux, dossiers de presse, supports print/digital.</span></p>
         <div class="card-link-row"><a class="card-link" href="https://www.purpleproposition.fr" target="_blank">Voir le portfolio <svg viewBox="0 0 10 10" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1 9L9 1M9 1H3M9 1V7"/></svg></a></div>
       </div></div>
     </div>
@@ -599,7 +649,7 @@ body.resizing .cb-wrap { transition:none !important }
         </div>
       </div>
       <div class="cb-wrap"><div class="cb">
-        <p class="exp-para" data-i="po-para"><span class="screen-text">Palm Off, le label que j'ai cofondé, c'est une identité de marque construite de zéro, des relations presse entretenues sortie après sortie, et une dizaine d'événements produits à Lyon, Paris et Séoul. L'emailing et le cross-canal ont fait le reste.</span><span class="print-text">Cofondateur du label Palm Off : identité de marque, relations presse, production d'événements à Lyon, Paris et Séoul, emailing et cross-canal.</span></p>
+        <p class="exp-para" data-i="po-para"><span class="screen-text">De 2014 à 2017, j'ai cofondé et développé Palm Off, un label de musique : identité de marque construite de zéro, relations presse entretenues sortie après sortie, et une dizaine d'événements produits à Lyon, Paris et Séoul. L'emailing et le cross-canal ont fait le reste.</span><span class="print-text">Cofondateur du label Palm Off : identité de marque, relations presse, production d'événements à Lyon, Paris et Séoul, emailing et cross-canal.</span></p>
         <div class="card-link-row"><a class="card-link" href="https://soundcloud.com/palmoff" target="_blank">Écouter sur SoundCloud <svg viewBox="0 0 10 10" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1 9L9 1M9 1H3M9 1V7"/></svg></a></div>
       </div></div>
     </div>
@@ -625,7 +675,7 @@ body.resizing .cb-wrap { transition:none !important }
         </div>
       </div>
       <div class="cb-wrap"><div class="cb">
-        <p class="exp-para">À la rentrée 2026, je rejoins l'École du Digital pour un cursus qui couvre le développement web, la PAO, la vidéo, le webdesign et le marketing fondamental, avec une spécialisation vers le pilotage de stratégie marketing et digitale.</p>
+        <p class="exp-para">À la rentrée 2026, je rejoins l'École Supérieure du Digital pour un cursus qui couvre le développement web, la PAO, la vidéo, le webdesign et le marketing fondamental, avec une spécialisation vers le pilotage de stratégie marketing et digitale.</p>
       </div></div>
     </div>
 
@@ -644,30 +694,9 @@ body.resizing .cb-wrap { transition:none !important }
         </div>
       </div>
       <div class="cb-wrap"><div class="cb">
-        <p class="exp-para">À Rocket School, j'apprends à construire des funnels d'acquisition qui convertissent : leads qualifiés, campagnes multicanales sur Meta, Google, LinkedIn et TikTok, landing pages et copywriting à l'appui. Le tout mesuré et affiné en continu via Google Analytics.</p>
+        <p class="exp-para">À Rocket School, j'apprends à construire des funnels d'acquisition qui convertissent : leads qualifiés, campagnes publicitaires multicanales, landing pages et copywriting à l'appui. Le tout mesuré et affiné en continu grâce à l'analyse de performance.</p>
       </div></div>
     </div>
-
-    <!-- Centres d'intérêt — masqué temporairement
-    <div class="card">
-      <div class="ch">
-        <div class="ch-l">
-          <span class="ch-icon">⭐</span>
-          <span class="ch-label" data-i="int-title">Centres d'intérêt</span>
-        </div>
-        <div class="ch-right"><button class="ch-toggle"><i data-lucide="chevron-up"></i></button></div>
-      </div>
-      <div class="cb-wrap"><div class="cb">
-        <div class="int-btns">
-          <a class="int-btn" href="https://letterboxd.com/prplprpstn/" target="_blank"><span class="int-ico">🎬</span><span data-i="int-cinema">Cinéma</span></a>
-          <button class="int-btn"><span class="int-ico">💻</span><span data-i="int-tech">Tech</span></button>
-          <button class="int-btn"><span class="int-ico">🎮</span><span data-i="int-gaming">Jeux vidéo</span></button>
-          <a class="int-btn" href="https://record.club/purpleproposition" target="_blank"><span class="int-ico">🎵</span><span>Musique</span></a>
-          <button class="int-btn" data-int="travel"><span class="int-ico">✈️</span><span>Voyage</span></button>
-        </div>
-      </div></div>
-    </div>
-    -->
 
   </div>
 </main>
@@ -680,7 +709,7 @@ body.resizing .cb-wrap { transition:none !important }
 <script>
 /* ── i18n ── */
 const T = {
-  fr: {'print':'Imprimer','tagline-b':'Co-fondateur, designer & growth manager','tagline-rest':'Spécialisé en marketing digital, acquisition et communication, je conçois des projets à la croisée du contenu, du design et de la donnée, actuellement en fin de Bac+3, avant ma rentrée en Bac+4 à l\'École du Digital.','section-skills':'Compétences','tools-label':'Outils','expertise-label':'Expertises','lang-title':'Langues','lang-fr-lvl':'Natif','lang-en-lvl':'Courant','lang-es-lvl':'Conversationnel','section-exp':'Expérience','since':'Depuis 2025','since2':'Depuis 2021','since3':'Depuis 2017','je-role':'Growth Manager','je-para':"Chez Job Events, je pilote la refonte digitale de l'entreprise : nouveau site, migration du CRM vers Odoo et déploiement de Claude dans les usages quotidiens de l'équipe. En parallèle, je fais tourner les campagnes Lemlist, enrichis les bases prospects salon par salon et co-construis la stratégie éditoriale et social media.",'8b-role':'Co-fondateur','8b-para':"8Beats Radio, c'est la première radio en ligne dédiée à la musique de jeux vidéo, que j'ai cofondée et façonnée de bout en bout : UI/UX, site, planning éditorial. Entre événements, incubation à Hotel71 puis à la French Tech, et une présence TikTok qui dépasse 3,3 millions de vues, le projet réunit aujourd'hui 4 000 auditeurs réguliers.",'pp-role':'Designer graphique','pp-para':"Purple Proposition, c'est mon studio de design graphique : identités visuelles et chartes pour des clients de secteurs variés, déclinées en campagnes cross-canal. Visuels Photoshop et Canva, contenus Instagram, dossiers de presse, supports print et digital, tout y passe.",'po-role':'Co-fondateur','po-para':"Palm Off, le label que j'ai cofondé, c'est une identité de marque construite de zéro, des relations presse entretenues sortie après sortie, et une dizaine d'événements produits à Lyon, Paris et Séoul. L'emailing et le cross-canal ont fait le reste.",'section-edu':'Formation','int-title':"Centres d'intérêt",'cta-email':"M'envoyer un email",'cta-phone':"M'appeler",'cta-linkedin':'Se connecter sur LinkedIn','int-cinema':'Cinéma','int-tech':'Tech','int-gaming':'Jeux vidéo'},
+  fr: {'print':'Imprimer','tagline-b':'Co-fondateur, designer & growth manager','tagline-rest':'Spécialisé en marketing digital, acquisition et communication, je conçois des projets à la croisée du contenu, du design et de la donnée, actuellement en fin de Bac+3, avant ma rentrée en Bac+4 à l\'École Supérieure du Digital.','section-skills':'Compétences','tools-label':'Outils','expertise-label':'Expertises','lang-title':'Langues','lang-fr-lvl':'Natif','lang-en-lvl':'Courant','lang-es-lvl':'Conversationnel','section-exp':'Expérience','since':'Depuis 2025','since2':'Depuis 2021','since3':'Depuis 2017','je-role':'Growth Manager','je-para':"Chez Job Events, je pilote la refonte digitale de l'entreprise : nouveau site, migration du CRM vers Odoo et déploiement de Claude dans les usages quotidiens de l'équipe. En parallèle, je fais tourner les campagnes marketing (newsletter, prospection), enrichis les bases prospects salon par salon et co-construis la stratégie éditoriale et social media.",'8b-role':'Co-fondateur','8b-para':"J'ai cofondé 8Beats Radio, la première radio en ligne dédiée à la musique de jeux vidéo, et j'en ai façonné l'UI/UX, le site et le planning éditorial de bout en bout. Entre événements, incubation à Hotel71 puis à la French Tech, et une présence TikTok qui dépasse 3,3 millions de vues, le projet réunit aujourd'hui 4 000 auditeurs réguliers.",'pp-role':'Designer graphique','pp-para':"Identités visuelles, chartes, campagnes cross-canal : c'est le cœur de Purple Proposition, mon studio de design graphique pour des clients de secteurs variés. Visuels pour réseaux sociaux, dossiers de presse, supports print et digital, tout y passe.",'po-role':'Co-fondateur','po-para':"De 2014 à 2017, j'ai cofondé et développé Palm Off, un label de musique : identité de marque construite de zéro, relations presse entretenues sortie après sortie, et une dizaine d'événements produits à Lyon, Paris et Séoul. L'emailing et le cross-canal ont fait le reste.",'section-edu':'Formation','int-title':"Centres d'intérêt",'cta-email':"M'envoyer un email",'cta-phone':"M'appeler",'cta-linkedin':'Se connecter sur LinkedIn','int-cinema':'Cinéma','int-tech':'Tech','int-gaming':'Jeux vidéo'},
   en: {'print':'Print','tagline-b':'Co-founder, designer & growth manager','tagline-rest':'Building brands and audiences for over 10 years.','section-skills':'Skills','tools-label':'Tools','expertise-label':'Expertise','lang-title':'Languages','lang-fr-lvl':'Native','lang-en-lvl':'Fluent','lang-es-lvl':'Conversational','section-exp':'Experience','since':'Since 2025','since2':'Since 2021','since3':'Since 2017','je-role':'Growth Manager','je-para':'Growth hacker at Job Events since 2021, leading editorial and digital strategy: SEO, social media and TikTok content generating over 2 million views. Continuously optimising campaigns through data analysis.','8b-role':'Co-founder','8b-para':'Co-founder of 8Beats Radio since 2021, the first online radio dedicated to video game music. Managing editorial strategy, acquisition and social media, 4,000 regular listeners.','pp-role':'Graphic designer','pp-para':'Graphic design studio founded in 2017. Created visual identities, brand guidelines and ran cross-channel campaigns for a dozen clients: social media, newsletters, print and digital materials.','po-role':'Co-founder','po-para':'Co-founder of music label Palm Off from 2014 to 2017. Brand identity development, press relations, concert production and cross-channel strategy, email marketing and digital campaigns.','section-edu':'Education','int-title':'Interests','cta-email':'Send me an email','cta-phone':'Call me','cta-linkedin':'Connect on LinkedIn','int-cinema':'Cinema','int-tech':'Tech','int-gaming':'Gaming'},
   es: {'print':'Imprimir','tagline-b':'Cofundador, diseñador & growth manager','tagline-rest':'Construyendo marcas y audiencias desde hace más de 10 años.','section-skills':'Competencias','tools-label':'Herramientas','expertise-label':'Especialidades','lang-title':'Idiomas','lang-fr-lvl':'Nativo','lang-en-lvl':'Fluido','lang-es-lvl':'Conversacional','section-exp':'Experiencia','since':'Desde 2025','since2':'Desde 2021','since3':'Desde 2017','je-role':'Growth Manager','je-para':'Growth hacker en Job Events desde 2021, dirigiendo estrategia editorial y digital: SEO, redes sociales y contenidos TikTok con más de 2 millones de vistas. Optimización continua de campañas mediante análisis de datos.','8b-role':'Cofundador','8b-para':'Cofundador de 8Beats Radio desde 2021, la primera radio online dedicada a la música de videojuegos. Gestión de estrategia editorial, adquisición y redes sociales, 4.000 oyentes habituales.','pp-role':'Diseñador gráfico','pp-para':'Estudio de diseño gráfico fundado en 2017. Creación de identidades visuales, guías de marca y campañas multicanal para una docena de clientes: redes sociales, newsletters, materiales impresos y digitales.','po-role':'Cofundador','po-para':'Cofundador del sello musical Palm Off de 2014 a 2017. Desarrollo de identidad de marca, relaciones con la prensa, producción de conciertos, email marketing y campañas digitales en apoyo.','section-edu':'Formación','int-title':'Intereses','cta-email':'Enviarme un email','cta-phone':'Llamarme','cta-linkedin':'Conectar en LinkedIn','int-cinema':'Cine','int-tech':'Tech','int-gaming':'Videojuegos'}
 };
@@ -855,28 +884,51 @@ const statsData = {
       { city:'Campagne 3', period:'21–22 juil.', ouverture:52, clic:42 },
       { city:'Campagne 4', period:'23 juil.',    ouverture:70, clic:56 },
     ]
-  }
+  },
+  'community-management': { tools:['Réseaux sociaux','Canva'] },
+  'direction-artistique':  { tools:['Figma','Photoshop','Canva'] },
+  'seo':                   { tools:['Google Analytics'] },
+  'production-contenu':    { tools:['Canva','Photoshop','Final Cut Pro','Claude'] },
+  'gestion-projet':        { tools:['Notion'] },
+  'ui-ux':                 { tools:['Figma'] },
+  'copywriting':           { tools:['Claude','Microsoft 365'] },
+  'branding':              { tools:['Figma','Photoshop','Canva'] },
+  'crm':                   { tools:['Odoo','HubSpot','Sellsy'] },
+  'marketing-automation':  { tools:['Odoo','Brevo','Lemlist'] },
+  'acquisition-digitale':  { tools:['Google Ads','Meta Ads'] },
+  'reporting':             { tools:['Google Analytics'] },
+  'sea':                   { tools:['Google Ads','Meta Ads'] },
+  'ia-generative':         { tools:['Claude'] },
+  'automatisation':        { tools:['Claude','n8n','Make'] },
+  'gestion-site-web':      { tools:['WordPress'] },
 };
 
 function showStatsPopup(d, anchor) {
-  spBody.innerHTML = `
-    <div class="sp-subtitle">${d.subtitle}</div>
-    ${d.rows.map(r => `
-      <div class="sp-row">
-        <div class="sp-row-head"><span class="sp-city">${r.city}</span><span class="sp-period">${r.period}</span></div>
-        <div class="sp-bar-line">
-          <span class="sp-bar-label">Ouverture</span>
-          <div class="sp-bar-track"><span class="sp-bar-fill" data-target="${r.ouverture}"></span></div>
-          <span class="sp-bar-val">${r.ouverture}%</span>
+  if (d.tools) {
+    spBody.innerHTML = `
+      <div class="sp-tools-label">Outils utilisés</div>
+      <div class="sp-tools">${d.tools.map(t => `<span class="sp-tool-chip">${t}</span>`).join('')}</div>
+    `;
+  } else {
+    spBody.innerHTML = `
+      <div class="sp-subtitle">${d.subtitle}</div>
+      ${d.rows.map(r => `
+        <div class="sp-row">
+          <div class="sp-row-head"><span class="sp-city">${r.city}</span><span class="sp-period">${r.period}</span></div>
+          <div class="sp-bar-line">
+            <span class="sp-bar-label">Ouverture</span>
+            <div class="sp-bar-track"><span class="sp-bar-fill" data-target="${r.ouverture}"></span></div>
+            <span class="sp-bar-val">${r.ouverture}%</span>
+          </div>
+          <div class="sp-bar-line">
+            <span class="sp-bar-label">Clic</span>
+            <div class="sp-bar-track"><span class="sp-bar-fill clic" data-target="${r.clic}"></span></div>
+            <span class="sp-bar-val">${r.clic}%</span>
+          </div>
         </div>
-        <div class="sp-bar-line">
-          <span class="sp-bar-label">Clic</span>
-          <div class="sp-bar-track"><span class="sp-bar-fill clic" data-target="${r.clic}"></span></div>
-          <span class="sp-bar-val">${r.clic}%</span>
-        </div>
-      </div>
-    `).join('')}
-  `;
+      `).join('')}
+    `;
+  }
   const r = anchor.getBoundingClientRect();
   requestAnimationFrame(() => {
     const pw = statsPopup.offsetWidth, ph = statsPopup.offsetHeight;
