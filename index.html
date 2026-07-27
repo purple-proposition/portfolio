@@ -201,6 +201,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
   -webkit-backdrop-filter:none !important; border-radius:0 !important;
   box-shadow:none !important; padding:0 !important; overflow:visible !important
 }
+#exp-popup.photo-only.visible { pointer-events:auto }
 .ep-stack { position:relative; width:100%; aspect-ratio:4/3; flex-shrink:0 }
 .ep-stack img {
   position:absolute;
@@ -210,6 +211,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
   object-fit:cover; border-radius:12px;
   animation:ep-fan-cycle 13.5s ease-in-out infinite;
 }
+.ep-stack.manual img { animation:none }
 .ep-stack img:nth-child(1) { animation-delay:-9s }
 .ep-stack img:nth-child(2) { animation-delay:-4.5s }
 .ep-stack img:nth-child(3) { animation-delay:0s }
@@ -234,7 +236,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .ep-link { display:inline-flex; align-items:center; gap:var(--sp-sm); padding:var(--sp-sm) var(--sp); background:var(--tag-bg); color:var(--tag-ink); border-radius:var(--r-sm); font-size:var(--t-base); text-decoration:none; transition:background var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease) }
 
 /* ── Stats popup (chip data-viz) ── */
-#stats-popup { position:fixed; z-index:9998; width:300px; background:rgba(250,250,250,.92); backdrop-filter:blur(20px) saturate(1.8); -webkit-backdrop-filter:blur(20px) saturate(1.8); box-shadow:var(--shadow-h); border-radius:var(--r); overflow:hidden; pointer-events:none; opacity:0; transform:translateY(8px) scale(.97); transition:opacity var(--dur-fast) var(--ease),transform var(--dur-fast) var(--ease) }
+#stats-popup { position:fixed; z-index:9998; width:300px; background:rgba(250,250,250,.92); backdrop-filter:blur(20px) saturate(1.8); -webkit-backdrop-filter:blur(20px) saturate(1.8); box-shadow:var(--shadow-h); border-radius:var(--r); overflow:hidden; pointer-events:none; opacity:0; transform:translateY(8px) scale(.97); transition:opacity .2s var(--ease), transform .2s var(--ease), left .32s var(--ease), top .32s var(--ease) }
 #stats-popup.visible { opacity:1; transform:translateY(0) scale(1) }
 .sp-body { padding:var(--sp); display:flex; flex-direction:column; gap:var(--sp) }
 .sp-subtitle { font-size:var(--t-base); color:var(--ink); line-height:1.6 }
@@ -832,7 +834,6 @@ function showPopup(d, anchor) {
       }
     }
     document.querySelector('#exp-popup .ep-body').innerHTML = `
-      <div class="ep-title" id="ep-title">${d.title}</div>
       <div class="ep-desc" id="ep-desc">${d.desc}</div>
     `;
     if (d.url) {
@@ -853,6 +854,47 @@ function hidePopup() {
 epPopup.addEventListener('mouseenter', () => clearTimeout(epT));
 epPopup.addEventListener('mouseleave', hidePopup);
 
+/* ── Photo stack: cursor-driven fan (auto-cycle at rest, mouse takes over) ── */
+function fanState(phase) {
+  const FRONT = {rot:1.5,  tx:1.5,  ty:-2, scale:1,   opacity:1,   z:3};
+  const RIGHT = {rot:-5,   tx:-11,  ty:3,  scale:.93, opacity:.75, z:2};
+  const LEFT  = {rot:7,    tx:14,   ty:6,  scale:.87, opacity:.5,  z:1};
+  const smooth = t => t*t*(3-2*t);
+  const lerp = (a,b,t) => a+(b-a)*t;
+  const mix = (A,B,t) => ({
+    rot: lerp(A.rot,B.rot,t), tx: lerp(A.tx,B.tx,t), ty: lerp(A.ty,B.ty,t),
+    scale: lerp(A.scale,B.scale,t), opacity: lerp(A.opacity,B.opacity,t),
+    z: t < .5 ? A.z : B.z
+  });
+  const p = phase;
+  if (p < .30) return FRONT;
+  if (p < .38) return mix(FRONT, RIGHT, smooth((p-.30)/.08));
+  if (p < .63) return RIGHT;
+  if (p < .71) return mix(RIGHT, LEFT, smooth((p-.63)/.08));
+  if (p < .96) return LEFT;
+  return mix(LEFT, FRONT, smooth((p-.96)/.04));
+}
+epPopup.addEventListener('mousemove', (e) => {
+  if (!epPopup.classList.contains('photo-only')) return;
+  const stack = epPopup.querySelector('.ep-stack');
+  if (!stack) return;
+  stack.classList.add('manual');
+  const rect = epPopup.getBoundingClientRect();
+  const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+  [...stack.querySelectorAll('img')].forEach((img, i) => {
+    const s = fanState((ratio + i / 3) % 1);
+    img.style.transform = `rotate(${s.rot}deg) translate(${s.tx}%, ${s.ty}%) scale(${s.scale})`;
+    img.style.opacity = s.opacity;
+    img.style.zIndex = s.z;
+  });
+});
+epPopup.addEventListener('mouseleave', () => {
+  const stack = epPopup.querySelector('.ep-stack');
+  if (!stack) return;
+  stack.classList.remove('manual');
+  stack.querySelectorAll('img').forEach(img => { img.style.transform = ''; img.style.opacity = ''; img.style.zIndex = ''; });
+});
+
 /* ── Exp popups ── */
 const expData = {
 };
@@ -867,9 +909,9 @@ document.querySelectorAll('.exp-card[data-popup]').forEach(card => {
 /* ── Interests popups ── */
 const intData = {
   travel:  {title:'Voyage', photos:true, photoSrc:['travel-1.jpg','travel-2.jpg','travel-3.jpg'], url:null, label:null},
-  cinema:  {title:'Cinéma', noImg:true, desc:'Mes coups de cœur cinéma, et les films que j\'ai hâte de voir.', url:'https://letterboxd.com/prplprpstn/', label:'Voir sur Letterboxd'},
-  musique: {title:'Musique', noImg:true, desc:'Mes critiques et coups de cœur en musique.', url:'https://record.club/purpleproposition', label:'Voir sur Record Club'},
-  lecture: {title:'Lecture', noImg:true, desc:'Mes coups de cœur littéraires, et les livres qui attendent sur ma pile.', url:'https://www.goodreads.com/purpleproposition', label:'Voir sur Goodreads'},
+  cinema:  {title:'Cinéma', noImg:true, desc:'Mes coups de cœur cinéma, et les films qui traînent dans ma watchlist depuis trop longtemps.', url:'https://letterboxd.com/prplprpstn/', label:'Voir sur Letterboxd'},
+  musique: {title:'Musique', noImg:true, desc:'Mes critiques, et les sons qui tournent en boucle sur mes enceintes.', url:'https://record.club/purpleproposition', label:'Voir sur Record Club'},
+  lecture: {title:'Lecture', noImg:true, desc:'Mes coups de cœur littéraires, et les livres qui attendent sur ma table de chevet.', url:'https://www.goodreads.com/purpleproposition', label:'Voir sur Goodreads'},
 };
 document.querySelectorAll('[data-int]').forEach(btn => {
   btn.addEventListener('mouseenter', () => {
@@ -910,7 +952,8 @@ const statsData = {
       { city:'Campagne 2', period:'15–17 juil.', ouverture:55, clic:41 },
       { city:'Campagne 3', period:'21–22 juil.', ouverture:52, clic:42 },
       { city:'Campagne 4', period:'23 juil.',    ouverture:70, clic:56 },
-    ]
+    ],
+    tools: ['Odoo','Brevo','Lemlist']
   },
   'community-management': { tools:['Réseaux sociaux','Canva'] },
   'direction-artistique':  { tools:['Figma','Photoshop','Canva'] },
@@ -936,16 +979,15 @@ const statsData = {
 };
 
 function showStatsPopup(d, anchor) {
-  if (d.tools) {
+  const descHtml = `<div class="sp-subtitle">${anchor.dataset.tip || ''}</div>`;
+  const toolsHtml = (d.tools && d.tools.length) ? `
+    <div class="sp-tools-label">Outils utilisés</div>
+    <div class="sp-tools">${d.tools.map(t => `<span class="sp-tool-chip">${t}</span>`).join('')}</div>
+  ` : '';
+
+  if (d.rows) {
     spBody.innerHTML = `
-      <div class="sp-subtitle">${anchor.dataset.tip || ''}</div>
-      ${d.tools.length ? `
-        <div class="sp-tools-label">Outils utilisés</div>
-        <div class="sp-tools">${d.tools.map(t => `<span class="sp-tool-chip">${t}</span>`).join('')}</div>
-      ` : ''}
-    `;
-  } else {
-    spBody.innerHTML = `
+      ${descHtml}
       <div class="sp-subtitle">${d.subtitle}</div>
       ${d.rows.map(r => `
         <div class="sp-row">
@@ -962,7 +1004,10 @@ function showStatsPopup(d, anchor) {
           </div>
         </div>
       `).join('')}
+      ${toolsHtml}
     `;
+  } else {
+    spBody.innerHTML = `${descHtml}${toolsHtml}`;
   }
   const r = anchor.getBoundingClientRect();
   requestAnimationFrame(() => {
