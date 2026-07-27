@@ -163,7 +163,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 .lang-btns { display:flex; flex-wrap:wrap; gap:12px }
 .lang-btn { display:inline-flex; align-items:center; gap:var(--sp-sm); padding:var(--sp-sm) 12px; background:var(--tag-bg); border:none; border-radius:var(--r-sm); font-family:var(--font); font-size:var(--t-base); font-weight:400; color:var(--tag-ink); cursor:pointer; transition:background var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease) }
 .lang-flag { font-size:14px; line-height:1; flex-shrink:0 }
-.lang-sep { width:1px; height:11px; background:currentColor; opacity:.2; flex-shrink:0 }
+.lang-sep { width:0; flex-shrink:0 }
 .lang-lvl { font-family:var(--mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; opacity:.6 }
 
 /* ── Experience ── */
@@ -196,22 +196,38 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
    Les photos sont statiques dans leur position finale — aucun @keyframes,
    aucun will-change individuel, zéro jank. */
 #exp-popup.photo-only {
-  width:264px !important; height:194px !important;
+  width:clamp(240px, 80vw, 320px) !important; height:auto !important;
   background:none !important; backdrop-filter:none !important;
   -webkit-backdrop-filter:none !important; border-radius:0 !important;
   box-shadow:none !important; padding:0 !important; overflow:visible !important
 }
-.ep-stack { position:relative; width:264px; height:194px; flex-shrink:0 }
+.ep-stack { position:relative; width:100%; aspect-ratio:4/3; flex-shrink:0 }
 .ep-stack img {
   position:absolute;
-  width:212px; height:160px;
+  width:80%; height:82%;
   left:50%; top:50%;
-  margin-left:-106px; margin-top:-80px;
-  object-fit:cover; border-radius:12px
+  margin-left:-40%; margin-top:-41%;
+  object-fit:cover; border-radius:12px;
+  animation:ep-fan-cycle 13.5s ease-in-out infinite;
 }
-.ep-stack img:nth-child(1) { z-index:1; opacity:.5;  transform:rotate(7deg)  translate(30px,12px) scale(.87) }
-.ep-stack img:nth-child(2) { z-index:2; opacity:.75; transform:rotate(-5deg) translate(-24px,6px) scale(.93) }
-.ep-stack img:nth-child(3) { z-index:3; opacity:1;   transform:rotate(1.5deg) translate(3px,-4px) }
+.ep-stack img:nth-child(1) { animation-delay:-9s }
+.ep-stack img:nth-child(2) { animation-delay:-4.5s }
+.ep-stack img:nth-child(3) { animation-delay:0s }
+@keyframes ep-fan-cycle {
+  0%    { transform:rotate(1.5deg) translate(1.5%,-2%) scale(1); opacity:1; z-index:3 }
+  30%   { transform:rotate(1.5deg) translate(1.5%,-2%) scale(1); opacity:1; z-index:3 }
+  38%   { transform:rotate(-5deg) translate(-11%,3%) scale(.93); opacity:.75; z-index:2 }
+  63%   { transform:rotate(-5deg) translate(-11%,3%) scale(.93); opacity:.75; z-index:2 }
+  71%   { transform:rotate(7deg) translate(14%,6%) scale(.87); opacity:.5; z-index:1 }
+  96%   { transform:rotate(7deg) translate(14%,6%) scale(.87); opacity:.5; z-index:1 }
+  100%  { transform:rotate(1.5deg) translate(1.5%,-2%) scale(1); opacity:1; z-index:3 }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ep-stack img { animation:none }
+  .ep-stack img:nth-child(1) { z-index:1; opacity:.5;  transform:rotate(7deg)  translate(14%,6%) scale(.87) }
+  .ep-stack img:nth-child(2) { z-index:2; opacity:.75; transform:rotate(-5deg) translate(-11%,3%) scale(.93) }
+  .ep-stack img:nth-child(3) { z-index:3; opacity:1;   transform:rotate(1.5deg) translate(1.5%,-2%) }
+}
 /* ── Card popup separator ── */
 .ep-sep { height:1px; background:rgba(0,0,0,.08); margin:0 16px }
 .ep-footer { padding:var(--sp) }
@@ -221,7 +237,7 @@ body { font-family:var(--font); color:var(--ink); -webkit-font-smoothing:antiali
 #stats-popup { position:fixed; z-index:9998; width:300px; background:rgba(250,250,250,.92); backdrop-filter:blur(20px) saturate(1.8); -webkit-backdrop-filter:blur(20px) saturate(1.8); box-shadow:var(--shadow-h); border-radius:var(--r); overflow:hidden; pointer-events:none; opacity:0; transform:translateY(8px) scale(.97); transition:opacity var(--dur-fast) var(--ease),transform var(--dur-fast) var(--ease) }
 #stats-popup.visible { opacity:1; transform:translateY(0) scale(1) }
 .sp-body { padding:var(--sp); display:flex; flex-direction:column; gap:var(--sp) }
-.sp-subtitle { font-size:var(--t-sm); color:var(--ink-2) }
+.sp-subtitle { font-size:var(--t-base); color:var(--ink); line-height:1.6 }
 .sp-row { display:flex; flex-direction:column; gap:6px }
 .sp-row-head { display:flex; align-items:baseline; justify-content:space-between }
 .sp-city { font-size:var(--t-base); font-weight:600; color:var(--ink) }
@@ -448,24 +464,24 @@ body.resizing .cb-wrap { transition:none !important }
           <div class="chips chips-compact">
             <span class="chip" data-tip="Animation de communautés, stratégie éditoriale et engagement sur Instagram, TikTok et LinkedIn." data-stats="community-management">Community management</span>
             <span class="chip" data-tip="Création, planification et distribution de contenus multicanaux." data-stats="production-contenu">Production de contenu</span>
-            <span class="chip" data-tip="Suivi des tendances et des pratiques de la concurrence.">Veille concurrentielle</span>
+            <span class="chip" data-tip="Suivi des tendances et des pratiques de la concurrence." data-stats="veille-concurrentielle">Veille concurrentielle</span>
             <span class="chip" data-tip="Supervision créative : cohérence visuelle, identité de marque et direction de production." data-stats="direction-artistique">Direction artistique</span>
             <span class="chip" data-tip="Scénarios automatisés déclenchés par le comportement des contacts." data-stats="marketing-automation">Marketing automation</span>
             <span class="chip" data-tip="Génération de trafic qualifié et construction de tunnels de conversion." data-stats="acquisition-digitale">Acquisition digitale</span>
             <span class="chip" data-tip="Administration, mise à jour et refonte de sites web." data-stats="gestion-site-web">Gestion de site web</span>
-            <span class="chip" data-tip="Lecture de données, tableaux de bord KPI et optimisation continue.">Google Analytics</span>
+            <span class="chip" data-tip="Lecture de données, tableaux de bord KPI et optimisation continue." data-stats="google-analytics-expertise">Google Analytics</span>
             <span class="chip" data-tip="Optimisation du référencement naturel : contenu, maillage, performance." data-stats="seo">SEO</span>
             <span class="chip" data-tip="Pilotage de projets de A à Z : planification, coordination équipe, suivi de livrables." data-stats="gestion-projet">Gestion de projet</span>
-            <span class="chip" data-tip="Rédaction de communiqués et mise en relation avec les médias.">Relations presse</span>
+            <span class="chip" data-tip="Rédaction de communiqués et mise en relation avec les médias." data-stats="relations-presse">Relations presse</span>
             <span class="chip" data-tip="Gestion et suivi de la relation client via des outils CRM." data-stats="crm">CRM</span>
-            <span class="chip" data-tip="Organisation de salons et rencontres professionnelles.">Événementiel B2B</span>
+            <span class="chip" data-tip="Organisation de salons et rencontres professionnelles." data-stats="evenementiel-b2b">Événementiel B2B</span>
             <span class="chip" data-tip="Séquences d'emails automatisées, A/B tests et segmentation audience." data-stats="email-marketing">Email marketing</span>
             <span class="chip" data-tip="Campagnes de référencement payant sur les moteurs de recherche." data-stats="sea">SEA</span>
             <span class="chip" data-tip="Production de contenu et automatisation assistées par IA." data-stats="ia-generative">IA générative</span>
             <span class="chip" data-tip="Automatisation de tâches et connexion d'outils entre eux." data-stats="automatisation">Automatisation</span>
             <span class="chip" data-tip="Conception d'interfaces et expériences utilisateurs : wireframes, maquettes, prototypes." data-stats="ui-ux">UI/UX design</span>
             <span class="chip" data-tip="Rédaction persuasive pour le web, les campagnes et les supports marketing." data-stats="copywriting">Copywriting</span>
-            <span class="chip" data-tip="Tests comparatifs pour optimiser les taux de conversion.">A/B testing</span>
+            <span class="chip" data-tip="Tests comparatifs pour optimiser les taux de conversion." data-stats="ab-testing">A/B testing</span>
             <span class="chip" data-tip="Mise en forme et communication des résultats via tableaux de bord." data-stats="reporting">Reporting</span>
             <span class="chip" data-tip="Identités visuelles, chartes graphiques et positionnement de marque." data-stats="branding">Branding</span>
           </div>
@@ -707,8 +723,7 @@ body.resizing .cb-wrap { transition:none !important }
 </main>
 
 <footer style="text-align:center; padding:var(--sp) var(--gap) calc(var(--gap)*2); font-family:var(--font); font-size:var(--t-sm); color:var(--ink-3); line-height:1.6">
-  <p>Jesse Sotomayor · Portfolio personnel · <a href="mailto:jessesotomayor@icloud.com" style="color:inherit; text-decoration:none">jessesotomayor@icloud.com</a></p>
-  <p style="margin-top:4px">Ce site ne collecte aucune donnée personnelle et n'utilise pas de cookies. Hébergé sur <a href="https://vercel.com" target="_blank" rel="noopener" style="color:inherit; text-decoration:none">Vercel</a>. © 2025 Jesse Sotomayor.</p>
+  <p>Ce site ne collecte aucune donnée personnelle et n'utilise pas de cookies. Hébergé sur <a href="https://vercel.com" target="_blank" rel="noopener" style="color:inherit; text-decoration:none">Vercel</a>. © 2025 Jesse Sotomayor.</p>
 </footer>
 
 <script>
@@ -804,13 +819,17 @@ function showPopup(d, anchor) {
   } else {
     epPopup.classList.remove('photo-only');
     document.querySelector('#exp-popup .ep-body').style.padding = '';
-    epImg.style.display = '';
     document.querySelector('.ep-sep').style.display = '';
     document.querySelector('.ep-footer').style.display = '';
-    if (d.preview) {
-      epImg.innerHTML = `<img src="images/${d.preview}" alt="${d.title}">`;
+    if (d.noImg) {
+      epImg.style.display = 'none';
     } else {
-      epImg.innerHTML = `<span style="font-size:36px">${d.emoji}</span>`;
+      epImg.style.display = '';
+      if (d.preview) {
+        epImg.innerHTML = `<img src="images/${d.preview}" alt="${d.title}">`;
+      } else {
+        epImg.innerHTML = `<span style="font-size:36px">${d.emoji}</span>`;
+      }
     }
     document.querySelector('#exp-popup .ep-body').innerHTML = `
       <div class="ep-title" id="ep-title">${d.title}</div>
@@ -848,9 +867,9 @@ document.querySelectorAll('.exp-card[data-popup]').forEach(card => {
 /* ── Interests popups ── */
 const intData = {
   travel:  {title:'Voyage', photos:true, photoSrc:['travel-1.jpg','travel-2.jpg','travel-3.jpg'], url:null, label:null},
-  cinema:  {title:'Cinéma', emoji:'🎬', desc:'Mes films et critiques sur Letterboxd.', url:'https://letterboxd.com/prplprpstn/', label:'Voir sur Letterboxd'},
-  musique: {title:'Musique', emoji:'🎵', desc:'Mes playlists et découvertes sur Record Club.', url:'https://record.club/purpleproposition', label:'Voir sur Record Club'},
-  lecture: {title:'Lecture', emoji:'📚', desc:'Mes lectures et critiques sur Goodreads.', url:'https://www.goodreads.com/purpleproposition', label:'Voir sur Goodreads'},
+  cinema:  {title:'Cinéma', noImg:true, desc:'Mes coups de cœur cinéma, et les films que j\'ai hâte de voir.', url:'https://letterboxd.com/prplprpstn/', label:'Voir sur Letterboxd'},
+  musique: {title:'Musique', noImg:true, desc:'Mes critiques et coups de cœur en musique.', url:'https://record.club/purpleproposition', label:'Voir sur Record Club'},
+  lecture: {title:'Lecture', noImg:true, desc:'Mes coups de cœur littéraires, et les livres qui attendent sur ma pile.', url:'https://www.goodreads.com/purpleproposition', label:'Voir sur Goodreads'},
 };
 document.querySelectorAll('[data-int]').forEach(btn => {
   btn.addEventListener('mouseenter', () => {
@@ -909,14 +928,21 @@ const statsData = {
   'ia-generative':         { tools:['Claude'] },
   'automatisation':        { tools:['Claude','n8n','Make'] },
   'gestion-site-web':      { tools:['WordPress'] },
+  'google-analytics-expertise': { tools:[] },
+  'veille-concurrentielle': { tools:[] },
+  'evenementiel-b2b':      { tools:[] },
+  'relations-presse':      { tools:[] },
+  'ab-testing':            { tools:[] },
 };
 
 function showStatsPopup(d, anchor) {
   if (d.tools) {
     spBody.innerHTML = `
       <div class="sp-subtitle">${anchor.dataset.tip || ''}</div>
-      <div class="sp-tools-label">Outils utilisés</div>
-      <div class="sp-tools">${d.tools.map(t => `<span class="sp-tool-chip">${t}</span>`).join('')}</div>
+      ${d.tools.length ? `
+        <div class="sp-tools-label">Outils utilisés</div>
+        <div class="sp-tools">${d.tools.map(t => `<span class="sp-tool-chip">${t}</span>`).join('')}</div>
+      ` : ''}
     `;
   } else {
     spBody.innerHTML = `
